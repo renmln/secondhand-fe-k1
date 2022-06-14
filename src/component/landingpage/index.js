@@ -12,7 +12,7 @@ export default function LandingPage() {
             <div>
                 <NavBar />
             </div>
-            <div style={{ width: 968, height: 388 }} className="container-fluid">
+            <div className="row">
                 <CarouselBanner />
             </div>
             <div className="container py-3">
@@ -60,7 +60,82 @@ export default function LandingPage() {
 
             </div>
             <div id="card" className="container">
-                <div class="row row-cols-6 row-cols-md-6 g-4" id="cars-container">
+                <div className="row">
+                    <div className="col-md-4 col-xl-2 col-sm-12">
+                        <div className="card" style={{ border: "none" }}>
+                            <div className="d-flex justify-content-center">
+                                <img className="card-img-top center-cropped m-1 img-fluid" src={Rectangle} style={{ height: "100px" }} alt='test' />
+                            </div>
+                            <div class="card-body mb-3">
+                                <h6 class="card-title " style={{ fontsize: '14px' }}>Jam Tangan Casio</h6>
+                                <p className="" style={{ fontsize: '10px' }}>Aksesoris</p>
+                                <p class="" style={{ fontsize: '14px' }}>Rp 250.000</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-4 col-xl-2 col-sm-12">
+                        <div className="card" style={{ border: "none" }}>
+                            <div className="d-flex justify-content-center">
+                                <img className="card-img-top center-cropped m-1 img-fluid" src={Rectangle} style={{ height: "100px" }} alt='test' />
+                            </div>
+                            <div class="card-body mb-3">
+                                <h6 class="card-title " style={{ fontsize: '14px' }}>Jam Tangan Casio</h6>
+                                <p className="" style={{ fontsize: '10px' }}>Aksesoris</p>
+                                <p class="" style={{ fontsize: '14px' }}>Rp 250.000</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-4 col-xl-2 col-sm-12">
+                        <div className="card" style={{ border: "none" }}>
+                            <div className="d-flex justify-content-center">
+                                <img className="card-img-top center-cropped m-1 img-fluid" src={Rectangle} style={{ height: "100px" }} alt='test' />
+                            </div>
+                            <div class="card-body mb-3">
+                                <h6 class="card-title " style={{ fontsize: '14px' }}>Jam Tangan Casio</h6>
+                                <p className="" style={{ fontsize: '10px' }}>Aksesoris</p>
+                                <p class="" style={{ fontsize: '14px' }}>Rp 250.000</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-4 col-xl-2 col-sm-12">
+                        <div className="card" style={{ border: "none" }}>
+                            <div className="d-flex justify-content-center">
+                                <img className="card-img-top center-cropped m-1 img-fluid" src={Rectangle} style={{ height: "100px" }} alt='test' />
+                            </div>
+                            <div class="card-body mb-3">
+                                <h6 class="card-title " style={{ fontsize: '14px' }}>Jam Tangan Casio</h6>
+                                <p className="" style={{ fontsize: '10px' }}>Aksesoris</p>
+                                <p class="" style={{ fontsize: '14px' }}>Rp 250.000</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-4 col-xl-2 col-sm-12">
+                        <div className="card" style={{ border: "none" }}>
+                            <div className="d-flex justify-content-center">
+                                <img className="card-img-top center-cropped m-1 img-fluid" src={Rectangle} style={{ height: "100px" }} alt='test' />
+                            </div>
+                            <div class="card-body mb-3">
+                                <h6 class="card-title " style={{ fontsize: '14px' }}>Jam Tangan Casio</h6>
+                                <p className="" style={{ fontsize: '10px' }}>Aksesoris</p>
+                                <p class="" style={{ fontsize: '14px' }}>Rp 250.000</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-4 col-xl-2 col-sm-12">
+                        <div className="card" style={{ border: "none" }}>
+                            <div className="d-flex justify-content-center">
+                                <img className="card-img-top center-cropped m-1 img-fluid" src={Rectangle} style={{ height: "100px" }} alt='test' />
+                            </div>
+                            <div class="card-body mb-3">
+                                <h6 class="card-title " style={{ fontsize: '14px' }}>Jam Tangan Casio</h6>
+                                <p className="" style={{ fontsize: '10px' }}>Aksesoris</p>
+                                <p class="" style={{ fontsize: '14px' }}>Rp 250.000</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {/* <div class="row row-cols-6 row-cols-md-6 row-cols-sm-12 g-4" id="cars-container">
                     <div className="card  " style={{ border: "none" }}>
                         <div className="d-flex justify-content-center">
                             <img className="card-img-top center-cropped m-1" src={Rectangle} style={{ height: "100px" }} alt='test' />
@@ -122,7 +197,7 @@ export default function LandingPage() {
                         </div>
                     </div>
 
-                </div>
+                </div> */}
                 {/* <div class="card">
                     <img class="card-img-top col-xl-2" src={Rectangle} alt="Cardimagecap" />
                     <div class="card-body">
