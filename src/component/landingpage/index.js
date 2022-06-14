@@ -1,9 +1,10 @@
 import React from "react";
+import "../../App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import NavBar from "../NavBar";
 import CarouselBanner from "../Carousel";
 import { FiSearch } from "react-icons/fi";
-import "../../App.css"
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Rectangle from '../../images/Rectangle 23.png';
 
 export default function LandingPage() {

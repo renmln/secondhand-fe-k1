@@ -9,7 +9,8 @@ import {
   Route,
 } from "react-router-dom";
 
-import { LandingPage } from './component';
+import { LandingPage, HalamanProduk } from './component';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -17,6 +18,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage/>} />
+        <Route path="/halamanproduk" element={<HalamanProduk/>} />
       </Routes>
     </BrowserRouter>
 );
