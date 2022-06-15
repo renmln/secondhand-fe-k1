@@ -42,10 +42,11 @@ export default function HalamanProduk() {
                             <p>or</p>
                             <button
                                 className="btn btn-custom me-3 mb-2 "
-                                onclick="/"
+
                                 id="Terbitakan"
                             > Saya tertarik dan ingin nego
                             </button>
+
                         </div>
                         <div className="card">
                             <div className="row">
