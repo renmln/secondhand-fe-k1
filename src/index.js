@@ -11,16 +11,20 @@ import {
 
 import { Login } from './components';
 import { Regis } from './components';
+import { LandingPage, HalamanProduk } from './component';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login/>} />
-        <Route path="/regis" element={<Regis/>} />
-      </Routes>
-    </BrowserRouter>
+  <BrowserRouter>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/regis" element={<Regis />} />
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/halamanproduk" element={<HalamanProduk />} />
+    </Routes>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
