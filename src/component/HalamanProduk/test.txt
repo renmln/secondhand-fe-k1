@@ -4,25 +4,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from "../NavBar";
 import halamanproduk from "../../images/halamanproduk.png";
 import profilpenjual from '../../images/profilpenjual.png';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
 
-function ModalSukses(props) {
-    return (
-        <Modal
-            {...props}
-        >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    <h6>Harga tawarmu berhasil dikirim ke penjual</h6>
-                </Modal.Title>
-            </Modal.Header>
-        </Modal>
-    )
-}
+
 
 function ModalTawar(props) {
-    const [modalShow2, setModalShow2] = React.useState(false);
     return (
         <Modal
             {...props}
