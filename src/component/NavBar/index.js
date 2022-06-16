@@ -56,7 +56,7 @@ export default function NavBar() {
               </Nav.Link>
             </Nav>
             <Nav>
-              <Nav.Link href="#">
+              <Nav.Link href="/login">
                 {" "}
                 <a
                   href="/login"
