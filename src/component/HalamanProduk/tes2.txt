@@ -1,74 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../App.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from "../NavBar";
 import halamanproduk from "../../images/halamanproduk.png";
 import profilpenjual from '../../images/profilpenjual.png';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button'
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
-function ModalSukses(props) {
-    return (
-        <Modal
-            {...props}
-        >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    <h6>Harga tawarmu berhasil dikirim ke penjual</h6>
-                </Modal.Title>
-            </Modal.Header>
-        </Modal>
-    )
-}
 
-function ModalTawar(props) {
-    const [modalShow2, setModalShow2] = React.useState(false);
-    return (
-        <Modal
-            {...props}
-            size="sm"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-        >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    <h6>Masukkan Harga Tawarmu</h6>
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <p className="" style={{ fontSize: '14px' }}>
-                    Harga tawaranmu akan diketahui penual, jika penjual cocok kamu akan segera dihubungi penjual.
-                </p>
-                <div className="row p-1">
-                    <div className="col-3 m-auto ">
-                        <img src={profilpenjual} alt='profilpenjual' className="" style={{ widht: '48' }} />
-                    </div>
-                    <div className="col-9 " style={{ fontSize: '14px', lineHeight: '20px', paddingTop: '18px', paddingLeft: '5px' }}>
-                        <b className="">Jam Tangan Casio</b>
-                        <p>Rp 250.000</p>
-                    </div>
-                </div>
-                <div>
-                    <form>
-                        <div class="mb-3">
-                            <label for="harga_tawar" class="form-label">Harga Tawar</label>
-                            <input type="text" class="form-control rounded " id="harga_tawar" placeholder="Rp 0,00" />
-                        </div>
-                        <button type="submit" class="btn btn-custom me-3 mb-2 " onClick={props.onHide}>Kirim</button>
-                    </form>
-                </div>
-            </Modal.Body>
-            {/* <Modal.Footer>
-                <Button onClick={props.onHide}>Close</Button>
-            </Modal.Footer> */}
-        </Modal>
-    )
-}
+
+
 
 
 
 export default function HalamanProduk() {
-    const [modalShow, setModalShow] = React.useState(false);
+    // modal tawar
+    const [show, setShow] = useState(false);
+    // modal sukses
+    const [show2, setShow2] = useState(false);
+
+    const handleClose = () => setShow(false); setShow2(true);
+    const handleShow = () => setShow(true); setShow2(false)
+
+
+
     return (
         <div className="container">
             <div>
@@ -103,7 +58,7 @@ export default function HalamanProduk() {
                             <p>or</p>
                             <button
                                 className="btn btn-custom me-3 mb-2 "
-                                onClick={() => setModalShow(true)}
+                                onClick={handleShow}
                                 id="Terbitakan"
                             > Saya tertarik dan ingin nego
                             </button>
@@ -126,10 +81,58 @@ export default function HalamanProduk() {
                 </div>
             </div>
             <div>
-                <ModalTawar
-                    show={modalShow}
-                    onHide={() => setModalShow(false)}
-                />
+                <Modal
+                    show={show}
+                    onHide={handleClose}
+                    size="sm"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            <h6>Masukkan Harga Tawarmu</h6>
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p className="" style={{ fontSize: '14px' }}>
+                            Harga tawaranmu akan diketahui penual, jika penjual cocok kamu akan segera dihubungi penjual.
+                        </p>
+                        <div className="row p-1">
+                            <div className="col-3 m-auto ">
+                                <img src={profilpenjual} alt='profilpenjual' className="" style={{ widht: '48' }} />
+                            </div>
+                            <div className="col-9 " style={{ fontSize: '14px', lineHeight: '20px', paddingTop: '18px', paddingLeft: '5px' }}>
+                                <b className="">Jam Tangan Casio</b>
+                                <p>Rp 250.000</p>
+                            </div>
+                        </div>
+                        <div>
+                            <form>
+                                <div class="mb-3">
+                                    <label for="harga_tawar" class="form-label">Harga Tawar</label>
+                                    <input type="text" class="form-control rounded " id="harga_tawar" placeholder="Rp 0,00" />
+                                </div>
+                                <button type="submit" class="btn btn-custom me-3 mb-2 " onClick={handleClose}>Kirim</button>
+                            </form>
+                        </div>
+                    </Modal.Body>
+                </Modal>
+            </div>
+            <div>
+                <Modal show={show2} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={handleClose}>
+                            Save Changes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
 
         </div>
