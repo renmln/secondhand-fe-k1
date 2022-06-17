@@ -23,10 +23,10 @@ export default function Regis() {
                 });
             // redirect
 
-            navigate('/')
-        } catch (error) {
-            if (error.respone) {
-                console.log(error.respone.data)
+            navigate('/login')
+        } catch (err) {
+            if (err.respone) {
+                console.log(err.respone.data)
             }
 
         }

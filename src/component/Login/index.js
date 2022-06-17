@@ -97,7 +97,7 @@ export default function Login() {
                                 <p>Belum punya akun? <a href="/regis">Daftar disini</a></p>
                             </form>
                         ) : (
-                            <Navigate to="/halamanproduk" />
+                            <Navigate to="/" />
                         )}
 
                     </div>

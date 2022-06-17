@@ -1,12 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import icon from '../../images/kotakbiru.svg';
-import { FiLogIn, FiSearch, FiList, FiBell, FiUser } from "react-icons/fi";
+import { FiLogIn, FiSearch, FiList, FiBell, FiUser, FiLogOut } from "react-icons/fi";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 
 
 export default function NavBar() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const token = localStorage.getItem("token");
+
+    useEffect(() => {
+        setIsLoggedIn(!!token);
+    }, [token]);
+
+    // function handleSubmit(e) {
+    //     setIsLoading(true);
+    //     e.preventDefault();
+    //     doLogin({ email, password })
+    //         .then((token) => localStorage.setItem("token", token))
+    //         .catch((err) => console.log(err.message))
+    //         .finally(() => setIsLoading(false));
+    // }
+
+    function handleLogout(e) {
+        e.preventDefault();
+        localStorage.removeItem("token");
+        setIsLoggedIn(false);
+    }
     return (
         // <header>
         //     <nav className="navbar navbar-expand-lg navbar-light bg-light  container">
@@ -45,13 +66,52 @@ export default function NavBar() {
                                 </form>
                             </Nav.Link>
                         </Nav>
-                        <Nav>
-                            <Nav.Link href="#"> <a href='/#' type="button" className="btn btn-sm btn-custom nav-link text-light rounded-12px active"> <FiLogIn /> Masuk</a></Nav.Link>
-                            <Nav.Link href="#"> <a href='/#' type="button" className="btn btn-sm nav-link text-dark rounded-12px active"> <FiList /></a></Nav.Link>
-                            <Nav.Link href="#"> <a href='/#' type="button" className="btn btn-sm nav-link text-dark rounded-12px active"> <FiBell /></a></Nav.Link>
-                            <Nav.Link href="#"> <a href='/#' type="button" className="btn btn-sm nav-link text-dark rounded-12px active"> <FiUser /></a></Nav.Link>
+                        {!isLoggedIn ? (
+                            <Nav>
+                                <Nav.Link href="/login">
+                                    <button
+                                        type="button"
+                                        className="btn btn-sm btn-custom nav-link text-light rounded-12px active"
+                                    >
+                                        <FiLogIn /> Masuk
+                                    </button>
+                                </Nav.Link>
+                            </Nav>
+                        ) : (
+                            <Nav>
 
-                        </Nav>
+                                <Nav.Link href="/regis">
+                                    <button
+                                        type="button"
+                                        className="btn btn-sm nav-link text-dark rounded-12px active">
+                                        <FiList />
+                                    </button>
+                                </Nav.Link>
+                                <Nav.Link href="#">
+                                    <button type="button"
+                                        className="btn btn-sm nav-link text-dark rounded-12px active">
+                                        <FiBell />
+                                    </button>
+                                </Nav.Link>
+                                <Nav.Link href="#">
+                                    <button type="button"
+                                        className="btn btn-sm nav-link text-dark rounded-12px active">
+                                        <FiUser />
+                                    </button>
+                                </Nav.Link>
+                                <Nav.Link href="/">
+                                    <button
+                                        type="button"
+                                        className="btn btn-sm btn-custom nav-link text-light rounded-12px active"
+                                        onClick={handleLogout}
+                                    >
+                                        <FiLogOut /> Logout
+                                    </button>
+
+                                </Nav.Link>
+                            </Nav>
+                            
+                        )}
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
