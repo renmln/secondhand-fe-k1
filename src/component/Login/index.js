@@ -45,17 +45,10 @@ export default function Login() {
             .finally(() => setIsLoading(false));
     }
 
-    function handleLogout(e) {
-        setIsLoading(true);
-        e.preventDefault();
-        localStorage.removeItem("token");
-        setIsLoggedIn(false);
-        setIsLoading(false);
-    }
     return (
         <section className="Form my-4 mx-5">
             <div className="container">
-                <div className="row no-gutters">
+                <div className="row rowlogin no-gutters">
                     <div className="col-lg-5">
                         <img className="img-fluid img1" src={icon} alt="" />
                     </div>
@@ -71,6 +64,7 @@ export default function Login() {
                                             onChange={(e) => setEmail(e.target.value)}
                                             className="form-control my-3 p-4"
                                             value={email}
+                                            required
 
                                         />
                                     </div>
@@ -83,6 +77,7 @@ export default function Login() {
                                             className="form-control my-3 p-4"
                                             onChange={(e) => setPassword(e.target.value)}
                                             value={password}
+                                            required
                                         />
                                     </div>
                                 </div>

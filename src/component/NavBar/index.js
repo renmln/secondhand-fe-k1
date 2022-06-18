@@ -4,6 +4,11 @@ import { FiLogIn, FiSearch, FiList, FiBell, FiUser, FiLogOut } from "react-icons
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import aFiBell from '../../images/fi_bell.png';
+import fotoproduk from '../../images/Rectangle 23.png';
+import alertnotif from '../../images/Ellipse.png';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 export default function NavBar() {
@@ -88,17 +93,69 @@ export default function NavBar() {
                                     </button>
                                 </Nav.Link>
                                 <Nav.Link href="#">
+
+                                </Nav.Link>
+                                <NavDropdown title={
                                     <button type="button"
                                         className="btn btn-sm nav-link text-dark rounded-12px active">
                                         <FiBell />
                                     </button>
-                                </Nav.Link>
+                                } id="collasible-nav-dropdown" align="end">
+                                    <NavDropdown.Item href="#">
+                                        <div className="card notifikasi">
+                                            <div className="row">
+                                                <div className="col-2 m-auto">
+                                                    <img src={fotoproduk} alt='profilpenjual' className="w-100 " />
+                                                </div>
+                                                <div className="col-10" >
+                                                    <div className="row mb-1" style={{ fontSize: '10px' }}>
+                                                        <div className="col-xl-6 mb-1">
+                                                            <p className="mb-1">Penawaran produk</p>
+                                                        </div>
+                                                        <div className="col-xl-6 mb-1" style={{ textAlign: 'right' }}>
+                                                            <p className="mb-1">20 Apr, 14:04  &ensp; <img className="" src={alertnotif}></img></p>
+                                                        </div>
+                                                    </div>
+                                                    <p className="mb-1" style={{ fontSize: '14px', fontWeight: 'bold' }}>Jam Tangan Casio</p>
+                                                    <p className="mb-1" style={{ fontSize: '14px', fontWeight: 'bold' }}>Rp 250.000</p>
+                                                    <p className="mb-1" style={{ fontSize: '14px', fontWeight: 'bold' }}>Berhasil Ditawar Rp 200.000</p>
+                                                    <p className="mb-1" style={{ fontSize: '10px' }}>Kamu akan segera dihubungi penjual via whatsapp</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item href="#">
+                                        <div className="card notifikasi">
+                                            <div className="row">
+                                                <div className="col-2 m-auto">
+                                                    <img src={fotoproduk} alt='profilpenjual' className="w-100 " />
+                                                </div>
+                                                <div className="col-10" >
+                                                    <div className="row mb-1" style={{ fontSize: '10px' }}>
+                                                        <div className="col-xl-6 mb-1">
+                                                            <p className="mb-1">Penawaran produk</p>
+                                                        </div>
+                                                        <div className="col-xl-6 mb-1" style={{ textAlign: 'right' }}>
+                                                            <p className="mb-1">20 Apr, 14:04  &ensp; <img className="" src={alertnotif}></img></p>
+                                                        </div>
+                                                    </div>
+                                                    <p className="mb-1" style={{ fontSize: '14px', fontWeight: 'bold' }}>Jam Tangan Casio</p>
+                                                    <p className="mb-1" style={{ fontSize: '14px', fontWeight: 'bold' }}>Rp 250.000</p>
+                                                    <p className="mb-1" style={{ fontSize: '14px', fontWeight: 'bold' }}>Berhasil Ditawar Rp 200.000</p>
+                                                    <p className="mb-1" style={{ fontSize: '10px' }}>Kamu akan segera dihubungi penjual via whatsapp</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </NavDropdown.Item>
+
+                                </NavDropdown>
                                 <Nav.Link href="#">
                                     <button type="button"
                                         className="btn btn-sm nav-link text-dark rounded-12px active">
                                         <FiUser />
                                     </button>
                                 </Nav.Link>
+
                                 <Nav.Link href="/">
                                     <button
                                         type="button"
@@ -110,11 +167,11 @@ export default function NavBar() {
 
                                 </Nav.Link>
                             </Nav>
-                            
+
                         )}
                     </Navbar.Collapse>
                 </Container>
-            </Navbar>
-        </div>
+            </Navbar >
+        </div >
     )
 }

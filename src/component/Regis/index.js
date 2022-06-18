@@ -35,7 +35,7 @@ export default function Regis() {
     return (
         <section className="Form my-4 mx-5">
             <div className="container">
-                <div className="row no-gutters">
+                <div className="row rowlogin no-gutters">
                     <div className="col-lg-5">
                         <img className="img-fluid img1" src={icon} alt="" />
                     </div>
