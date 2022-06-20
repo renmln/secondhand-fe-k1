@@ -58,12 +58,14 @@ export default function Login() {
                             <form onSubmit={handleSubmit}>
                                 <div className="form-row">
                                     <div className="col-lg-7">
+                                        <label className="fw-bold my-0">Email</label>
                                         <input
                                             type="email"
                                             placeholder="johndee@gmail.com"
                                             onChange={(e) => setEmail(e.target.value)}
-                                            className="form-control my-3 p-4"
+                                            className="form-control my-3 p-4 buttonradius16 mt-0"
                                             value={email}
+                                            style={{ height: '48px' }}
                                             required
 
                                         />
@@ -71,12 +73,14 @@ export default function Login() {
                                 </div>
                                 <div className="form-row">
                                     <div className="col-lg-7">
+                                    <label className="fw-bold my-0">Password</label>
                                         <input
                                             type="password"
                                             placeholder="Masukkan Password"
-                                            className="form-control my-3 p-4"
+                                            className="form-control my-3 p-4 buttonradius16 mt-0"
                                             onChange={(e) => setPassword(e.target.value)}
                                             value={password}
+                                            style={{ height: '48px' }}
                                             required
                                         />
                                     </div>
@@ -85,11 +89,13 @@ export default function Login() {
                                     <div className="col-lg-7">
                                         <input type="submit"
                                             value={isLoading ? "Loading" : "Login"}
-                                            className="btn1 mt-3 mb-5">
+                                            className="btn1 mt-3 mb-2 buttonradius16"
+                                            style={{ height: '48px' }}
+                                        >
                                         </input>
                                     </div>
                                 </div>
-                                <p>Belum punya akun? <a href="/regis">Daftar disini</a></p>
+                                <p className="my-1">Belum punya akun? <a href="/regis" className=" fw-bold" style={{color: '#7126B5'}}>Daftar disini</a></p>
                             </form>
                         ) : (
                             <Navigate to="/" />

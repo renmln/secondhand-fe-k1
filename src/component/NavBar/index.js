@@ -65,7 +65,7 @@ export default function NavBar() {
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Link href="#features">
-                                <form className="d-flex border">
+                                <form className="d-flex border buttonradius12 ">
                                     <input className="form-control me-2 border-0" type="search" placeholder="Search" aria-label="Search"></input>
                                     <button className="btn" type="submit"><FiSearch /></button>
                                 </form>
@@ -76,7 +76,7 @@ export default function NavBar() {
                                 <Nav.Link href="/login">
                                     <button
                                         type="button"
-                                        className="btn btn-sm btn-custom nav-link text-light rounded-12px active"
+                                        className="btn btn-sm btn-custom nav-link text-light buttonradius12 active "
                                     >
                                         <FiLogIn /> Masuk
                                     </button>
@@ -146,7 +146,7 @@ export default function NavBar() {
                                     </NavDropdown.Item>
 
                                 </NavDropdown>
-                                <Nav.Link href="#">
+                                <Nav.Link href="/infoprofil">
                                     <button type="button"
                                         className="btn btn-sm nav-link text-dark rounded-12px active">
                                         <FiUser />

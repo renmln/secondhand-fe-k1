@@ -44,38 +44,52 @@ export default function Regis() {
                         <form onSubmit={Register}>
                             <div className="form-row">
                                 <div className="col-lg-7">
-                                    <input type="nama" placeholder="Nama Lengkap" className="form-control my-3 p-4" />
+                                    <label className="fw-bold my-0">Nama</label>
+                                    <input
+                                        type="nama"
+                                        placeholder="Nama Lengkap"
+                                        className="form-control my-3 p-4 mt-0 buttonradius16"
+                                        style={{ height: '48px' }}
+                                        required />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="col-lg-7">
+                                    <label className="fw-bold my-0">Email</label>
                                     <input
                                         type="email"
                                         placeholder="johndee@gmail.com"
-                                        className="form-control my-3 p-4"
+                                        className="form-control my-3 mt-0 p-4 buttonradius16"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
+                                        style={{ height: '48px' }}
+                                        required
                                     />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="col-lg-7">
+                                    <label className="fw-bold my-0">Password</label>
                                     <input
                                         type="password"
                                         placeholder="Masukkan Password"
-                                        className="form-control my-3 p-4"
+                                        className="form-control my-3 p-4 buttonradius16 mt-0"
                                         value={password}
-                                        onChange={(e) => setPassword(e.target.value)} />
-
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        style={{ height: '48px' }}
+                                        required />
                                 </div>
                             </div>
                             <div className="form-row">
                                 <div className="col-lg-7">
                                     {/* <input type="submit" className="btn1 mt-3 mb-5" value={"Daftar"} /> */}
-                                    <button className="button is-success is-fullwidth">Daftar</button>
+                                    <button
+                                        className="btn1 btn-custom buttonradius16 is-success is-fullwidth"
+                                        style={{ height: '48px' }}
+                                    >Daftar</button>
                                 </div>
                             </div>
-                            <p>Sudah punya akun? <a href="/login">Masuk disini</a></p>
+                            <p className="my-1">Sudah punya akun? <a href="/login" className=" fw-bold" style={{color: '#7126B5'}}>Masuk disini</a></p>
                         </form>
                     </div>
                 </div>
