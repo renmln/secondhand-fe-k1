@@ -92,9 +92,6 @@ export default function NavBar() {
                                         <FiList />
                                     </button>
                                 </Nav.Link>
-                                <Nav.Link href="#">
-
-                                </Nav.Link>
                                 <NavDropdown title={
                                     <button type="button"
                                         className="btn btn-sm nav-link text-dark rounded-12px active">
