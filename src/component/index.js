@@ -7,5 +7,6 @@ import Regis from "./Regis";
 import InfoProduk from "./InfoProduk";
 import InfoProfil from "./InfoProfil";
 import Footer from "./Footer";
+import DaftarJual from './DaftarJual'
 
-export { Login, Regis, NavBar, LandingPage, CarouselBanner, HalamanProduk, InfoProfil, InfoProduk, Footer }
+export { Login, Regis, NavBar, LandingPage, CarouselBanner, HalamanProduk, InfoProfil, InfoProduk, Footer, DaftarJual }

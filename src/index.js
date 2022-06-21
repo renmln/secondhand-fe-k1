@@ -9,7 +9,7 @@ import {
   Route,
 } from "react-router-dom";
 
-import { LandingPage, HalamanProduk, Login, Regis, InfoProduk } from './component';
+import { LandingPage, HalamanProduk, Login, Regis, InfoProduk, DaftarJual } from './component';
 import { InfoProfil } from './component';
 
 
@@ -24,6 +24,7 @@ root.render(
       <Route path="/halamanproduk" element={<HalamanProduk />} />
       <Route path="/infoprofil" element={<InfoProfil />} />
       <Route path="/infoproduk" element={<InfoProduk />} />
+      <Route path="/daftarjual" element={<DaftarJual />} />
     </Routes>
   </BrowserRouter>
 );

@@ -85,7 +85,7 @@ export default function NavBar() {
                         ) : (
                             <Nav>
 
-                                <Nav.Link href="/regis">
+                                <Nav.Link href="/daftarjual">
                                     <button
                                         type="button"
                                         className="btn btn-sm nav-link text-dark rounded-12px active">
