@@ -22,6 +22,7 @@ export default function NavBar() {
     function handleLogout(e) {
         e.preventDefault();
         localStorage.removeItem("token");
+        localStorage.removeItem("userInfo");
         setIsLoggedIn(false);
     }
     return (
