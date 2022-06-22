@@ -22,7 +22,7 @@ root.render(
       <Route path="/regis" element={<Regis />} />
       <Route path="/" element={<LandingPage />} />
       <Route path="/halamanproduk" element={<HalamanProduk />} />
-      <Route path="/infoprofil/:id" element={<InfoProfil />} />
+      <Route path="/infoprofil" element={<InfoProfil />} />
       <Route path="/infoproduk" element={<InfoProduk />} />
       <Route path="/daftarjual" element={<DaftarJual />} />
     </Routes>

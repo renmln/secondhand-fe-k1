@@ -13,7 +13,15 @@ export default function InfoProfil() {
   const [address, setAddress] = useState("");
   const [no_hp, setNo_hp] = useState("");
   const navigate = useNavigate();
-  const { id } = useParams();
+  const userInfo = localStorage.getItem("userInfo")
+    const infoid = JSON.parse(userInfo)
+    console.log("landing")
+    console.log(infoid)
+    const userid = infoid.id
+    console.log(userid)
+
+  const id = userid
+  console.log(id)
 
   useEffect(() => {
     getUserById();

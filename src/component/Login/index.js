@@ -18,7 +18,12 @@ async function doLogin({ email, password }) {
         }),
     });
     const data = await response.json();
+    // console.log(data)
+
+    localStorage.setItem("userInfo", JSON.stringify(data));
     return data.token;
+
+
 }
 
 
@@ -73,7 +78,7 @@ export default function Login() {
                                 </div>
                                 <div className="form-row">
                                     <div className="col-lg-7">
-                                    <label className="fw-bold my-0">Password</label>
+                                        <label className="fw-bold my-0">Password</label>
                                         <input
                                             type="password"
                                             placeholder="Masukkan Password"
@@ -95,7 +100,7 @@ export default function Login() {
                                         </input>
                                     </div>
                                 </div>
-                                <p className="my-1">Belum punya akun? <a href="/regis" className=" fw-bold" style={{color: '#7126B5'}}>Daftar disini</a></p>
+                                <p className="my-1">Belum punya akun? <a href="/regis" className=" fw-bold" style={{ color: '#7126B5' }}>Daftar disini</a></p>
                             </form>
                         ) : (
                             <Navigate to="/" />

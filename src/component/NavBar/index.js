@@ -14,7 +14,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export default function NavBar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const token = localStorage.getItem("token");
-
+   
     useEffect(() => {
         setIsLoggedIn(!!token);
     }, [token]);
@@ -115,7 +115,7 @@ export default function NavBar() {
                                     </NavDropdown.Item>
 
                                 </NavDropdown>
-                                <Nav.Link href="/infoprofil/">
+                                <Nav.Link href="/infoprofil">
                                     <button type="button"
                                         className="btn btn-sm nav-link text-dark rounded-12px active">
                                         <FiUser />
