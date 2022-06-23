@@ -12,6 +12,7 @@ export default function InfoProfil() {
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
   const [no_hp, setNo_hp] = useState("");
+  const [role, setRole] = useState("");
   const [file, setFile] = useState("");
   const navigate = useNavigate();
   const userInfo = localStorage.getItem("userInfo");
@@ -44,15 +45,16 @@ export default function InfoProfil() {
         }
       );
       setPhotoProfile(response.data.url);
-      console.log(photo_profile);
       await axios.put(`http://localhost:8000/api/v1/profile/update/${id}`, {
         name: name,
-        photo_profile: photo_profile,
+        role: "seller",
+        photo_profile: response.data.url,
         city: city,
         address: address,
         no_hp: no_hp,
       });
       navigate("/");
+      console.log(photo_profile);
     } catch (error) {
       console.log(error);
     }
@@ -64,7 +66,8 @@ export default function InfoProfil() {
     );
     console.log(response);
     setName(response.data.name);
-    // setPhoto_profile(response.data.photo_profile);
+    setRole(response.data.role);
+    setPhotoProfile(response.data.photo_profile);
     setCity(response.data.city);
     setAddress(response.data.address);
     setNo_hp(response.data.no_hp);
@@ -116,6 +119,12 @@ export default function InfoProfil() {
 
       <section>
         <form onSubmit={updateUser}>
+          <input
+            type="text"
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            hidden
+          />
           <div className="container" style={{ padding: "30px", width: "70%" }}>
             <a href="/">
               {" "}
@@ -130,7 +139,11 @@ export default function InfoProfil() {
               }}
             >
               {photo_profile ? (
-                <img src={photo_profile} alt="Uploaded Image URL" />
+                <img
+                  src={photo_profile}
+                  alt="Uploaded Image URL"
+                  style={{ maxHeight: "150px" }}
+                />
               ) : (
                 <img src={Group1} alt=".." />
               )}
@@ -140,7 +153,7 @@ export default function InfoProfil() {
               type="file"
               style={{ display: "none" }}
               accept=".jpg,.jpeg,.png"
-              value={photo_profile}
+              // value={photo_profile}
               onChange={(e) => setFile(e.target.files[0])}
             />
             <div className="mb-3">
