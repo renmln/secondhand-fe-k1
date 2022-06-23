@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 export default function Regis() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [name, setName] = useState('')
     // const [msg, setMsg] = useState('');
     const navigate = useNavigate();
 
@@ -19,7 +20,8 @@ export default function Regis() {
             await axios.post('http://localhost:8000/api/v1/register',
                 {
                     email: email,
-                    password: password
+                    password: password,
+                    name: name
                 });
             // redirect
 
@@ -50,6 +52,8 @@ export default function Regis() {
                                         placeholder="Nama Lengkap"
                                         className="form-control my-3 p-4 mt-0 buttonradius16"
                                         style={{ height: '48px' }}
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
                                         required />
                                 </div>
                             </div>
@@ -89,7 +93,7 @@ export default function Regis() {
                                     >Daftar</button>
                                 </div>
                             </div>
-                            <p className="my-1">Sudah punya akun? <a href="/login" className=" fw-bold" style={{color: '#7126B5'}}>Masuk disini</a></p>
+                            <p className="my-1">Sudah punya akun? <a href="/login" className=" fw-bold" style={{ color: '#7126B5' }}>Masuk disini</a></p>
                         </form>
                     </div>
                 </div>
