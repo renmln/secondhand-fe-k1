@@ -64,7 +64,7 @@ export default function DaftarJual() {
                             <div className="col-md-4 col-xl-4 col-sm-12 card mb-1 ml-1 justify-content-center justify-align-center" style={{
                                 borderStyle: "dashed", border: '3px dashed', color: '#D0D0D0', boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.15)', padding: '8px, 8px, 16px, 8px', borderRadius: '4px'
                             }} >
-                                <a href="#" className="text-decoration-none m-auto" style={{ color: 'black' }}>
+                                <a href="/" className="text-decoration-none m-auto" style={{ color: 'black' }}>
                                     <div className=" m-auto"  >
                                         < FiPlus className="align-center " />
                                     </div>

@@ -2,15 +2,19 @@ import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Rectangle127 from "../../images/Rectangle127.svg"
 import axios  from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import fi_plus from "../../images/fi_plus.png"
+// import { Link } from "react-router-dom";
 
 export default function InfoProduk() {
     const [product_name, setProductName] = useState("");
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("");
     const [description, setDescription] = useState("");
-    // const [file, setFile] = useState("");
+    const [image, setImage] = useState("");
+    const [file, setFile] = useState("");
     const navigate = useNavigate();
+
     const userInfo = localStorage.getItem("userInfo");
     const infoid = JSON.parse(userInfo);
     const userid = infoid.id;
@@ -20,15 +24,13 @@ export default function InfoProduk() {
         getUserById();
     }, []);
 
-
-
-    const updateUser = async (e) => {
+    const updateProduct = async (e) => {
         e.preventDefault();
         const form = new FormData();
-        // form.append("picture", file);
+        form.append("picture", file);
         try {
           const response = await axios.put(
-            // `http://localhost:8000/api/v1/profile/cloudinary/${id}`,
+            `http://localhost:8000/api/v1/products/cloudinary/${id}`,
             form,
             {
               headers: {
@@ -36,17 +38,18 @@ export default function InfoProduk() {
               },
             }
           );
-        //   setPhotoProfile(response.data.url);
-        //   console.log(photo_profile);
+          setImage(response.data.url);
+          console.log(image);
           await axios.put(
-            //   `http://localhost:8000/api/v1/profile/update/${id}`, 
+              `http://localhost:8000/api/v1/products/update/${id}`, 
               {
             product_name: product_name,
             price: price,
+            image: response.data.url,
             category: category,
             description: description,
           });
-          navigate("/");
+          navigate("/daftarjual");
         } catch (error) {
           console.log(error);
         }
@@ -54,10 +57,11 @@ export default function InfoProduk() {
 
     const getUserById = async () => {
         const response = await axios.get(
-            `http://localhost:8000/api/v1/users/${id}`
+            `http://localhost:8000/api/v1/users/${id}`,
     );
             setProductName(response.data.product_name);
             setPrice(response.data.price);
+            setImage(response.data.image);
             setCategory(response.data.category);
             setDescription(response.data.description);
     }
@@ -74,7 +78,7 @@ export default function InfoProduk() {
 
 
             <section>
-                <form onSubmit={updateUser}>
+                <form onSubmit={updateProduct}>
                     <div className="container" style={{ padding: '30px', width: '70%' }}>
                         <div className="mb-3">
                             <label for="namaproduk" className="form-label">Nama Produk<span style={{ color: 'red' }}>*</span></label>
@@ -129,8 +133,22 @@ export default function InfoProduk() {
                         <div className="mb-3">
                             <label for="deskripsi" className="form-label">Foto Produk<span style={{ color: 'red' }}>*</span></label>
                             <div>
-                                <label><img src="fi_plus.png" alt='' style={{ borderStyle: 'dashed', padding: '34px', borderRadius: '12px', width: '96px', borderColor: '#d0d0d0' }} />
-                                    <input type="file" accept=".jpg,.jpeg,.png" style={{ display: 'none' }} /></label>
+                                <label>
+                                {image ? (
+                                    <img src={image} alt=''  />
+                                ) : ( 
+                                    <img src={ fi_plus} alt='' 
+                                    style={{ borderStyle: 'dashed', padding: '34px', borderRadius: '12px', width: '96px', borderColor: '#d0d0d0' }} />
+                                )}
+                                    <input type="file" 
+                                    accept=".jpg,.jpeg,.png" 
+                                    style={{ display: 'none' }}
+                                    placeholder='Upload Image'
+                                    onChange={(e) => setFile(e.target.file)}
+                                    multiple 
+                                    />
+                
+                                    </label>
                             </div>
                         </div>
 
@@ -144,7 +162,8 @@ export default function InfoProduk() {
                                     borderRadius: '16px', 
                                     color: 'black', 
                                     borderColor: '#7126B5' }}
-                                    multiple
+                                    // component={Link}
+                                    // to="/infoprofil"
                                     >Preview</button>
                                 </div>
                             </div>
