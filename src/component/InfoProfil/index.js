@@ -15,25 +15,21 @@ export default function InfoProfil() {
   const [role, setRole] = useState("");
   const [file, setFile] = useState("");
   const navigate = useNavigate();
-  const userInfo = localStorage.getItem("userInfo");
-  const infoid = JSON.parse(userInfo);
-
-  console.log("landing");
-  console.log(infoid);
-  const userid = infoid.id;
-  console.log(userid);
-
-  const id = userid;
+  const userEmail = localStorage.getItem("userEmail");
+  const email = userEmail;
+  const userId = localStorage.getItem("userId");
+  const id = userId;
   console.log(id);
 
   useEffect(() => {
     getUserById();
   }, []);
-  console.log(userInfo);
+  console.log(userId);
   const updateUser = async (e) => {
     e.preventDefault();
     const form = new FormData();
     form.append("picture", file);
+    console.log(file);
     try {
       const response = await axios.put(
         `http://localhost:8000/api/v1/profile/cloudinary/${id}`,
@@ -62,7 +58,7 @@ export default function InfoProfil() {
 
   const getUserById = async () => {
     const response = await axios.get(
-      `http://localhost:8000/api/v1/users/${id}`
+      `http://localhost:8000/api/v1/users/${email}`
     );
     console.log(response);
     setName(response.data.name);
