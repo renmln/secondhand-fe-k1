@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Rectangle127 from "../../images/Rectangle127.svg";
 import axios from "axios";
@@ -12,27 +12,18 @@ export default function InfoProduk() {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
-  const [image_1, setImage] = useState("");
-  //   const [image_2, setImage2] = useState("");
-  //   const [image_3, setImage3] = useState("");
-  //   const [image_4, setImage4] = useState("");
-  const [file, setFile] = useState([]);
+  const [file, setFile] = useState();
   const navigate = useNavigate();
 
-  const userInfo = localStorage.getItem("userInfo");
-  const infoid = JSON.parse(userInfo);
-  const userid = infoid.id;
-  const id = userid;
-
-  useEffect(() => {
-    getUserById();
-  }, []);
+  const userInfo = localStorage.getItem("userId");
+  const id = userInfo;
 
   const addProduct = async (e) => {
     e.preventDefault();
     const form = new FormData();
-    // file = [image_1, image_2, image_3, image_4];
-    form.append("picture", file);
+    for(var i = 0; i < file.length; i++) {
+      form.append("picture", file[i]);
+    }
     try {
       const response = await axios.put(
         `http://localhost:8000/api/v1/products/cloudinary/${id}`,
@@ -43,8 +34,7 @@ export default function InfoProduk() {
           },
         }
       );
-      setImage(response.data.url[0]);
-      console.log(id, product_name, price, category, description, image_1);
+      console.log(response.data.url)
       await axios.post(`http://localhost:8000/api/v1/products/add`, {
         id_seller: id,
         product_name: product_name,
@@ -57,26 +47,11 @@ export default function InfoProduk() {
         description: description,
       });
       navigate("/daftarjual");
-      console.log(image_1);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getUserById = async () => {
-    const response = await axios.get(
-      `http://localhost:8000/api/v1/users/${id}`
-    );
-    setIdSeller(response.data);
-    setProductName(response.data.product_name);
-    setPrice(response.data.price);
-    setImage(response.data.image_1);
-    // setImage2(response.data.image_2);
-    // setImage3(response.data.image_3);
-    // setImage4(response.data.image_4);
-    setCategory(response.data.category);
-    setDescription(response.data.description);
-  };
   return (
     <div>
       <nav
@@ -183,8 +158,8 @@ export default function InfoProduk() {
                 <div className="row">
                   <div className="col-md-3">
                     <label>
-                      {image_1 ? (
-                        <img src={image_1} alt="" />
+                      {file ? (
+                        <img src={file} alt="" />
                       ) : (
                         <img
                           src={fi_plus}
@@ -201,9 +176,9 @@ export default function InfoProduk() {
                       <input
                         type="file"
                         accept=".jpg,.jpeg,.png"
-                        style={{ display: "none" }}
+                        // style={{ display: "none" }}
                         placeholder="Upload Image"
-                        onChange={(e) => setFile.push(e.target.files)}
+                        onChange={(e) => setFile(e.target.files)}
                         multiple
                       />
                     </label>

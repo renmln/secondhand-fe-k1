@@ -9,6 +9,8 @@ import Rectangle from '../../images/Rectangle 23.png';
 import Footer from "../Footer";
 
 export default function LandingPage() {
+
+    
     return (
         <div>
             <div>

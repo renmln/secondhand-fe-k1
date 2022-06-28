@@ -4,6 +4,7 @@ import "../../images/img.png";
 import "../../css/style.css";
 import icon from "../../images/img.png";
 import { Navigate } from "react-router-dom";
+import axios from "axios";
 
 async function doLogin({ email, password }) {
   // Gunakan endpoint-mu sendiri
@@ -18,7 +19,10 @@ async function doLogin({ email, password }) {
     }),
   });
   const data = await response.json();
-  // console.log(data)
+  
+  const user = await axios.get(`http://localhost:8000/api/v1/users/${email}`);
+  localStorage.setItem("userId", user.data.id)
+  localStorage.setItem("userEmail", user.data.email)
 
   localStorage.setItem("userInfo", JSON.stringify(data));
   return data.token;
