@@ -23,13 +23,20 @@ export default function HalamanProduk() {
   const [id_buyer, setIdBuyer] = useState("");
   const [offering_price, setOfferingPrice] = useState("");
 
-  id_product = detailProduct.id;
-  id_user = user.id;
-
   React.useEffect(() => {
     dispatch(getProductById(id));
   }, [dispatch, id]);
 
+  const handleSubmit = async () => {
+    const data = {
+      id_product: detailProduct.id,
+      id_buyer: user.id,
+      offering_price: offering_price,
+    };
+    console.log(data);
+    console.log(detailProduct.id);
+    dispatch(addOffering(data));
+  };
   function ModalTawar(props) {
     return (
       <Modal
@@ -80,7 +87,6 @@ export default function HalamanProduk() {
                 />
                 <input
                   type="number"
-                  required
                   value={id_buyer}
                   onChange={(e) => setIdBuyer(e.target.value)}
                   hidden
@@ -89,13 +95,13 @@ export default function HalamanProduk() {
                   Harga Tawar
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   className="form-control rounded "
                   id="harga_tawar"
                   placeholder="Rp 0,00"
-                  required
+                  style={{ borderRadius: "16px" }}
                   value={offering_price}
-                  onchange={(e) => setOfferingPrice(e.target.value)}
+                  onChange={(e) => setOfferingPrice(e.target.value)}
                 />
               </div>
               <button
@@ -111,11 +117,6 @@ export default function HalamanProduk() {
       </Modal>
     );
   }
-
-  const handleSubmit = () => {
-    const data = { id_product, id_buyer, offering_price };
-    dispatch(addOffering(data));
-  };
 
   if (localStorage.getItem("token") === null) {
     Swal.fire({
