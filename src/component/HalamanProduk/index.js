@@ -79,18 +79,18 @@ export default function HalamanProduk() {
           <div>
             <form>
               <div className="mb-3">
-                <input
+                {/* <input
                   type="number"
                   value={id_product}
-                  onChange={(e) => setIdProduct(e.target.value)}
+                  onChange={() => setIdProduct(detailProduct.id)}
                   hidden
                 />
                 <input
                   type="number"
                   value={id_buyer}
-                  onChange={(e) => setIdBuyer(e.target.value)}
+                  onChange={() => setIdBuyer(user.id)}
                   hidden
-                />
+                /> */}
                 <label htmlFor="harga_tawar" className="form-label">
                   Harga Tawar
                 </label>

@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
-import {GET_ALL_PRODUCT, GET_PRODUCT, CREATE_PRODUCT, UPDATE_PRODUCT, CLEAR_PRODUCT, PRODUCT_ERROR, DELETE_PRODUCT} from "./types";
+import { GET_ALL_PRODUCT, GET_PRODUCT, CREATE_PRODUCT, UPDATE_PRODUCT, CLEAR_PRODUCT, PRODUCT_ERROR, DELETE_PRODUCT } from "./types";
 
-const {REACT_APP_BACKEND} = process.env;
+const { REACT_APP_BACKEND } = process.env;
 
 // Di Halaman Landing Page
 export const getAllProduct = () => async (dispatch) => {
@@ -59,7 +59,7 @@ export const getProductById = (id) => async (dispatch) => {
         const data = await res.json();
         dispatch({
             type: GET_PRODUCT,
-            detailproduct:data,
+            detailproduct: data,
         });
     } catch (err) {
         dispatch({
@@ -90,7 +90,7 @@ export const addProduct = (params) => async (dispatch) => {
         });
 
         const data = await response.json();
-
+        console.log("ini" + JSON.stringify(data))
         dispatch({
             type: CREATE_PRODUCT,
             status: data.status,
@@ -194,9 +194,9 @@ export const updateProduct = (params) => async (dispatch) => {
 };
 
 export const deleteProduct = (params) => async (dispatch) => {
-    const {id, oldImage} = params;
+    const { id, oldImage } = params;
     try {
-        const response = await fetch(REACT_APP_BACKEND + "/api/v1/product?" + new URLSearchParams({id, oldImage}), {
+        const response = await fetch(REACT_APP_BACKEND + "/api/v1/product?" + new URLSearchParams({ id, oldImage }), {
             method: "DELETE",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,

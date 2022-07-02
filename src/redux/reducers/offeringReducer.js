@@ -11,14 +11,14 @@ const offeringReducer = (state = initialState, action) => {
     case CREATE_OFFERING:
       return {
         ...state,
-        offering: action.offering,
+        // offering: action.offering,
         status: action.status,
       };
     case OFFERING_ERROR:
       return {
         ...state,
-        offering: action.offering,
-        status: action.status,
+        error: action.payload,
+        status: "FAIL",
       };
     default:
       return state;

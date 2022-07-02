@@ -1,8 +1,8 @@
-import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {addProduct} from "../../redux/actions/productsActions";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addProduct } from "../../redux/actions/productsActions";
 import Swal from "sweetalert2";
-import {Navigate} from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import fi_plus from "../../images/fi_plus.png";
@@ -10,8 +10,8 @@ import NavBar from "../NavBar";
 
 export default function InfoProduk() {
     const dispatch = useDispatch();
-    const {user} = useSelector((state) => state.auth);
-    const {status} = useSelector((state) => state.product);
+    const { user } = useSelector((state) => state.auth);
+    const { status } = useSelector((state) => state.product);
 
     const [product_name, setProductName] = useState("");
     const [price, setPrice] = useState("");
@@ -19,8 +19,9 @@ export default function InfoProduk() {
     const [description, setDescription] = useState("");
     const [file, setFile] = useState();
 
-    const handleSubmit = async () => {
-        const data = {product_name, price, category, description, file};
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const data = { product_name, price, category, description, file };
         dispatch(addProduct(data));
     };
 
@@ -56,23 +57,23 @@ export default function InfoProduk() {
         <div>
             <NavBar />
             <section className="container my-5">
-                <form style={{maxWidth: "800px"}} className="mx-auto">
+                <form style={{ maxWidth: "800px" }} className="mx-auto">
                     <div>
                         <div className="mb-3">
                             <label for="namaproduk" className="form-label">
-                                Nama Produk<span style={{color: "red"}}>*</span>
+                                Nama Produk<span style={{ color: "red" }}>*</span>
                             </label>
                             <input type="text" className="form-control" id="namaproduk" placeholder="Nama Produk" required value={product_name} onChange={(e) => setProductName(e.target.value)} />
                         </div>
                         <div className="mb-3">
                             <label for="harga" className="form-label">
-                                Harga Produk<span style={{color: "red"}}>*</span>
+                                Harga Produk<span style={{ color: "red" }}>*</span>
                             </label>
                             <input type="number" min="1" step="any" className="form-control" id="harga" placeholder="Rp 0,00" required value={price} onChange={(e) => setPrice(e.target.value)} />
                         </div>
                         <div className="mb-3">
                             <label for="kategori" className="form-label">
-                                Kategori<span style={{color: "red"}}>*</span>
+                                Kategori<span style={{ color: "red" }}>*</span>
                             </label>
                             <select className="form-select" id="kategori" required value={category} onChange={(e) => setCategory(e.target.value)}>
                                 <option>Pilih Kategori</option>
@@ -85,7 +86,7 @@ export default function InfoProduk() {
                         </div>
                         <div className="mb-3">
                             <label for="deskripsi" className="form-label">
-                                Deskripsi<span style={{color: "red"}}>*</span>
+                                Deskripsi<span style={{ color: "red" }}>*</span>
                             </label>
                             <input
                                 type="text"
@@ -100,7 +101,7 @@ export default function InfoProduk() {
 
                         <div className="mb-3">
                             <label for="deskripsi" className="form-label">
-                                Foto Produk<span style={{color: "red"}}>*</span>
+                                Foto Produk<span style={{ color: "red" }}>*</span>
                             </label>
                             <div>
                                 <div className="row">
