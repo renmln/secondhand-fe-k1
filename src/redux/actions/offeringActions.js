@@ -4,10 +4,9 @@ import axios from "axios";
 
 export const addOffering = (params) => async (dispatch) => {
   try {
-    const id_product = params.id_product
-    const id_buyer = params.id_buyer
-    const offering_price = params.offering_price
-    console.log(id_product)
+    const id_product = params.id_product;
+    const offering_price = params.offering_price;
+    console.log(id_product);
     // var formdata = new FormData();
     // formdata.append("id_product", id_product);
     // formdata.append("id_buyer", id_buyer);
@@ -37,15 +36,21 @@ export const addOffering = (params) => async (dispatch) => {
     // });
     const config = {
       headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-type": "application/json",
       },
     };
-    const response = await axios.post("http://localhost:8000/api/v1/products/offer", { 
-      id_product, id_buyer, offering_price },
-      config)
+    const response = await axios.post(
+      "http://localhost:8000/api/v1/products/offer",
+      {
+        id_product,
+        offering_price,
+      },
+      config
+    );
     const data = await response.data;
 
-    console.log(data)
+    console.log(data);
 
     dispatch({
       type: CREATE_OFFERING,

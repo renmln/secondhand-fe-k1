@@ -11,7 +11,6 @@ const offeringReducer = (state = initialState, action) => {
     case CREATE_OFFERING:
       return {
         ...state,
-        // offering: action.offering,
         status: action.status,
       };
     case OFFERING_ERROR:
