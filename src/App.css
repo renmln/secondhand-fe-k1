@@ -1,21 +1,21 @@
 .buttonradius12 {
-  border-radius: 12px !important
+    border-radius: 12px !important;
 }
 .buttonradius20 {
-  border-radius: 20px !important
+    border-radius: 20px !important;
 }
 .buttonradius16 {
-  border-radius: 16px !important
+    border-radius: 16px !important;
 }
 .borderradius8 {
-  border-radius: 8px !important;
+    border-radius: 8px !important;
 }
 
 /* button filter-landingpage */
 .btn-custom {
-  color: #3C3C3C;
-  background-color: #E2D4F0;
-  border-color: #E2D4F0;
+    color: #3c3c3c;
+    background-color: #e2d4f0;
+    border-color: #e2d4f0;
 }
 
 .btn-custom:hover,
@@ -23,15 +23,15 @@
 .btn-custom:active,
 .btn-custom.active,
 .open .dropdown-toggle.btn-custom {
-  color: #FFFFFF;
-  background-color: #7126B5;
-  border-color: #7126B5;
+    color: #ffffff;
+    background-color: #7126b5;
+    border-color: #7126b5;
 }
 
 .btn-custom:active,
 .btn-custom.active,
 .open .dropdown-toggle.btn-custom {
-  background-image: none;
+    background-image: none;
 }
 
 .btn-custom.disabled,
@@ -49,49 +49,48 @@ fieldset[disabled] .btn-custom:active,
 .btn-custom.disabled.active,
 .btn-custom[disabled].active,
 fieldset[disabled] .btn-custom.active {
-  background-color: #7126B5;
-  border-color: #7126B5;
+    background-color: #7126b5;
+    border-color: #7126b5;
 }
 
 .btn-custom .badge {
-  color: #3C3C3C;
-  background-color: #ffffff;
+    color: #3c3c3c;
+    background-color: #ffffff;
 }
 
 /* Carosel */
 .karosel {
-  max-width: 100%;
-  max-height: 100%
+    max-width: 100%;
+    max-height: 100%;
 }
 
 /* icon panah dropdown */
 .dropdown-toggle::after {
-  display: none !important;
+    display: none !important;
 }
 
 .dropdown-menu {
-  min-width: 376px;
+    min-width: 376px;
 }
 .dropdown-item {
-  padding: 10px;
+    padding: 10px;
 }
-
 
 .notifikasi {
-  border-radius: 0;
-  padding: 0;
+    border-radius: 0;
+    padding: 0;
 }
 
-
-.dropdown-item.active, .dropdown-item:active {
-  color: #fff;
-  text-decoration: none;
-  background-color: #fff;
+.dropdown-item.active,
+.dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #fff;
 }
 
 .sticky {
-  position: -webkit-sticky;
-  position: sticky;
-  bottom: 0;
-  padding: 5px;
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+    padding: 5px;
 }

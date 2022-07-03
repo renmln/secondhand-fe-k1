@@ -1,120 +1,70 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateInfoUsers } from "../../redux/actions/authActions";
+
+import NavBar from "../NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import arrow from "../../images/fi_arrow-left.png";
-import Rectangle127 from "../../images/Rectangle127.svg";
 import Group1 from "../../images/Group_1.png";
-import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function InfoProfil() {
+  const dispatch = useDispatch();
+  const { status } = useSelector((state) => state.auth);
+
   const [name, setName] = useState("");
-  const [photo_profile, setPhotoProfile] = useState("");
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
   const [no_hp, setNo_hp] = useState("");
   const [role, setRole] = useState("");
+  const [photo_profile, setPhotoProfile] = useState("");
   const [file, setFile] = useState("");
-  const navigate = useNavigate();
-  const userEmail = localStorage.getItem("userEmail");
-  const email = userEmail;
-  const userId = localStorage.getItem("userId");
-  const id = userId;
-  console.log(id);
 
   useEffect(() => {
     getUserById();
-  }, []);
-  console.log(userId);
-  const updateUser = async (e) => {
-    e.preventDefault();
-    const form = new FormData();
-    form.append("picture", file);
-    console.log(file);
-    try {
-      const response = await axios.put(
-        `http://localhost:8000/api/v1/profile/cloudinary/${id}`,
-        form,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      setPhotoProfile(response.data.url);
-      await axios.put(`http://localhost:8000/api/v1/profile/update/${id}`, {
-        name: name,
-        role: "seller",
-        photo_profile: response.data.url,
-        city: city,
-        address: address,
-        no_hp: no_hp,
-      });
-      navigate("/");
-      console.log(photo_profile);
-    } catch (error) {
-      console.log(error);
-    }
+  });
+
+  const handleSubmit = async () => {
+    const data = { name, city, address, no_hp, role, file };
+    dispatch(updateInfoUsers(data));
+    // swal loading
+    Swal.fire({
+      title: "Loading...",
+      text: "Please wait...",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+    });
   };
 
   const getUserById = async () => {
-    const response = await axios.get(
-      `http://localhost:8000/api/v1/users/${email}`
-    );
-    console.log(response);
-    setName(response.data.name);
-    setRole(response.data.role);
-    setPhotoProfile(response.data.photo_profile);
-    setCity(response.data.city);
-    setAddress(response.data.address);
-    setNo_hp(response.data.no_hp);
+    if (name === "" && role === "") {
+      const response = await fetch(`http://localhost:8000/api/v1/whoami`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const result = await response.json();
+      setName(result.user.name);
+      setRole(result.user.role);
+      setPhotoProfile(result.user.photo_profile);
+      setCity(result.user.city);
+      setAddress(result.user.address);
+      setNo_hp(result.user.no_hp);
+    }
   };
+
+  if (status === "UPDATE_SUCCESS") {
+    window.location.href = "/";
+  }
 
   return (
     <div>
-      <nav
-        className="navbar navbar-expand-lg bg-light d-inline-flex"
-        style={{
-          justifyContent: "space-between",
-          alignItems: "center",
-          width: "100%",
-        }}
-      >
-        <div
-          className="d-inline-flex"
-          style={{
-            padding: "10px",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <a className="navbar-brand" href="/">
-            {" "}
-            <img src={Rectangle127} alt="" />
-          </a>
-        </div>
-
-        <div
-          className="d-inline-flex"
-          style={{ justifyContent: "center", alignItems: "center" }}
-        >
-          <span
-            className="navbar-brand mb-0 h1"
-            style={{ fontWeight: "400px" }}
-          >
-            Lengkapi info Akun
-          </span>
-        </div>
-
-        <div
-          className="d-inline-flex"
-          style={{ justifyContent: "center", alignItems: "center" }}
-        >
-          <span className="navbar-brand mb-0 h1"></span>
-        </div>
-      </nav>
-
+      <NavBar />
       <section>
-        <form onSubmit={updateUser}>
+        <form>
           <input
             type="text"
             value={role}
@@ -123,7 +73,6 @@ export default function InfoProfil() {
           />
           <div className="container" style={{ padding: "30px", width: "70%" }}>
             <a href="/">
-              {" "}
               <img src={arrow} alt="" />
             </a>
             <label
@@ -137,7 +86,7 @@ export default function InfoProfil() {
               {photo_profile ? (
                 <img
                   src={photo_profile}
-                  alt="Uploaded Image URL"
+                  alt=""
                   style={{ maxHeight: "150px" }}
                 />
               ) : (
@@ -149,7 +98,6 @@ export default function InfoProfil() {
               type="file"
               style={{ display: "none" }}
               accept=".jpg,.jpeg,.png"
-              // value={photo_profile}
               onChange={(e) => setFile(e.target.files[0])}
             />
             <div className="mb-3">
@@ -181,12 +129,6 @@ export default function InfoProfil() {
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
               />
-              {/* <select className="form-select" id="kota" required style={{ borderRadius: '16px' }}>
-                <option selected>Pilih Kota</option>
-                <option value="1"> Jakarta</option>
-                <option value="2"> Surabaya</option>
-                <option value="3"> Bandung</option>
-              </select> */}
             </div>
             <div className="mb-3">
               <label for="alamat" className="form-label">
@@ -209,7 +151,6 @@ export default function InfoProfil() {
               </label>
               <input
                 type="number"
-                min="11"
                 className="form-control"
                 id="nohp"
                 placeholder="contoh: 08123456789"
@@ -221,7 +162,8 @@ export default function InfoProfil() {
             </div>
             <div className="mb-3">
               <button
-                type="submit"
+                type="button"
+                onClick={handleSubmit}
                 className="btn btn-primary"
                 style={{
                   width: "100%",

@@ -36,11 +36,19 @@ function ModalTawar(props) {
                 </div>
                 <div>
                     <form>
+<<<<<<< HEAD
                         <div class="mb-3">
                             <label for="harga_tawar" class="form-label">Harga Tawar</label>
                             <input type="text" class="form-control rounded " id="harga_tawar" placeholder="Rp 0,00" />
                         </div>
                         <button type="submit" class="btn btn-custom me-3 mb-2 " onClick={props.onHide}>Kirim</button>
+=======
+                        <div className="mb-3">
+                            <label for="harga_tawar" className="form-label">Harga Tawar</label>
+                            <input type="text" className="form-control rounded " id="harga_tawar" placeholder="Rp 0,00" />
+                        </div>
+                        <button type="submit" className="btn btn-custom me-3 mb-2 " onClick={props.onHide}>Kirim</button>
+>>>>>>> master
                     </form>
                 </div>
             </Modal.Body>
@@ -71,18 +79,31 @@ export default function HalamanProduk() {
                     </div>
                     <div className="col-xl-4 col-sm-12">
                         <div className="card mt-1 p-2 rounded mb-2">
+<<<<<<< HEAD
                             <h6 class="card-title " style={{ fontsize: '14px' }}>Jam Tangan Casio</h6>
                             <p className="" style={{ fontsize: '10px' }}>Aksesoris</p>
                             <p class="" style={{ fontsize: '14px' }}>Rp 250.000</p>
                             <button
                                 className="btn btn-custom me-3 mb-2 "
                                 onclick="/"
+=======
+                            <h6 className="card-title " style={{ fontsize: '14px' }}>Jam Tangan Casio</h6>
+                            <p className="" style={{ fontsize: '10px' }}>Aksesoris</p>
+                            <p className="" style={{ fontsize: '14px' }}>Rp 250.000</p>
+                            <button
+                                className="btn btn-custom me-3 mb-2 "
+                                onClick="/"
+>>>>>>> master
                                 id="Terbitakan"
                             > Terbitakan
                             </button>
                             <button
                                 className="btn btn-custom me-3 mb-2 "
+<<<<<<< HEAD
                                 onclick="/"
+=======
+                                onClick="/"
+>>>>>>> master
                                 id="Edit"
                             > Edit
                             </button>

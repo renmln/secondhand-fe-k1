@@ -1,105 +1,106 @@
-import React, { useState } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../images/img.png';
-import '../../css/style.css';
-import icon from '../../images/img.png';
-import axios from "axios";
-import { useNavigate } from 'react-router-dom'
+import React, {useState, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {Link, Navigate} from "react-router-dom";
 
-export default function Regis() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [name, setName] = useState('')
-    // const [msg, setMsg] = useState('');
-    const navigate = useNavigate();
+import {Container, Row, Col, Form, Button, Stack} from "react-bootstrap";
+import "../../css/auth.css";
+import CoverAuth from "../../images/img.png";
+import Swal from "sweetalert2";
 
-    const Register = async (e) => {
-        // biar onosubmit tidak terefresh
-        e.preventDefault();
-        try {
-            await axios.post('http://localhost:8000/api/v1/register',
-                {
-                    email: email,
-                    password: password,
-                    name: name
-                });
-            // redirect
+import {regis, clear} from "../../redux/actions/authActions";
 
-            navigate('/login')
-        } catch (err) {
-            if (err.respone) {
-                console.log(err.respone.data)
-            }
+const Regis = () => {
+    const dispatch = useDispatch();
+    const {isAuthenticated, status, error} = useSelector((state) => state.auth);
 
+    useEffect(() => {
+        if (error) {
+            alert(error);
         }
+        dispatch(clear());
+    }, [dispatch, error]);
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+
+    const handleSubmit = async (e) => {
+        if (name === "") {
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "Harap isi name anda",
+                showConfirmButton: false,
+                timer: 1000,
+            });
+        } else if (email === "") {
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "Harap isi email anda",
+                showConfirmButton: false,
+                timer: 1000,
+            });
+        } else if (password === "") {
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "Harap isi password anda",
+                showConfirmButton: false,
+                timer: 1000,
+            });
+        } else {
+            dispatch(regis({email, password, name}));
+        }
+    };
+
+    if (status === "REGISTER_SUCCESS") {
+        return <Navigate to={`/login`} />;
     }
 
     return (
-        <section className="Form my-4 mx-5">
-            <div className="container">
-                <div className="row rowlogin no-gutters">
-                    <div className="col-lg-5">
-                        <img className="img-fluid img1" src={icon} alt="" />
-                    </div>
-                    <div className="col-lg-7 px-5 pt-5">
-                        <h1 className="font-weight-bold py-3">Daftar</h1>
-                        <form onSubmit={Register}>
-                            <div className="form-row">
-                                <div className="col-lg-7">
-                                    <label className="fw-bold my-0">Nama</label>
-                                    <input
-                                        type="nama"
-                                        placeholder="Nama Lengkap"
-                                        className="form-control my-3 p-4 mt-0 buttonradius16"
-                                        style={{ height: '48px' }}
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        required />
+        <>
+            {!isAuthenticated ? (
+                <Container fluid>
+                    <Row className="h-100 align-items-center">
+                        <Col lg={6} className="m-0 p-0 cover-image">
+                            <img src={CoverAuth} className="img-fluid image-login" alt="" />
+                        </Col>
+                        <Col lg={6}>
+                            <Form className="formAuth">
+                                <h3 className="fw-bold mb-3">Daftar</h3>
+                                <Form.Group className="mb-3" controlId="name">
+                                    <Form.Label className="formLabel">Nama</Form.Label>
+                                    <Form.Control type="text" className="formInput" placeholder="Nama Lengkap" value={name} onChange={(e) => setName(e.target.value)} />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="email">
+                                    <Form.Label className="formLabel">Email</Form.Label>
+                                    <Form.Control type="email" className="formInput" placeholder="Contoh: johndee@gmail.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                </Form.Group>
+                                <Form.Group className="mb-3" controlId="password">
+                                    <Form.Label className="formLabel">Password</Form.Label>
+                                    <Form.Control type="password" className="formInput" placeholder="Masukkan password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                </Form.Group>
+                                <Button type="button" className="btn-block w-100 mb-3 btnPrimary" onClick={() => handleSubmit()}>
+                                    Daftar
+                                </Button>
+                                <div className="mt-3 d-flex justify-content-center">
+                                    <Stack direction="horizontal" gap={1}>
+                                        <p>Sudah punya akun?</p>
+                                        <Link to="/login">
+                                            <p style={{color: "#4b1979", fontWeight: "bold"}}>Masuk di sini</p>
+                                        </Link>
+                                    </Stack>
                                 </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="col-lg-7">
-                                    <label className="fw-bold my-0">Email</label>
-                                    <input
-                                        type="email"
-                                        placeholder="johndee@gmail.com"
-                                        className="form-control my-3 mt-0 p-4 buttonradius16"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        style={{ height: '48px' }}
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="col-lg-7">
-                                    <label className="fw-bold my-0">Password</label>
-                                    <input
-                                        type="password"
-                                        placeholder="Masukkan Password"
-                                        className="form-control my-3 p-4 buttonradius16 mt-0"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        style={{ height: '48px' }}
-                                        required />
-                                </div>
-                            </div>
-                            <div className="form-row">
-                                <div className="col-lg-7">
-                                    {/* <input type="submit" className="btn1 mt-3 mb-5" value={"Daftar"} /> */}
-                                    <button
-                                        className="btn1 btn-custom buttonradius16 is-success is-fullwidth"
-                                        style={{ height: '48px' }}
-                                    >Daftar</button>
-                                </div>
-                            </div>
-                            <p className="my-1">Sudah punya akun? <a href="/login" className=" fw-bold" style={{ color: '#7126B5' }}>Masuk disini</a></p>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-    )
+                            </Form>
+                        </Col>
+                    </Row>
+                </Container>
+            ) : (
+                <Navigate to="/" />
+            )}
+        </>
+    );
+};
 
-}
-
+export default Regis;
