@@ -55,7 +55,12 @@ export const getAllProductByIdSeller = (params) => async (dispatch) => {
 
 export const getProductById = (id) => async (dispatch) => {
     try {
-        const res = await fetch(`http://localhost:8000/api/v1/product/${id}`);
+        const res = await fetch(`http://localhost:8000/api/v1/product/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
         const data = await res.json();
         dispatch({
             type: GET_PRODUCT,

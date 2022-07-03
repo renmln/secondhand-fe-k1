@@ -1,30 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Navigate } from "react-router-dom";
 import { addOffering } from "../../redux/actions/offeringActions";
-
 import "../../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import profilpenjual from "../../images/profilpenjual.png";
+import nullprofil from "../../images/nullprofil.png"
 import Modal from "react-bootstrap/Modal";
 import Swal from "sweetalert2";
-
+import { Carousel } from "react-bootstrap";
 import NavBar from "../NavBar";
 import { getProductById } from "../../redux/actions/productsActions";
+import { getUserbyID } from "../../redux/actions/authActions";
 
 export default function HalamanProduk() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { detailProduct } = useSelector((state) => state.product);
-  const { user } = useSelector((state) => state.auth);
+  const { user, detailUser } = useSelector((state) => state.auth);
   const [modalShow, setModalShow] = React.useState(false);
 
   const [id_product, setIdProduct] = useState("");
   const [offering_price, setOfferingPrice] = useState("");
 
   React.useEffect(() => {
-    dispatch(getProductById(id));
+    dispatch(getProductById(id))
   }, [dispatch, id]);
+
+  React.useEffect(() => {
+    dispatch(getUserbyID(detailProduct.id_seller))
+  }, [dispatch, detailProduct.id_seller]);
+
 
   const handleSubmit = async () => {
     const data = {
@@ -120,6 +126,22 @@ export default function HalamanProduk() {
     return <Navigate to="/login" />;
   }
 
+  // handle carosel preview
+  const imagepreview = []
+  if (detailProduct.image_1 !== null) {
+    imagepreview.push(detailProduct.image_1)
+  }
+  if (detailProduct.image_2 !== null) {
+    imagepreview.push(detailProduct.image_2)
+  }
+  if (detailProduct.image_3 !== null) {
+    imagepreview.push(detailProduct.image_3)
+  }
+  if (detailProduct.image_4 !== null) {
+    imagepreview.push(detailProduct.image_4)
+  }
+
+
   return (
     <div className="container">
       {detailProduct.length === 0 ? (
@@ -136,12 +158,21 @@ export default function HalamanProduk() {
               <div className="container-fluid mt-5">
                 <div className="row mx-auto mb-3">
                   <div className="col-xl-6 col-sm-12">
-                    <img
-                      className="img-fluid center-cropped rounded"
-                      src={detailProduct.image_1}
-                      alt="halamanproduk"
-                      style={{ width: "600px", objectFit: "cover" }}
-                    />
+                    {imagepreview === 0 ? (
+                      <></>
+                    ) : (
+                      <Carousel className="boxCarousel">
+                        {
+                          imagepreview.map((item, index) => {
+                            return (
+                              <Carousel.Item key={index}>
+                                <img className="d-block w-100 boxImagePreview" src={item} alt="First slide" />
+                              </Carousel.Item>
+                            )
+                          })
+                        }
+                      </Carousel>
+                    )}
                     <h5 className="mt-5">Deskripsi</h5>
                     <p>{detailProduct.description}</p>
                   </div>
@@ -179,23 +210,25 @@ export default function HalamanProduk() {
                     </div>
                     <div className="card">
                       <div className="row m-2">
-                        {user.id !== detailProduct.id_seller ? (
-                          <></>
-                        ) : (
-                          <>
-                            <div className="col-2">
-                              <img
-                                src={user.photo_profile}
-                                alt="profilpenjual"
-                                style={{ width: "50px" }}
-                              />
-                            </div>
-                            <div className="col-10">
-                              <h5>{user.name}</h5>
-                              <p>{user.city}</p>
-                            </div>
-                          </>
-                        )}
+
+                        <div className="col-2">
+                          {detailUser.photo_profile === null ? (
+                            <img
+                              src={nullprofil}
+                              alt="profilpenjual"
+                              style={{ width: "50px" }}
+                            />
+                          ) : (<img
+                            src={detailUser.photo_profile}
+                            alt="profilpenjual"
+                            style={{ width: "50px" }}
+                          />)}
+
+                        </div>
+                        <div className="col-10">
+                          <h5>{detailUser.name}</h5>
+                          <p>{detailUser.city}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
