@@ -23,22 +23,55 @@ export default function HalamanProduk() {
     dispatch(getProductById(id));
   }, [dispatch, id]);
 
-  function ModalTawar(props) {
-    const [id_product, setIdProduct] = useState("");
-    const [id_buyer, setIdBuyer] = useState("");
-    const [offering_price, setOfferingPrice] = useState("");
+  const [id_product, setIdProduct] = useState("");
+  const [offering_price, setOfferingPrice] = useState("");
 
-    const handleSubmit = async () => {
-      const data = {
-        id_product: detailProduct.id,
-        id_buyer: user.id,
-        offering_price: offering_price,
-      };
-      console.log(data);
-      console.log(detailProduct.id);
-      dispatch(addOffering(data));
+  const handleSubmit = async () => {
+    const data = {
+      id_product: id,
+      offering_price,
     };
+    console.log(data);
+    dispatch(addOffering(data));
+  };
 
+  function FormPenawaran() {
+    return (
+      <form>
+        <div className="mb-3">
+          <input
+            // type="number"
+            // required
+            value={id_product}
+            onChange={(e) => setIdProduct(e.target.value)}
+            disabled
+          />
+          <label htmlFor="harga_tawar" className="form-label">
+            Harga Tawar
+          </label>
+          <input
+            type="number"
+            className="form-control rounded "
+            id="harga_tawar"
+            placeholder="Rp 0,00"
+            required
+            style={{ borderRadius: "16px" }}
+            value={offering_price}
+            onChange={(e) => setOfferingPrice(e.target.value)}
+          />
+        </div>
+        <button
+          type="button"
+          className="btn btn-custom me-3 mb-2 "
+          onClick={handleSubmit}
+        >
+          Kirim
+        </button>
+      </form>
+    );
+  }
+
+  function ModalTawar(props) {
     return (
       <Modal
         {...props}
@@ -78,41 +111,7 @@ export default function HalamanProduk() {
             </div>
           </div>
           <div>
-            <form>
-              <div className="mb-3">
-                <input
-                  type="number"
-                  value={id_product}
-                  onChange={(e) => setIdProduct(e.target.value)}
-                  hidden
-                />
-                <input
-                  type="number"
-                  value={id_buyer}
-                  onChange={(e) => setIdBuyer(e.target.value)}
-                  hidden
-                />
-                <label htmlFor="harga_tawar" className="form-label">
-                  Harga Tawar
-                </label>
-                <input
-                  type="number"
-                  className="form-control rounded "
-                  id="harga_tawar"
-                  placeholder="Rp 0,00"
-                  style={{ borderRadius: "16px" }}
-                  value={offering_price}
-                  onChange={(e) => setOfferingPrice(e.target.value)}
-                />
-              </div>
-              <button
-                type="button"
-                className="btn btn-custom me-3 mb-2 "
-                onClick={handleSubmit}
-              >
-                Kirim
-              </button>
-            </form>
+            <FormPenawaran />
           </div>
         </Modal.Body>
       </Modal>
