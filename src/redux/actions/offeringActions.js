@@ -6,7 +6,7 @@ export const addOffering = (params) => async (dispatch) => {
   try {
     const id_product = params.id_product;
     const offering_price = params.offering_price;
-    console.log(id_product);
+    const no_hp = params.no_hp;
     // var formdata = new FormData();
     // formdata.append("id_product", id_product);
     // formdata.append("id_buyer", id_buyer);
@@ -45,6 +45,7 @@ export const addOffering = (params) => async (dispatch) => {
       {
         id_product,
         offering_price,
+        no_hp,
       },
       config
     );

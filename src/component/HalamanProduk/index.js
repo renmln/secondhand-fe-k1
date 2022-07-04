@@ -22,6 +22,7 @@ export default function HalamanProduk() {
 
   const [id_product, setIdProduct] = useState("");
   const [offering_price, setOfferingPrice] = useState("");
+  const [no_hp, setNoHp] = useState("");
 
   React.useEffect(() => {
     dispatch(getProductById(id));
@@ -35,8 +36,10 @@ export default function HalamanProduk() {
     const data = {
       id_product: detailProduct.id,
       offering_price: offering_price,
+      no_hp: user.no_hp,
     };
     console.log(data);
+    console.log(user.no_hp);
     dispatch(addOffering(data));
   };
   function ModalTawar(props) {
@@ -85,6 +88,12 @@ export default function HalamanProduk() {
                   type="number"
                   value={id_product}
                   onChange={() => setIdProduct(detailProduct.id)}
+                  hidden
+                />
+                <input
+                  type="number"
+                  value={no_hp}
+                  onChange={() => setNoHp(user.no_hp)}
                   hidden
                 />
                 <label htmlFor="harga_tawar" className="form-label">

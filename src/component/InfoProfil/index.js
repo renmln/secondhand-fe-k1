@@ -153,7 +153,7 @@ export default function InfoProfil() {
                 type="number"
                 className="form-control"
                 id="nohp"
-                placeholder="contoh: 08123456789"
+                placeholder="contoh: 628123456789"
                 required
                 style={{ borderRadius: "16px" }}
                 value={no_hp}
