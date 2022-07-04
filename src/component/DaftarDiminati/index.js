@@ -15,12 +15,13 @@ import {
   FiPlus,
 } from "react-icons/fi";
 
-export default function DaftarJual() {
+export default function DaftarDiminati() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const { product } = useSelector((state) => state.product);
   const { user } = useSelector((state) => state.auth);
+  const { offering } = useSelector((state) => state.offering);
 
   useEffect(() => {
     if (token === null) {
@@ -89,7 +90,6 @@ export default function DaftarJual() {
                   <FiHeart />
                 </td>
                 <td>
-                  {" "}
                   <a href={`/daftarDiminati`}>Diminati</a>
                 </td>
                 <td>
@@ -132,11 +132,11 @@ export default function DaftarJual() {
                   </div>
                 </Link>
               </div>
-              {product.length === 0 ? (
+              {product.length && offering.length === 0 ? (
                 <>
                   <h4 className="text-center pt-5">Produk Tidak Tersedia</h4>
                 </>
-              ) : (
+              ) : product.id === offering.id_product ? (
                 product.map((item) => (
                   <div
                     key={item.id}
@@ -189,6 +189,8 @@ export default function DaftarJual() {
                     </a>
                   </div>
                 ))
+              ) : (
+                <></>
               )}
             </div>
           </div>

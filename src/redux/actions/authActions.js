@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import {AUTH_ERROR, LOGIN, REGISTER, CLEAR, LOGOUT, UPDATE_INFO_USERS} from "./types";
+import { AUTH_ERROR, LOGIN, REGISTER, CLEAR, LOGOUT, UPDATE_INFO_USERS, GET_USER, GET_USER_ERROR } from "./types";
 
 export const login = (data) => async (dispatch) => {
     // localStorage.setItem("userId", user.data.id);
@@ -8,6 +8,7 @@ export const login = (data) => async (dispatch) => {
     try {
         const response = await fetch("http://localhost:8000/api/v1/login", {
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json",
             },
@@ -216,4 +217,38 @@ export const logout = () => async (dispatch) => {
         showConfirmButton: false,
         timer: 1500,
     });
+};
+
+export const getUserbyID = (params) => async (dispatch) => {
+    try {
+        const id = params;
+        console.log(id)
+        const response = await fetch(
+            `http://localhost:8000/api/v1/users/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-type": "application/json",
+            },
+        }
+        );
+        const data = await response.json();
+
+        dispatch({
+            type: GET_USER,
+            payload: data,
+        });
+    } catch (error) {
+        dispatch({
+            type: GET_USER_ERROR,
+            payload: error.response,
+        });
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title: error.message,
+            showConfirmButton: false,
+            timer: 1500,
+        });
+    }
 };

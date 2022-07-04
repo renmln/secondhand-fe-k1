@@ -1,4 +1,4 @@
-import {AUTH_ERROR, LOGIN, REGISTER, UPDATE_INFO_USERS, CLEAR, LOGOUT} from "../actions/types";
+import { AUTH_ERROR, LOGIN, REGISTER, UPDATE_INFO_USERS, CLEAR, LOGOUT, GET_USER, GET_USER_ERROR } from "../actions/types";
 
 const initialState = {
     isAuthenticated: !!localStorage.getItem("token"),
@@ -6,6 +6,7 @@ const initialState = {
     user: null,
     status: null,
     error: null,
+    detailUser: []
 };
 
 const authReducer = (state = initialState, action) => {
@@ -53,6 +54,17 @@ const authReducer = (state = initialState, action) => {
                 token: null,
                 error: action.payload,
                 status: null,
+            };
+        case GET_USER:
+            return {
+                ...state,
+                detailUser: action.payload
+            }
+        case GET_USER_ERROR:
+            return {
+                ...state,
+                error: action.payload,
+                status: "FAIL",
             };
         default:
             return state;
