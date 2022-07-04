@@ -5,7 +5,7 @@ import { addOffering } from "../../redux/actions/offeringActions";
 import "../../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import profilpenjual from "../../images/profilpenjual.png";
-import nullprofil from "../../images/nullprofil.png"
+import nullprofil from "../../images/nullprofil.png";
 import Modal from "react-bootstrap/Modal";
 import Swal from "sweetalert2";
 import { Carousel } from "react-bootstrap";
@@ -24,13 +24,12 @@ export default function HalamanProduk() {
   const [offering_price, setOfferingPrice] = useState("");
 
   React.useEffect(() => {
-    dispatch(getProductById(id))
+    dispatch(getProductById(id));
   }, [dispatch, id]);
 
   React.useEffect(() => {
-    dispatch(getUserbyID(detailProduct.id_seller))
+    dispatch(getUserbyID(detailProduct.id_seller));
   }, [dispatch, detailProduct.id_seller]);
-
 
   const handleSubmit = async () => {
     const data = {
@@ -127,20 +126,19 @@ export default function HalamanProduk() {
   }
 
   // handle carosel preview
-  const imagepreview = []
+  const imagepreview = [];
   if (detailProduct.image_1 !== null) {
-    imagepreview.push(detailProduct.image_1)
+    imagepreview.push(detailProduct.image_1);
   }
   if (detailProduct.image_2 !== null) {
-    imagepreview.push(detailProduct.image_2)
+    imagepreview.push(detailProduct.image_2);
   }
   if (detailProduct.image_3 !== null) {
-    imagepreview.push(detailProduct.image_3)
+    imagepreview.push(detailProduct.image_3);
   }
   if (detailProduct.image_4 !== null) {
-    imagepreview.push(detailProduct.image_4)
+    imagepreview.push(detailProduct.image_4);
   }
-
 
   return (
     <div className="container">
@@ -162,15 +160,17 @@ export default function HalamanProduk() {
                       <></>
                     ) : (
                       <Carousel className="boxCarousel">
-                        {
-                          imagepreview.map((item, index) => {
-                            return (
-                              <Carousel.Item key={index}>
-                                <img className="d-block w-100 boxImagePreview" src={item} alt="First slide" />
-                              </Carousel.Item>
-                            )
-                          })
-                        }
+                        {imagepreview.map((item, index) => {
+                          return (
+                            <Carousel.Item key={index}>
+                              <img
+                                className="d-block w-100 boxImagePreview"
+                                src={item}
+                                alt="First slide"
+                              />
+                            </Carousel.Item>
+                          );
+                        })}
                       </Carousel>
                     )}
                     <h5 className="mt-5">Deskripsi</h5>
@@ -210,7 +210,6 @@ export default function HalamanProduk() {
                     </div>
                     <div className="card">
                       <div className="row m-2">
-
                         <div className="col-2">
                           {detailUser.photo_profile === null ? (
                             <img
@@ -218,12 +217,13 @@ export default function HalamanProduk() {
                               alt="profilpenjual"
                               style={{ width: "50px" }}
                             />
-                          ) : (<img
-                            src={detailUser.photo_profile}
-                            alt="profilpenjual"
-                            style={{ width: "50px" }}
-                          />)}
-
+                          ) : (
+                            <img
+                              src={detailUser.photo_profile}
+                              alt="profilpenjual"
+                              style={{ width: "50px" }}
+                            />
+                          )}
                         </div>
                         <div className="col-10">
                           <h5>{detailUser.name}</h5>
