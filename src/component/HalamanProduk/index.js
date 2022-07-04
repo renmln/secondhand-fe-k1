@@ -30,6 +30,7 @@ export default function HalamanProduk() {
     const data = {
       id_product: id,
       offering_price,
+      no_hp: user.no_hp,
     };
     console.log(data);
     dispatch(addOffering(data));
