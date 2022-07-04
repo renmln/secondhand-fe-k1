@@ -1,5 +1,13 @@
 import Swal from "sweetalert2";
-import { GET_ALL_PRODUCT, GET_PRODUCT, CREATE_PRODUCT, UPDATE_PRODUCT, CLEAR_PRODUCT, PRODUCT_ERROR, DELETE_PRODUCT } from "./types";
+import {
+  GET_ALL_PRODUCT,
+  GET_PRODUCT,
+  CREATE_PRODUCT,
+  UPDATE_PRODUCT,
+  CLEAR_PRODUCT,
+  PRODUCT_ERROR,
+  DELETE_PRODUCT,
+} from "./types";
 
 const { REACT_APP_BACKEND } = process.env;
 
@@ -53,24 +61,24 @@ export const getAllProductByIdSeller = (params) => async (dispatch) => {
 };
 
 export const getProductById = (id) => async (dispatch) => {
-    try {
-        const res = await fetch(`http://localhost:8000/api/v1/product/${id}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        });
-        const data = await res.json();
-        dispatch({
-            type: GET_PRODUCT,
-            detailproduct: data,
-        });
-    } catch (err) {
-        dispatch({
-            type: PRODUCT_ERROR,
-            payload: err.response.data.msg,
-        });
-    }
+  try {
+    const res = await fetch(`http://localhost:8000/api/v1/product/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    const data = await res.json();
+    dispatch({
+      type: GET_PRODUCT,
+      detailproduct: data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PRODUCT_ERROR,
+      payload: err.response.data.msg,
+    });
+  }
 };
 
 export const addProduct = (params) => async (dispatch) => {
@@ -81,45 +89,8 @@ export const addProduct = (params) => async (dispatch) => {
     formdata.append("category", params.category);
     formdata.append("description", params.description);
 
-        for (let i = 0; i < params.file.length; i++) {
-            formdata.append("picture", params.file[i]);
-        }
-
-        const response = await fetch("http://localhost:8000/api/v1/product", {
-            method: "POST",
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: formdata,
-        });
-
-        const data = await response.json();
-        console.log("ini" + JSON.stringify(data))
-        dispatch({
-            type: CREATE_PRODUCT,
-            status: data.status,
-        });
-
-        Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Success",
-            showConfirmButton: false,
-            timer: 1500,
-        });
-    } catch (error) {
-        dispatch({
-            type: PRODUCT_ERROR,
-            payload: error.response,
-        });
-
-        Swal.fire({
-            position: "center",
-            icon: "error",
-            title: error,
-            showConfirmButton: false,
-            timer: 1500,
-        });
+    for (let i = 0; i < params.file.length; i++) {
+      formdata.append("picture", params.file[i]);
     }
 
     const response = await fetch("http://localhost:8000/api/v1/product", {
@@ -131,7 +102,7 @@ export const addProduct = (params) => async (dispatch) => {
     });
 
     const data = await response.json();
-
+    console.log("ini" + JSON.stringify(data));
     dispatch({
       type: CREATE_PRODUCT,
       status: data.status,
@@ -247,14 +218,19 @@ export const updateProduct = (params) => async (dispatch) => {
 };
 
 export const deleteProduct = (params) => async (dispatch) => {
-    const { id, oldImage } = params;
-    try {
-        const response = await fetch(REACT_APP_BACKEND + "/api/v1/product?" + new URLSearchParams({ id, oldImage }), {
-            method: "DELETE",
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        });
+  const { id, oldImage } = params;
+  try {
+    const response = await fetch(
+      REACT_APP_BACKEND +
+        "/api/v1/product?" +
+        new URLSearchParams({ id, oldImage }),
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
 
     const data = await response.json();
 
