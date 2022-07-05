@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Navigate } from "react-router-dom";
+import { useParams, Navigate, useNavigate } from "react-router-dom";
 import { addOffering } from "../../redux/actions/offeringActions";
 import "../../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,12 +12,16 @@ import { Carousel } from "react-bootstrap";
 import NavBar from "../NavBar";
 import { getProductById } from "../../redux/actions/productsActions";
 import { getUserbyID } from "../../redux/actions/authActions";
+import { getAllOffers } from "../../redux/actions/offeringActions";
 
 export default function HalamanProduk() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   const { detailProduct } = useSelector((state) => state.product);
   const { user, detailUser } = useSelector((state) => state.auth);
+  const { offering } = useSelector((state) => state.offering);
   const [modalShow, setModalShow] = React.useState(false);
 
   const [id_product, setIdProduct] = useState("");
@@ -29,8 +33,15 @@ export default function HalamanProduk() {
   }, [dispatch, id]);
 
   React.useEffect(() => {
-    dispatch(getUserbyID(detailProduct.id_seller));
-  }, [dispatch, detailProduct.id_seller]);
+    if (token === null) {
+      return navigate("/");
+    }
+    dispatch(getAllOffers());
+  }, [dispatch, navigate, token]);
+
+  React.useEffect(() => {
+    dispatch(getUserbyID(detailProduct.id_seller, offering.id_buyer));
+  }, [dispatch, detailProduct.id_seller, offering.id_buyer]);
 
   const handleSubmit = async () => {
     const data = {
@@ -40,7 +51,10 @@ export default function HalamanProduk() {
     };
     console.log(data);
     console.log(user.no_hp);
+    console.log(detailProduct.id);
+    console.log(offering.offerings);
     dispatch(addOffering(data));
+    document.getElementById("suksesnego").classList.add("disabled");
   };
 
   function ModalTawar(props) {
@@ -112,6 +126,7 @@ export default function HalamanProduk() {
               </div>
               <button
                 type="button"
+                id="suksesnego"
                 className="btn btn-custom me-3 mb-2 "
                 onClick={handleSubmit}
               >
@@ -208,14 +223,25 @@ export default function HalamanProduk() {
                             Edit
                           </button>
                         </>
+                      ) : offering.id_buyer === user.id ? (
+                        <>
+                          <button
+                            id="suksesnego"
+                            className="btn btn-custom me-3 mb-2 "
+                          >
+                            Menunggu respon penjual
+                          </button>
+                        </>
                       ) : (
-                        <button
-                          className="btn btn-custom me-3 mb-2 "
-                          onClick={() => setModalShow(true)}
-                          id="Terbitkan"
-                        >
-                          Saya tertarik dan ingin nego
-                        </button>
+                        <>
+                          <button
+                            className="btn btn-custom me-3 mb-2 "
+                            onClick={() => setModalShow(true)}
+                            id="suksesnego"
+                          >
+                            Saya tertarik dan ingin nego
+                          </button>
+                        </>
                       )}
                     </div>
                     <div className="card">
