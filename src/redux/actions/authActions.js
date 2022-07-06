@@ -107,6 +107,51 @@ export const regis = (data) => async (dispatch) => {
   }
 };
 
+export const loginWithGoogle = (accessToken) => async (dispatch) => {
+  try {
+    const data = {
+      access_token: accessToken,
+    };
+    const response = await fetch("http://localhost:8000/api/v1/auth/google", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    if (result.token) {
+      await dispatch({
+        type: LOGIN,
+        token: result.token,
+        user: result.user,
+        status: result.status,
+      });
+      await Swal.fire({
+        title: "Success",
+        text: "You have successfully logged in",
+        icon: "success",
+      });
+    } else {
+      authError(result.error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: result.message,
+      });
+    }
+  } catch (error) {
+    authError(error);
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: error.message,
+    });
+  }
+};
+
 export const cekTokenExp = () => async (dispatch) => {
   try {
     const response = await fetch(`http://localhost:8000/api/v1/whoami`, {

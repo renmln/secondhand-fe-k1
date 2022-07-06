@@ -1531,7 +1531,7 @@
   dependencies:
     "@babel/runtime" "^7.6.2"
 
-"@react-oauth/google@^0.2.1":
+"@react-oauth/google@^0.2.6":
   "integrity" "sha512-Az6w/EL3QHSvWVbfX2WbUB15PGqM0hm86bpAoyvjw2nhDdPp9IOjpFg5HfSGJQJBydjbCFnZjI8PJskTzLOhew=="
   "resolved" "https://registry.npmjs.org/@react-oauth/google/-/google-0.2.6.tgz"
   "version" "0.2.6"

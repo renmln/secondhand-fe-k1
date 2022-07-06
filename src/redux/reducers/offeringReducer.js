@@ -1,15 +1,10 @@
-import {
-  CREATE_OFFERING,
-  GET_ALL_OFFERING,
-  GET_OFFERING,
-  OFFERING_ERROR,
-} from "../actions/types";
+import { CREATE_OFFERING, GET_ALL_OFFERING, GET_OFFER, OFFERING_ERROR } from "../actions/types";
 
 const initialState = {
   offering: [],
-  detailOffering: [],
   status: [],
   error: null,
+  detailOffer: []
 };
 
 const offeringReducer = (state = initialState, action) => {
@@ -20,15 +15,15 @@ const offeringReducer = (state = initialState, action) => {
         offering: action.offering,
         status: action.status,
       };
-    case GET_OFFERING:
-      return {
-        ...state,
-        detailOffering: action.detailOffering,
-      };
     case CREATE_OFFERING:
       return {
         ...state,
         status: action.status,
+      };
+    case GET_OFFER:
+      return {
+        ...state,
+        detailOffer: action.detailoffer,
       };
     case OFFERING_ERROR:
       return {

@@ -1,12 +1,15 @@
 .buttonradius12 {
   border-radius: 12px !important;
 }
+
 .buttonradius20 {
   border-radius: 20px !important;
 }
+
 .buttonradius16 {
   border-radius: 16px !important;
 }
+
 .borderradius8 {
   border-radius: 8px !important;
 }
@@ -49,8 +52,10 @@ fieldset[disabled] .btn-custom:active,
 .btn-custom.disabled.active,
 .btn-custom[disabled].active,
 fieldset[disabled] .btn-custom.active {
-  background-color: #7126b5;
-  border-color: #7126b5;
+  color: #ffffff;
+  font-weight: 500;
+  background-color: #b7a1cd;
+  border-color: #b4b4b4;
 }
 
 .btn-custom .badge {
@@ -72,6 +77,7 @@ fieldset[disabled] .btn-custom.active {
 .dropdown-menu {
   min-width: 376px;
 }
+
 .dropdown-item {
   padding: 10px;
 }

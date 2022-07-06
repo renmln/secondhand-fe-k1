@@ -2,90 +2,10 @@ import Swal from "sweetalert2";
 import {
   CREATE_OFFERING,
   GET_ALL_OFFERING,
-  GET_OFFERING,
+  GET_OFFER,
   OFFERING_ERROR,
 } from "./types";
 import axios from "axios";
-
-export const getAllOffers = () => async (dispatch) => {
-  try {
-    const res = await fetch(`http://localhost:8000/api/v1/products/offers`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    const data = await res.json();
-    console.log(data);
-    dispatch({
-      type: GET_ALL_OFFERING,
-      offering: data,
-      status: "OK",
-    });
-  } catch (err) {
-    dispatch({
-      type: OFFERING_ERROR,
-      payload: err.response.data.msg,
-    });
-  }
-};
-
-export const getOfferingByIdBuyer = (params) => async (dispatch) => {
-  try {
-    const response = await fetch(
-      `http://localhost:8000/api/v1/products/offer`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
-    const data = await response.json();
-
-    dispatch({
-      type: GET_ALL_OFFERING,
-      offering: data,
-      status: "ID_BUYER",
-    });
-  } catch (error) {
-    dispatch({
-      type: OFFERING_ERROR,
-      payload: error.response,
-    });
-    Swal.fire({
-      position: "center",
-      icon: "error",
-      title: error.message,
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  }
-};
-
-export const getOfferingById = (id) => async (dispatch) => {
-  try {
-    const res = await fetch(
-      `http://localhost:8000/api/v1/products/offer/${id}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
-    const data = await res.json();
-    dispatch({
-      type: GET_OFFERING,
-      detailproduct: data,
-    });
-  } catch (err) {
-    dispatch({
-      type: OFFERING_ERROR,
-      payload: err.response.data.msg,
-    });
-  }
-};
 
 export const addOffering = (params) => async (dispatch) => {
   try {
@@ -160,6 +80,41 @@ export const addOffering = (params) => async (dispatch) => {
       title: error,
       showConfirmButton: false,
       timer: 150000,
+    });
+  }
+};
+
+export const getOfferbyIDProduct = (params) => async (dispatch) => {
+  try {
+    const id = params.id;
+    console.log("iniii" + id);
+    const response = await fetch(
+      `http://localhost:8000/api/v1/products/offered/${id}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const data = await response.json();
+    console.log("ini data" + JSON.stringify(data));
+    dispatch({
+      type: GET_ALL_OFFERING,
+      offering: data,
+      status: "ID_PRODUCT",
+    });
+  } catch (error) {
+    dispatch({
+      type: OFFERING_ERROR,
+      payload: error.response,
+    });
+    Swal.fire({
+      position: "center",
+      icon: "error",
+      title: error.message,
+      showConfirmButton: false,
+      timer: 1500,
     });
   }
 };

@@ -28,7 +28,7 @@ export default function DaftarJual() {
     }
     dispatch(getAllProductByIdSeller());
   }, [dispatch, navigate, token]);
-
+console.log(user)
   return (
     <div className="container">
       <div>

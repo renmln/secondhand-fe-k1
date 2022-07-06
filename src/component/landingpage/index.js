@@ -9,6 +9,7 @@ import { FiSearch } from "react-icons/fi";
 import ButtonJual from "../ButtonJual";
 import Footer from "../Footer";
 import { Container } from "react-bootstrap";
+import { getOfferbyIDProduct } from "../../redux/actions/offeringActions";
 
 export default function LandingPage() {
   const dispatch = useDispatch();
@@ -24,7 +25,10 @@ export default function LandingPage() {
       <CarouselBanner />
       <Container className="container py-3">
         <p className="fw-bold">Telusuri Kategori</p>
-        <div className="container py-3 d-flex buttonradius12">
+        <div
+          className="container py-3 d-flex buttonradius12"
+          style={{ overflowX: "auto" }}
+        >
           <button
             className="btn btn-custom me-3 buttonradius12 "
             id="filtersemua"

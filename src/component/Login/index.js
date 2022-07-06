@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 
+import { useGoogleLogin } from "@react-oauth/google";
 import { Container, Row, Col, Form, Button, Stack } from "react-bootstrap";
 import "../../css/auth.css";
 import CoverAuth from "../../images/img.png";
+import GoogleImg from "../../images/google.png";
 import Swal from "sweetalert2";
 
-import { login, clear } from "../../redux/actions/authActions";
+import { login, clear, loginWithGoogle } from "../../redux/actions/authActions";
 
 const Regis = () => {
   const dispatch = useDispatch();
@@ -44,6 +46,15 @@ const Regis = () => {
       dispatch(login({ email, password }));
     }
   };
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      dispatch(loginWithGoogle(tokenResponse.access_token));
+    },
+    onError: (error) => {
+      alert(error);
+    },
+  });
 
   if (status === "LOGIN_SUCCESS") {
     return <Navigate to={`/`} />;
@@ -87,6 +98,29 @@ const Regis = () => {
                 >
                   Masuk
                 </Button>
+                <div className="d-flex justify-content-center">
+                  <Button
+                    variant="success"
+                    className="mb-3"
+                    style={{
+                      height: "40px",
+                      color: "black",
+                      backgroundColor: "white",
+                    }}
+                    onClick={() => googleLogin()}
+                  >
+                    <div className="d-flex justify-content-center">
+                      <img
+                        src={GoogleImg}
+                        width={25}
+                        height={25}
+                        style={{ marginRight: "10px" }}
+                        alt=""
+                      />
+                      <p>Masuk dengan Google</p>
+                    </div>
+                  </Button>
+                </div>
                 <div className="mt-3 d-flex justify-content-center">
                   <Stack direction="horizontal" gap={1}>
                     <p>Belum punya akun?</p>

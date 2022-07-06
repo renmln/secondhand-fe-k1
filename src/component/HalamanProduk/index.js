@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Navigate, useNavigate } from "react-router-dom";
-import { addOffering } from "../../redux/actions/offeringActions";
+import {
+  addOffering,
+  getOfferbyIDProduct,
+} from "../../redux/actions/offeringActions";
 import "../../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import profilpenjual from "../../images/profilpenjual.png";
@@ -12,16 +15,14 @@ import { Carousel } from "react-bootstrap";
 import NavBar from "../NavBar";
 import { getProductById } from "../../redux/actions/productsActions";
 import { getUserbyID } from "../../redux/actions/authActions";
-import { getAllOffers } from "../../redux/actions/offeringActions";
 
 export default function HalamanProduk() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
   const { detailProduct } = useSelector((state) => state.product);
   const { user, detailUser } = useSelector((state) => state.auth);
-  const { offering } = useSelector((state) => state.offering);
+  const { offering, detailOffer } = useSelector((state) => state.offering);
   const [modalShow, setModalShow] = React.useState(false);
 
   const [id_product, setIdProduct] = useState("");
@@ -33,15 +34,13 @@ export default function HalamanProduk() {
   }, [dispatch, id]);
 
   React.useEffect(() => {
-    if (token === null) {
-      return navigate("/");
-    }
-    dispatch(getAllOffers());
-  }, [dispatch, navigate, token]);
+    dispatch(getUserbyID(detailProduct.id_seller));
+  }, [dispatch, detailProduct.id_seller]);
 
   React.useEffect(() => {
-    dispatch(getUserbyID(detailProduct.id_seller, offering.id_buyer));
-  }, [dispatch, detailProduct.id_seller, offering.id_buyer]);
+    dispatch(getOfferbyIDProduct({ id }));
+  }, [dispatch, id]);
+  console.log(id);
 
   const handleSubmit = async () => {
     const data = {
@@ -51,11 +50,13 @@ export default function HalamanProduk() {
     };
     console.log(data);
     console.log(user.no_hp);
-    console.log(detailProduct.id);
-    console.log(offering.offerings);
     dispatch(addOffering(data));
-    document.getElementById("suksesnego").classList.add("disabled");
+    window.location.reload();
   };
+
+  function handleEdit() {
+    return navigate(`/edit-product/${id}`);
+  }
 
   function ModalTawar(props) {
     return (
@@ -126,7 +127,6 @@ export default function HalamanProduk() {
               </div>
               <button
                 type="button"
-                id="suksesnego"
                 className="btn btn-custom me-3 mb-2 "
                 onClick={handleSubmit}
               >
@@ -165,6 +165,28 @@ export default function HalamanProduk() {
     imagepreview.push(detailProduct.image_4);
   }
 
+  // console.log(offering[0].id_buyer)
+  // console.log(offering[0])
+  // console.log(user + "ini")
+  // for (let i = 0; i < offering.length; i++) {
+  //   if (offering[i].id_buyer === user.id) {
+  //     // document.getElementById("suksesnego").prop.add("disabled");
+  //     console.log("adasama")
+  //   } else {
+  //     console.log("tada")
+  //   }
+  // }
+  // if (offering) {
+  //   offering.forEach((data) => {
+  //     console.log(data)
+  //   })
+  // }
+  let cekoffer = [];
+  if (offering && user) {
+    cekoffer = offering.find((x) => x.id_buyer === user.id);
+  }
+  console.log(cekoffer);
+
   return (
     <div className="container">
       {detailProduct.length === 0 ? (
@@ -175,7 +197,9 @@ export default function HalamanProduk() {
             <NavBar />
           </div>
           {user === null ? (
-            <></>
+            <>
+              <p>asdfsaafs</p>
+            </>
           ) : (
             <>
               <div className="container-fluid mt-5">
@@ -218,29 +242,36 @@ export default function HalamanProduk() {
                             {" "}
                             Terbitakan
                           </button>
-                          <button className="btn btn-custom me-3 mb-2 ">
+                          <button
+                            className="btn btn-custom me-3 mb-2 "
+                            onClick={() => handleEdit(detailProduct.id)}
+                          >
                             {" "}
                             Edit
                           </button>
                         </>
-                      ) : offering.id_buyer === user.id ? (
-                        <>
-                          <button
-                            id="suksesnego"
-                            className="btn btn-custom me-3 mb-2 "
-                          >
-                            Menunggu respon penjual
-                          </button>
-                        </>
                       ) : (
                         <>
-                          <button
-                            className="btn btn-custom me-3 mb-2 "
-                            onClick={() => setModalShow(true)}
-                            id="suksesnego"
-                          >
-                            Saya tertarik dan ingin nego
-                          </button>
+                          {cekoffer === null || cekoffer === undefined ? (
+                            <>
+                              <button
+                                className="btn btn-custom me-3 mb-2 "
+                                onClick={() => setModalShow(true)}
+                                id="suksesnego"
+                              >
+                                Saya tertarik dan ingin nego
+                              </button>
+                            </>
+                          ) : (
+                            <button
+                              className="btn btn-custom me-3 mb-2 "
+                              // onClick={() => setModalShow(true)}
+                              id="suksesnego"
+                              disabled
+                            >
+                              Saya tertarik dan ingin nego
+                            </button>
+                          )}
                         </>
                       )}
                     </div>

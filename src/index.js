@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -18,6 +19,7 @@ import {
   InfoProduk,
   DaftarJual,
   DaftarDiminati,
+  EditProduct,
 } from "./component";
 import { InfoProfil } from "./component";
 
@@ -26,7 +28,14 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <GoogleOAuthProvider clientId="1015150245337-9ipu5ts9u5n4o1e7n20bqfo6dlqgsr5p.apps.googleusercontent.com">
+              <Login />
+            </GoogleOAuthProvider>
+          }
+        />
         <Route path="/regis" element={<Regis />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/halamanproduk/:id" element={<HalamanProduk />} />
@@ -34,6 +43,7 @@ root.render(
         <Route path="/infoproduk" element={<InfoProduk />} />
         <Route path="/daftarjual" element={<DaftarJual />} />
         <Route path="/daftarDiminati" element={<DaftarDiminati />} />
+        <Route path="/edit-product/:id" element={<EditProduct />} />
       </Routes>
     </BrowserRouter>
   </Provider>
