@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .buttonradius12 {
   border-radius: 12px !important;
 }
