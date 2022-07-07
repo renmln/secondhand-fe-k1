@@ -118,3 +118,36 @@ export const getOfferbyIDProduct = (params) => async (dispatch) => {
     });
   }
 };
+
+export const getOfferingByIdBuyer = (params) => async (dispatch) => {
+  try {
+    const response = await fetch(
+      `http://localhost:8000/api/v1/products/offer`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const data = await response.json();
+
+    dispatch({
+      type: GET_ALL_OFFERING,
+      offering: data,
+      status: "ID_BUYER",
+    });
+  } catch (error) {
+    dispatch({
+      type: OFFERING_ERROR,
+      payload: error.response,
+    });
+    Swal.fire({
+      position: "center",
+      icon: "error",
+      title: error.message,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
+};
