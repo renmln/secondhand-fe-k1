@@ -4,6 +4,7 @@ import {
   GET_ALL_OFFERING,
   GET_OFFER,
   OFFERING_ERROR,
+  GET_ALL
 } from "./types";
 import axios from "axios";
 
@@ -152,4 +153,19 @@ export const getOfferingByIdBuyer = (params) => async (dispatch) => {
   }
 };
 
-
+export const getAllOffering = () => async (dispatch) => {
+  try {
+    const res = await fetch(`http://localhost:8000/api/v1/products/alloffer`);
+    const data = await res.json();
+    dispatch({
+      type: GET_ALL,
+      alloffer: data,
+      status: "OK",
+    });
+  } catch (err) {
+    dispatch({
+      type: OFFERING_ERROR,
+      payload: err.response.data.msg,
+    });
+  }
+};

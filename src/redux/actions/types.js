@@ -22,4 +22,5 @@ export const CREATE_OFFERING = "CREATE_OFFERING";
 export const OFFERING_ERROR = "OFFERING_ERROR";
 export const GET_OFFER = "GET_OFFER"
 export const GET_ALL_OFFERING = "GET_ALL_OFFERING"
+export const GET_ALL = "GET_ALL"
 

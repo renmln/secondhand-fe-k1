@@ -1,6 +1,7 @@
-import { CREATE_OFFERING, GET_ALL_OFFERING, GET_OFFER, OFFERING_ERROR } from "../actions/types";
+import { CREATE_OFFERING, GET_ALL_OFFERING, GET_OFFER, OFFERING_ERROR, GET_ALL } from "../actions/types";
 
 const initialState = {
+  alloffer: [],
   offering: [],
   status: [],
   error: null,
@@ -9,6 +10,12 @@ const initialState = {
 
 const offeringReducer = (state = initialState, action) => {
   switch (action.type) {
+    case GET_ALL:
+      return {
+        ...state,
+        alloffer: action.alloffer,
+        status: action.status,
+      };
     case GET_ALL_OFFERING:
       return {
         ...state,

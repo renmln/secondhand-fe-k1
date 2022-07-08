@@ -80,6 +80,8 @@ fieldset[disabled] .btn-custom.active {
 
 .dropdown-menu {
   min-width: 376px;
+  max-height: 280px;
+  overflow-y: auto;
 }
 
 .dropdown-item {
