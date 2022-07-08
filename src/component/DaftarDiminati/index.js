@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-
-import { getAllProductByIdSeller } from "../../redux/actions/productsActions";
 import NavBar from "../NavBar";
 
 import "../../App.css";
@@ -14,6 +12,7 @@ import {
   FiChevronRight,
   FiPlus,
 } from "react-icons/fi";
+import { getOfferingByIdBuyer } from "../../redux/actions/offeringActions";
 
 export default function DaftarDiminati() {
   const navigate = useNavigate();
@@ -23,13 +22,16 @@ export default function DaftarDiminati() {
   const { user } = useSelector((state) => state.auth);
   const { offering } = useSelector((state) => state.offering);
 
+
   useEffect(() => {
     if (token === null) {
       return navigate("/");
     }
-    dispatch(getAllProductByIdSeller());
-  }, [dispatch, navigate, token]);
-
+    dispatch(getOfferingByIdBuyer());
+  }, [dispatch, token]);
+  if (offering) {
+    console.log(offering)
+  }
   return (
     <div className="container">
       <div>
@@ -109,93 +111,83 @@ export default function DaftarDiminati() {
           </div>
           <div className="col-9 ">
             <div className="row justify-content-center">
-              <div
-                className="col-xl-3 col-md-5 col-sm-12 card m-2"
-                style={{
-                  border: "2px dashed",
-                  color: "#D0D0D0",
-                  height: "400px",
-                  boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.15)",
-                  borderRadius: "4px",
-                }}
-              >
-                <Link
-                  to="/infoproduk"
-                  className="text-decoration-none m-auto align-items-center"
-                  style={{ color: "black" }}
-                >
-                  <div className="ms-5">
-                    <FiPlus />
-                  </div>
-                  <div>
-                    <p>Tambah Produk</p>
-                  </div>
-                </Link>
-              </div>
-              {product.length && offering.length === 0 ? (
+              
+              {offering === null || offering === undefined ? (
                 <>
                   <h4 className="text-center pt-5">Produk Tidak Tersedia</h4>
                 </>
-              ) : product.id === offering.id_product ? (
-                product.map((item) => (
-                  <div
-                    key={item.id}
-                    className="col-xl-3 col-md-5 col-sm-12 m-2"
-                    style={{ border: "1px solid rgba(0,0,0,.125)" }}
-                  >
-                    <a
-                      href="/halamanproduk"
-                      className="text-decoration-none"
-                      style={{ color: "black" }}
-                    >
-                      <div
-                        className="card "
-                        style={{
-                          border: "none",
-                          boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.15)",
-                          padding: "8px, 8px, 16px, 8px",
-                          borderRadius: "4px",
-                        }}
-                      >
-                        <div className="d-flex justify-content-center">
-                          <img
-                            className="card-img-top center-cropped m-1 img-fluid"
-                            style={{ height: "250px", objectFit: "cover" }}
-                            src={item.image_1}
-                            alt="test"
-                          />
-                        </div>
-                        <div className="card-body">
-                          <h6
-                            className="card-title text-decoration-none"
-                            style={{ fontsize: "14px" }}
-                          >
-                            {item.product_name}
-                          </h6>
-                          <p
-                            className="text-decoration-none"
-                            style={{ fontsize: "10px" }}
-                          >
-                            {item.category}
-                          </p>
-                          <p
-                            className="text-decoration-none"
-                            style={{ fontsize: "14px" }}
-                          >
-                            Rp {item.price}
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                ))
               ) : (
-                <></>
+                offering.map((item) => (
+                  <>
+                    <div
+                      // key={item.}
+                      className="col-xl-3 col-md-5 col-sm-12 m-2"
+                      style={{ border: "1px solid rgba(0,0,0,.125)" }}
+                    >
+                      <a
+                        href={`/halamanproduk/${item.id_product}`}
+                        className="text-decoration-none"
+                        style={{ color: "black" }}
+                      >
+                        <div
+                          className="card "
+                          style={{
+                            border: "none",
+                            boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.15)",
+                            padding: "8px, 8px, 16px, 8px",
+                            borderRadius: "4px",
+                          }}
+                        >
+                          <div className="d-flex justify-content-center">
+                            <img
+                              className="card-img-top center-cropped m-1 img-fluid"
+                              style={{ height: "250px", objectFit: "cover" }}
+                              src={item.Product.image_1}
+                              alt="test"
+                            />
+                          </div>
+                          <div className="card-body">
+                            <h6
+                              className="card-title text-decoration-none"
+                              style={{ fontsize: "14px" }}
+                            >
+                              {item.Product.product_name}
+                            </h6>
+                            <p
+                              className="text-decoration-none"
+                              style={{ fontsize: "10px" }}
+                            >
+                              {item.Product.category}
+                            </p>
+                            <p
+                              className="text-decoration-none"
+                              style={{ fontsize: "14px" }}
+                            >
+                              Rp {item.Product.price}
+                            </p>
+                            <p
+                              className="text-decoration-none"
+                              style={{ fontsize: "14px" }}
+                            >
+                              Harga Tawar : Rp {item.offering_price}
+                            </p>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </>
+
+                ))
+
               )}
+
+
+
+
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
