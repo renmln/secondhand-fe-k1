@@ -94,8 +94,8 @@ export default function NavBar() {
                                     </>
                                 ) : (
                                     notif.map((item) => {
-                                        
-                                        return <NavDropdown.Item href="#">
+
+                                        <NavDropdown.Item href="#">
                                             <div className="card notifikasi">
                                                 <div className="row">
                                                     <div className="col-2 m-auto">

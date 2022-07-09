@@ -82,6 +82,7 @@ export const addProduct = (params) => async (dispatch) => {
         formdata.append("category", params.category);
         formdata.append("description", params.description);
 
+
         for (let i = 0; i < params.file.length; i++) {
             formdata.append("picture", params.file[i]);
         }
@@ -126,6 +127,7 @@ export const addProduct = (params) => async (dispatch) => {
 
 export const updateProduct = (params) => async (dispatch) => {
     try {
+        console.log(params)
         var formdata = new FormData();
         // formdata.append("id_seller", params.idSeller);
         formdata.append("product_name", params.product_name);
@@ -133,6 +135,10 @@ export const updateProduct = (params) => async (dispatch) => {
         formdata.append("category", params.category);
         formdata.append("description", params.description);
 
+        if (params.status) {
+            formdata.append("status", params.status)
+        }
+        console.log(formdata)
         // Upload new image
         if (params.file) {
             for (let i = 0; i < params.file.length; i++) {
