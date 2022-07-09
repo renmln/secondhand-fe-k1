@@ -42,7 +42,7 @@ export default function NavBar() {
             }
         }
     }
-    // console.log(notif)
+    console.log(notif)
 
 
     return (
@@ -89,13 +89,10 @@ export default function NavBar() {
                                 id="collasible-nav-dropdown"
                                 align="end"
                             >
-                                {notif === null ? (
-                                    <><p>tidak ada notif</p>
-                                    </>
-                                ) : (
+                                {notif.length > 0 ? (
                                     notif.map((item) => {
 
-                                        <NavDropdown.Item href="#">
+                                        return <NavDropdown.Item href="#">
                                             <div className="card notifikasi">
                                                 <div className="row">
                                                     <div className="col-2 m-auto">
@@ -126,6 +123,15 @@ export default function NavBar() {
                                             </div>
                                         </NavDropdown.Item>
                                     })
+
+
+                                ) : (
+                                    <NavDropdown.Item href="#">
+                                        <div className="card notifikasi">
+                                            <p>tidak ada notif</p>
+                                        </div>
+                                    </NavDropdown.Item>
+
                                 )}
 
                             </NavDropdown>
