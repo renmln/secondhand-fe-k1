@@ -92,7 +92,7 @@ export default function NavBar() {
                                 {notif.length > 0 ? (
                                     notif.map((item) => {
 
-                                        return <NavDropdown.Item href="#">
+                                        return <NavDropdown.Item href={`/info-penawaran/${item.id_buyer}`}>
                                             <div className="card notifikasi">
                                                 <div className="row">
                                                     <div className="col-2 m-auto">
@@ -150,6 +150,6 @@ export default function NavBar() {
                     )}
                 </Navbar.Collapse>
             </Navbar>
-        </Container>
+        </Container >
     );
 }

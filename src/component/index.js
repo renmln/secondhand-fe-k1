@@ -9,7 +9,8 @@ import InfoProfil from "./InfoProfil";
 import Footer from "./Footer";
 import DaftarJual from "./DaftarJual";
 import DaftarDiminati from "./DaftarDiminati";
-import EditProduct from "./EditProduct"
+import EditProduct from "./EditProduct";
+import InfoPenawaran from "./InfoPenawaran"
 
 export {
   Login,
@@ -23,5 +24,6 @@ export {
   Footer,
   DaftarJual,
   DaftarDiminati,
-  EditProduct
+  EditProduct,
+  InfoPenawaran
 };
