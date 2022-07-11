@@ -137,23 +137,23 @@ export default function InfoPenawaran() {
                                                 Tanggal dan jam
                                             </p>
                                         </Stack>
-                                        {produk.length>0 ? (
-                                            <div className="float-end mt-2">
-                                                <Button className="btnOutline me-2 px-5">Tolak</Button>
-                                                <Button className="btnPrimary px-5" data-toggle="modal" data-target={`#modal${produk.id}`}>
-                                                    Terima
-                                                </Button>
-                                            </div>
-                                        ) : (
-                                            <div className="float-end mt-2">
-                                                <Button className="btnOutline me-2 px-5" data-toggle="modal" data-target={`#status${produk.id}`}>
-                                                    Status
-                                                </Button>
-                                                <Button className="btnPrimary px-3">
-                                                    Hubungi di <i className="bi bi-whatsapp ms-2"></i>
-                                                </Button>
-                                            </div>
-                                        )}
+
+                                        <div className="float-end mt-2">
+                                            <Button className="btnOutline me-2 px-5">Tolak</Button>
+                                            <Button className="btnPrimary px-5" data-toggle="modal" data-target={`#modal${produk.id}`}>
+                                                Terima
+                                            </Button>
+                                        </div>
+
+                                        <div className="float-end mt-2">
+                                            <Button className="btnOutline me-2 px-5" data-toggle="modal" data-target={`#status${produk.id}`}>
+                                                Status
+                                            </Button>
+                                            <Button className="btnPrimary px-3">
+                                                Hubungi di <i className="bi bi-whatsapp ms-2"></i>
+                                            </Button>
+                                        </div>
+
 
                                         {/* Modal Terima*/}
                                         <div className="modal fade" id={`modal${produk.id}`} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -170,27 +170,27 @@ export default function InfoPenawaran() {
                                                         <Stack gap={3} className="modalProduk">
                                                             <div className="text-center fw-bold">Product Match</div>
                                                             <Stack direction="horizontal" gap={3}>
-                                                                <img src={profilpenjual} alt="" className="imageSmall" />
+                                                                <img src={produk.User.photo_profile} alt="" className="imageSmall" />
                                                                 <div>
                                                                     <h5 className="my-auto" style={{ fontSize: "14px", lineHeight: "24px" }}>
-                                                                        Nama Pembeli
+                                                                        {produk.User.name}
                                                                     </h5>
                                                                     <p className="my-auto" style={{ fontSize: "14px", color: "#BABABA" }}>
-                                                                        Kota
+                                                                        {produk.User.city}
                                                                     </p>
                                                                 </div>
                                                             </Stack>
                                                             <Stack direction="horizontal" gap={3}>
-                                                                <img src={profilproduk} alt="" className="imageSmall align-self-start mt-1" />
+                                                                <img src={produk.Product.image_1} alt="" className="imageSmall align-self-start mt-1" />
                                                                 <div>
                                                                     <h5 className="my-auto" style={{ fontSize: "14px", lineHeight: "26px" }}>
-                                                                        {produk.nama}
+                                                                        {produk.Product.product_name}
                                                                     </h5>
                                                                     <h5 className="my-auto" style={{ fontSize: "14px", lineHeight: "26px" }}>
-                                                                        <del>{produk.harga}</del>
+                                                                        <del>{produk.Product.price}</del>
                                                                     </h5>
                                                                     <h5 className="my-auto" style={{ fontSize: "14px", lineHeight: "26px" }}>
-                                                                        Ditawar {produk.ditawar}
+                                                                        Ditawar {produk.offering_price}
                                                                     </h5>
                                                                 </div>
                                                             </Stack>
@@ -238,6 +238,8 @@ export default function InfoPenawaran() {
                                                 </div>
                                             </div>
                                         </div>
+
+                                        
                                     </div>
                                     <hr className="mb-4"></hr>
                                 </div>
