@@ -12,7 +12,7 @@ import {
   FiChevronRight,
   FiPlus,
 } from "react-icons/fi";
-import { getOfferingByIdBuyer } from "../../redux/actions/offeringActions";
+import { getAllOffering, getOfferingByIdBuyer } from "../../redux/actions/offeringActions";
 
 export default function DaftarDiminati() {
   const navigate = useNavigate();
@@ -20,18 +20,21 @@ export default function DaftarDiminati() {
   const token = localStorage.getItem("token");
   const { product } = useSelector((state) => state.product);
   const { user } = useSelector((state) => state.auth);
-  const { offering } = useSelector((state) => state.offering);
+  const { alloffer } = useSelector((state) => state.offering);
 
 
   useEffect(() => {
-    if (token === null) {
-      return navigate("/");
+    dispatch(getAllOffering())
+}, [dispatch]);
+
+const diminati = []
+if (alloffer && user) {
+    for (let i = 0; i < alloffer.length; i++) {
+        if (alloffer[i].Product.id_seller === user.id) {
+          diminati.push(alloffer[i])
+        }
     }
-    dispatch(getOfferingByIdBuyer());
-  }, [dispatch, token]);
-  if (offering) {
-    console.log(offering)
-  }
+}
   return (
     <div className="container">
       <div>
@@ -112,12 +115,12 @@ export default function DaftarDiminati() {
           <div className="col-9 ">
             <div className="row justify-content-center">
               
-              {offering === null || offering === undefined ? (
+              {diminati === null || diminati === undefined ? (
                 <>
                   <h4 className="text-center pt-5">Produk Tidak Tersedia</h4>
                 </>
               ) : (
-                offering.map((item) => (
+                diminati.map((item) => (
                   <>
                     <div
                       // key={item.}
