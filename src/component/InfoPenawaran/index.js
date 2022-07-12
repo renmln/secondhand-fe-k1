@@ -67,6 +67,7 @@ export default function InfoPenawaran() {
         };
         console.log(data)
         dispatch(addTransaction(data));
+
     }
 
     const listtransaksi = []
@@ -78,6 +79,10 @@ export default function InfoPenawaran() {
     }
 
     console.log(listtransaksi)
+
+    function handlerefresh() {
+        window.location.reload();
+    }
 
 
 
@@ -152,22 +157,32 @@ export default function InfoPenawaran() {
                                             </p>
                                         </Stack>
 
-                                        
-                                        <div className="float-end mt-2">
-                                            <Button className="btnOutline me-2 px-5">Tolak</Button>
-                                            <Button className="btnPrimary px-5" onClick={() => handleTerima(index)} data-toggle="modal" data-target={`#modal${produk.id}`}>
-                                                Terima
-                                            </Button>
-                                        </div>
+                                        {listtransaksi.find((x) => x === produk.id_product) ? (
 
-                                        <div className="float-end mt-2">
-                                            <Button className="btnOutline me-2 px-5" data-toggle="modal" data-target={`#status${produk.id}`}>
-                                                Status
-                                            </Button>
-                                            <Button className="btnPrimary px-3">
-                                                Hubungi di <i className="bi bi-whatsapp ms-2"></i>
-                                            </Button>
-                                        </div>
+                                            <>
+                                                <div className="float-end mt-2">
+                                                    <Button className="btnOutline me-2 px-5" data-toggle="modal" data-target={`#status${produk.id}`}>
+                                                        Status
+                                                    </Button>
+                                                    <Button className="btnPrimary px-3">
+                                                        Hubungi di <i className="bi bi-whatsapp ms-2"></i>
+                                                    </Button>
+                                                </div>
+                                            </>
+
+                                        ) : (
+                                            <>
+                                                <div className="float-end mt-2">
+                                                    <Button className="btnOutline me-2 px-5">Tolak</Button>
+                                                    <Button className="btnPrimary px-5" onClick={() => handleTerima(index)} data-toggle="modal" data-target={`#modal${produk.id}`}>
+                                                        Terima
+                                                    </Button>
+                                                </div>
+                                            </>
+                                        )}
+
+
+
 
 
                                         {/* Modal Terima*/}
@@ -175,7 +190,7 @@ export default function InfoPenawaran() {
                                             <div className="modal-dialog modal-dialog-centered">
                                                 <div className="modal-content modalPenawaran">
                                                     <div className="modal-header">
-                                                        <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                                        <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close" onClick={handlerefresh}></button>
                                                     </div>
                                                     <div className="modal-body">
                                                         Yeay kamu berhasil mendapat harga yang sesuai
@@ -262,7 +277,7 @@ export default function InfoPenawaran() {
                         })}
                     </div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     );
 }
