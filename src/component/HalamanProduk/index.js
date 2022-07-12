@@ -26,7 +26,7 @@ export default function HalamanProduk() {
   const [modalShow, setModalShow] = React.useState(false);
 
   const [id_product, setIdProduct] = useState("");
-  const [offering_price, setOfferingPrice] = useState("");
+  const [offering_price, setOfferingPrice] = useState(0);
   const [no_hp, setNoHp] = useState("");
 
   React.useEffect(() => {
@@ -62,6 +62,11 @@ export default function HalamanProduk() {
 
   function handleEdit() {
     return navigate(`/edit-product/${id}`);
+  }
+
+  function handleChangePrice(event) {
+    console.log(event.target.value)
+    setOfferingPrice(event.target.value)
   }
 
   function ModalTawar(props) {
@@ -129,7 +134,8 @@ export default function HalamanProduk() {
                   placeholder="Rp 0,00"
                   style={{ borderRadius: "16px" }}
                   value={offering_price}
-                  onChange={(e) => setOfferingPrice(e.target.value)}
+                  onChange={handleChangePrice}
+                // onChange={(e) => setOfferingPrice(e.target.value)}
                 />
               </div>
               <button
@@ -192,7 +198,7 @@ export default function HalamanProduk() {
   if (offering && user) {
     cekoffer = offering.find((x) => x.id_buyer === user.id);
   }
-  console.log(cekoffer);
+  // console.log(cekoffer);
 
   return (
     <div className="container">
