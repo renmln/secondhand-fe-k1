@@ -4,7 +4,7 @@ import {
   GET_ALL_OFFERING,
   GET_OFFER,
   OFFERING_ERROR,
-  GET_ALL
+  GET_ALL,
 } from "./types";
 import axios from "axios";
 

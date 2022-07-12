@@ -13,7 +13,10 @@ import Modal from "react-bootstrap/Modal";
 import Swal from "sweetalert2";
 import { Carousel } from "react-bootstrap";
 import NavBar from "../NavBar";
-import { getProductById, updateProduct } from "../../redux/actions/productsActions";
+import {
+  getProductById,
+  updateProduct,
+} from "../../redux/actions/productsActions";
 import { getUserbyID } from "../../redux/actions/authActions";
 
 export default function HalamanProduk() {
@@ -22,7 +25,7 @@ export default function HalamanProduk() {
   const navigate = useNavigate();
   const { detailProduct } = useSelector((state) => state.product);
   const { user, detailUser } = useSelector((state) => state.auth);
-  const { offering, detailOffer } = useSelector((state) => state.offering);
+  const { offering } = useSelector((state) => state.offering);
   const [modalShow, setModalShow] = React.useState(false);
 
   const [id_product, setIdProduct] = useState("");
@@ -54,9 +57,9 @@ export default function HalamanProduk() {
 
     const updatestatus = {
       id,
-      status: "ditawar"
-    }
-    dispatch(updateProduct(updatestatus))
+      status: "ditawar",
+    };
+    dispatch(updateProduct(updatestatus));
     window.location.reload();
   };
 
