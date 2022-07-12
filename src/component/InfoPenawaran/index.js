@@ -11,13 +11,21 @@ import Jam from "../../images/Rectangle 23.png";
 import NavBar from "../NavBar";
 import { getUserbyID } from "../../redux/actions/authActions";
 import { getAllOffering, getOfferingByIdBuyer } from "../../redux/actions/offeringActions";
+import { addTransaction, getAllTransaction } from "../../redux/actions/transactionAction";
 
 export default function InfoPenawaran() {
     let [show, setShow] = useState(false);
     const dispatch = useDispatch();
     const { id } = useParams();
-    const { user, status, detailUser } = useSelector((state) => state.auth);
+    const { user, detailUser } = useSelector((state) => state.auth);
     const { alloffer } = useSelector((state) => state.offering);
+    const { transaction } = useSelector((state) => state.transaction);
+
+    const [id_seller, setId_seller] = useState("");
+    const [id_offering, setId_offering] = useState("");
+    const [id_buyer, setId_buyer] = useState("");
+    const [status, setStatus] = useState("");
+    const [id_product, setId_product] = useState("");
 
     useEffect(() => {
         dispatch(getUserbyID(id))
@@ -28,34 +36,15 @@ export default function InfoPenawaran() {
         dispatch(getAllOffering())
     }, [dispatch]);
 
-    console.log(alloffer)
+    useEffect(() => {
+        dispatch(getAllTransaction())
+    }, [dispatch]);
+
+
+
+    // console.log(transaction)
     // Data Dummy
     const produkDitawar = [];
-    // Buat orderan baru masuk
-    // for (let i = 1; i <= 2; i++) {
-    //     produkDitawar.push({
-    //         id: i,
-    //         nama: "Jam Tangan Casio",
-    //         gambar: "Jam",
-    //         harga: "Rp. 250.000",
-    //         ditawar: "Rp. 200.000",
-    //         date: "20 Apr, 14:04",
-    //         status: "Ditawarkan",
-    //     });
-    // }
-
-    // // Buat orderan udah diterima
-    // for (let i = 1; i <= 2; i++) {
-    //     produkDitawar.push({
-    //         id: i,
-    //         nama: "Jam Tangan Casio",
-    //         gambar: "Jam",
-    //         harga: "Rp. 250.000",
-    //         ditawar: "Rp. 200.000",
-    //         date: "20 Apr, 14:04",
-    //         status: "Diterima",
-    //     });
-    // }
 
     if (alloffer && detailUser) {
         for (let i = 0; i < alloffer.length; i++) {
@@ -64,7 +53,32 @@ export default function InfoPenawaran() {
             }
         }
     }
-    console.log(produkDitawar)
+    // console.log(produkDitawar)
+
+    function handleTerima(index) {
+        console.log(index)
+        // e.preventDefault();
+        const data = {
+            id_seller: user.id,
+            id_product: produkDitawar[index].id_product,
+            id_offering: produkDitawar[index].id,
+            id_buyer: produkDitawar[index].id_buyer,
+            status: "proses"
+        };
+        console.log(data)
+        dispatch(addTransaction(data));
+    }
+
+    const listtransaksi = []
+
+    if (transaction && user) {
+        for (let i = 0; i < transaction.length; i++) {
+            listtransaksi.push(transaction[i].id_product)
+        }
+    }
+
+    console.log(listtransaksi)
+
 
 
 
@@ -138,9 +152,10 @@ export default function InfoPenawaran() {
                                             </p>
                                         </Stack>
 
+                                        
                                         <div className="float-end mt-2">
                                             <Button className="btnOutline me-2 px-5">Tolak</Button>
-                                            <Button className="btnPrimary px-5" data-toggle="modal" data-target={`#modal${produk.id}`}>
+                                            <Button className="btnPrimary px-5" onClick={() => handleTerima(index)} data-toggle="modal" data-target={`#modal${produk.id}`}>
                                                 Terima
                                             </Button>
                                         </div>
@@ -239,7 +254,7 @@ export default function InfoPenawaran() {
                                             </div>
                                         </div>
 
-                                        
+
                                     </div>
                                     <hr className="mb-4"></hr>
                                 </div>

@@ -71,6 +71,7 @@ export default function HalamanProduk() {
         size="sm"
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        preventDefault
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
