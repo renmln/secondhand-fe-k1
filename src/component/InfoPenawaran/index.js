@@ -256,9 +256,19 @@ export default function InfoPenawaran() {
                           >
                             Status
                           </Button>
-                          <Button className="btnPrimary px-3">
-                            Hubungi di <i className="bi bi-whatsapp ms-2"></i>
-                          </Button>
+                          <a
+                            href={
+                              "https://api.whatsapp.com/send/?phone=" +
+                              detailUser.no_hp +
+                              "&text&app_absent=0"
+                            }
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Button className="btnPrimary px-3">
+                              Hubungi di <i className="bi bi-whatsapp ms-2"></i>
+                            </Button>
+                          </a>
                         </div>
                       </>
                     ) : (
