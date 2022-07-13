@@ -17,7 +17,10 @@ import {
 import {
   addTransaction,
   getAllTransaction,
+  updateTransaction,
 } from "../../redux/actions/transactionAction";
+import { UPDATE_PRODUCT } from "../../redux/actions/types";
+import { updateProduct } from "../../redux/actions/productsActions";
 
 export default function InfoPenawaran() {
   let [show, setShow] = useState(false);
@@ -27,16 +30,12 @@ export default function InfoPenawaran() {
   const { alloffer } = useSelector((state) => state.offering);
   const { transaction } = useSelector((state) => state.transaction);
 
-  const [id_seller, setId_seller] = useState("");
-  const [id_offering, setId_offering] = useState("");
-  const [id_buyer, setId_buyer] = useState("");
   const [status, setStatus] = useState("");
-  const [id_product, setId_product] = useState("");
 
   useEffect(() => {
     dispatch(getUserbyID(id));
   }, [dispatch, id]);
-  console.log(detailUser);
+  // console.log(detailUser)
 
   useEffect(() => {
     dispatch(getAllOffering());
@@ -46,7 +45,6 @@ export default function InfoPenawaran() {
     dispatch(getAllTransaction());
   }, [dispatch]);
 
-  // console.log(transaction)
   // Data Dummy
   const produkDitawar = [];
 
@@ -57,10 +55,17 @@ export default function InfoPenawaran() {
       }
     }
   }
-  // console.log(produkDitawar)
+
+  const listtransaksi = [];
+  if (transaction && user) {
+    for (let i = 0; i < transaction.length; i++) {
+      listtransaksi.push(transaction[i]);
+    }
+  }
+  console.log(listtransaksi);
 
   function handleTerima(index) {
-    console.log(index);
+    // console.log(index)
     // e.preventDefault();
     const data = {
       id_seller: user.id,
@@ -69,22 +74,41 @@ export default function InfoPenawaran() {
       id_buyer: produkDitawar[index].id_buyer,
       status: "proses",
     };
-    console.log(data);
+    // console.log(data)
     dispatch(addTransaction(data));
   }
 
-  const listtransaksi = [];
-
-  if (transaction && user) {
-    for (let i = 0; i < transaction.length; i++) {
-      listtransaksi.push(transaction[i].id_product);
-    }
-  }
-
-  console.log(listtransaksi);
-
   function handlerefresh() {
     window.location.reload();
+  }
+
+  function handleModalStatus(index) {
+    setShow(true);
+    console.log(status);
+    if (status === "BERHASIL") {
+      const updatestatusproduct = {
+        id: listtransaksi[index].id_product,
+        status: "NOT AVAILABLE",
+      };
+      console.log(updatestatusproduct);
+      dispatch(updateProduct(updatestatusproduct));
+    }
+
+    if (status === "GAGAL") {
+      const updatestatusproduct = {
+        id: listtransaksi[index].id_product,
+        status: "AVAILABLE",
+      };
+      console.log(updatestatusproduct);
+      dispatch(updateProduct(updatestatusproduct));
+    }
+
+    const data = {
+      id: listtransaksi[index].id,
+      status,
+    };
+    // console.log(data)
+    dispatch(updateTransaction(data));
   }
 
   return (
@@ -220,7 +244,9 @@ export default function InfoPenawaran() {
                       </p>
                     </Stack>
 
-                    {listtransaksi.find((x) => x === produk.id_product) ? (
+                    {listtransaksi.find(
+                      (x) => x.id_product === produk.id_product
+                    ) ? (
                       <>
                         <div className="float-end mt-2">
                           <Button
@@ -230,19 +256,9 @@ export default function InfoPenawaran() {
                           >
                             Status
                           </Button>
-                          <a
-                            href={
-                              "https://api.whatsapp.com/send/?phone=" +
-                              detailUser.no_hp +
-                              "&text&app_absent=0"
-                            }
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <Button className="btnPrimary px-3">
-                              Hubungi di <i className="bi bi-whatsapp ms-2"></i>
-                            </Button>
-                          </a>
+                          <Button className="btnPrimary px-3">
+                            Hubungi di <i className="bi bi-whatsapp ms-2"></i>
+                          </Button>
                         </div>
                       </>
                     ) : (
@@ -400,7 +416,8 @@ export default function InfoPenawaran() {
                                   type="radio"
                                   name="flexRadioDefault"
                                   id="flexRadioDefault1"
-                                  defaultChecked
+                                  value="BERHASIL"
+                                  onClick={(e) => setStatus(e.target.value)}
                                 />
                                 <label
                                   className="form-check-label"
@@ -422,6 +439,8 @@ export default function InfoPenawaran() {
                                   type="radio"
                                   name="flexRadioDefault"
                                   id="flexRadioDefault2"
+                                  value="GAGAL"
+                                  onClick={(e) => setStatus(e.target.value)}
                                 />
                                 <label
                                   className="form-check-label"
@@ -442,7 +461,7 @@ export default function InfoPenawaran() {
                               type="button"
                               className="btn btnPrimary mt-3 w-100"
                               id="btnSubmit"
-                              onClick={() => setShow(true)}
+                              onClick={() => handleModalStatus(index)}
                               data-dismiss="modal"
                             >
                               Kirim

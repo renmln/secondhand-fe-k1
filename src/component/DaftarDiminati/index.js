@@ -25,16 +25,16 @@ export default function DaftarDiminati() {
 
   useEffect(() => {
     dispatch(getAllOffering())
-}, [dispatch]);
+  }, [dispatch]);
 
-const diminati = []
-if (alloffer && user) {
+  const diminati = []
+  if (alloffer && user) {
     for (let i = 0; i < alloffer.length; i++) {
-        if (alloffer[i].Product.id_seller === user.id) {
-          diminati.push(alloffer[i])
-        }
+      if (alloffer[i].Product.id_seller === user.id) {
+        diminati.push(alloffer[i])
+      }
     }
-}
+  }
   return (
     <div className="container">
       <div>
@@ -84,7 +84,11 @@ if (alloffer && user) {
                 <td>
                   <FiBox />
                 </td>
-                <td>Semua Produk</td>
+                <td>
+                  <a href={`/daftarjual`}>
+                    Semua Produk
+                  </a>
+                </td>
                 <td>
                   <FiChevronRight />
                 </td>
@@ -105,7 +109,11 @@ if (alloffer && user) {
                 <td>
                   <FiDollarSign />
                 </td>
-                <td>Terjual</td>
+                <td>
+                  <a href="daftarterjual">
+                    Terjual
+                  </a>
+                </td>
                 <td>
                   <FiChevronRight />
                 </td>
@@ -114,7 +122,7 @@ if (alloffer && user) {
           </div>
           <div className="col-9 ">
             <div className="row justify-content-center">
-              
+
               {diminati === null || diminati === undefined ? (
                 <>
                   <h4 className="text-center pt-5">Produk Tidak Tersedia</h4>

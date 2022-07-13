@@ -21,6 +21,7 @@ import {
   DaftarDiminati,
   EditProduct,
   InfoPenawaran,
+  DaftarTerjual,
 } from "./component";
 import { InfoProfil } from "./component";
 
@@ -46,6 +47,7 @@ root.render(
         <Route path="/daftarDiminati" element={<DaftarDiminati />} />
         <Route path="/edit-product/:id" element={<EditProduct />} />
         <Route path="/info-penawaran/:id" element={<InfoPenawaran />} />
+        <Route path="/daftarterjual" element={<DaftarTerjual />} />
 
       </Routes>
     </BrowserRouter>

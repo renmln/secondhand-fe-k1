@@ -2,7 +2,8 @@ import Swal from "sweetalert2";
 import {
     GET_ALL_TRANSACTION,
     CREATE_TRANSACTION,
-    TRANSACTION_ERROR
+    TRANSACTION_ERROR,
+    UPDATE_TRANSACTION
 } from "./types";
 import axios from "axios";
 
@@ -75,6 +76,66 @@ export const addTransaction = (params) => async (dispatch) => {
             title: error,
             showConfirmButton: false,
             timer: 150000,
+        });
+    }
+};
+
+export const updateTransaction = (params) => async (dispatch) => {
+    try {
+        const status = params.status;
+
+        // var formdata = new FormData();
+        // formdata.append("status", params.status)
+
+        // const response = await fetch(`http://localhost:8000/api/v1/transactions/update/${params.id}`, {
+        //     method: "PUT",
+        //     headers: {
+        //         Authorization: `Bearer ${localStorage.getItem("token")}`,
+        //     },
+        //     body: status,
+        // });
+        console.log(params)
+        // const data = await response.json();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-type": "application/json",
+            },
+        };
+        const response = await axios.put(
+            `http://localhost:8000/api/v1/transactions/update/${params.id}`,
+            {
+                status
+            },
+            config
+        );
+        const data = await response.data;
+
+
+        dispatch({
+            type: UPDATE_TRANSACTION,
+            status: data.status,
+        });
+
+        // Swal.fire({
+        //     position: "center",
+        //     icon: "success",
+        //     title: "Success",
+        //     showConfirmButton: false,
+        //     timer: 1500,
+        // });
+    } catch (error) {
+        dispatch({
+            type: TRANSACTION_ERROR,
+            payload: error.response,
+        });
+
+        Swal.fire({
+            position: "center",
+            icon: "error",
+            title: error,
+            showConfirmButton: false,
+            timer: 1500,
         });
     }
 };
