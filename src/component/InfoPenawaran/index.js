@@ -11,7 +11,9 @@ import Jam from "../../images/Rectangle 23.png";
 import NavBar from "../NavBar";
 import { getUserbyID } from "../../redux/actions/authActions";
 import { getAllOffering, getOfferingByIdBuyer } from "../../redux/actions/offeringActions";
-import { addTransaction, getAllTransaction } from "../../redux/actions/transactionAction";
+import { addTransaction, getAllTransaction, updateTransaction } from "../../redux/actions/transactionAction";
+import { UPDATE_PRODUCT } from "../../redux/actions/types";
+import { updateProduct } from "../../redux/actions/productsActions";
 
 export default function InfoPenawaran() {
     let [show, setShow] = useState(false);
@@ -21,16 +23,12 @@ export default function InfoPenawaran() {
     const { alloffer } = useSelector((state) => state.offering);
     const { transaction } = useSelector((state) => state.transaction);
 
-    const [id_seller, setId_seller] = useState("");
-    const [id_offering, setId_offering] = useState("");
-    const [id_buyer, setId_buyer] = useState("");
     const [status, setStatus] = useState("");
-    const [id_product, setId_product] = useState("");
 
     useEffect(() => {
         dispatch(getUserbyID(id))
     }, [dispatch, id]);
-    console.log(detailUser)
+    // console.log(detailUser)
 
     useEffect(() => {
         dispatch(getAllOffering())
@@ -41,8 +39,6 @@ export default function InfoPenawaran() {
     }, [dispatch]);
 
 
-
-    // console.log(transaction)
     // Data Dummy
     const produkDitawar = [];
 
@@ -53,10 +49,18 @@ export default function InfoPenawaran() {
             }
         }
     }
-    // console.log(produkDitawar)
+
+    const listtransaksi = []
+    if (transaction && user) {
+        for (let i = 0; i < transaction.length; i++) {
+            listtransaksi.push(transaction[i])
+        }
+    }
+    console.log(listtransaksi)
+
 
     function handleTerima(index) {
-        console.log(index)
+        // console.log(index)
         // e.preventDefault();
         const data = {
             id_seller: user.id,
@@ -65,23 +69,45 @@ export default function InfoPenawaran() {
             id_buyer: produkDitawar[index].id_buyer,
             status: "proses"
         };
-        console.log(data)
+        // console.log(data)
         dispatch(addTransaction(data));
-
     }
-
-    const listtransaksi = []
-
-    if (transaction && user) {
-        for (let i = 0; i < transaction.length; i++) {
-            listtransaksi.push(transaction[i].id_product)
-        }
-    }
-
-    console.log(listtransaksi)
 
     function handlerefresh() {
         window.location.reload();
+    }
+
+    function handleModalStatus(index) {
+        setShow(true);
+        console.log(status)
+        if (status === "BERHASIL") {
+            const updatestatusproduct = {
+                id: listtransaksi[index].id_product,
+                status: "NOT AVAILABLE"
+            }
+            console.log(updatestatusproduct)
+            dispatch(updateProduct(updatestatusproduct))
+        }
+
+        if (status === "GAGAL") {
+            const updatestatusproduct = {
+                id: listtransaksi[index].id_product,
+                status: "AVAILABLE"
+            }
+            console.log(updatestatusproduct)
+            dispatch(updateProduct(updatestatusproduct))
+        }
+
+        const data = {
+            id: listtransaksi[index].id,
+            status
+        }
+        // console.log(data)
+        dispatch(updateTransaction(data))
+
+
+
+
     }
 
 
@@ -157,7 +183,7 @@ export default function InfoPenawaran() {
                                             </p>
                                         </Stack>
 
-                                        {listtransaksi.find((x) => x === produk.id_product) ? (
+                                        {listtransaksi.find((x) => x.id_product === produk.id_product) ? (
 
                                             <>
                                                 <div className="float-end mt-2">
@@ -243,7 +269,13 @@ export default function InfoPenawaran() {
                                                         <Stack gap={3}>
                                                             <div>Perbarui status penjualan produkmu</div>
                                                             <div className="form-check">
-                                                                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" defaultChecked />
+                                                                <input
+                                                                    className="form-check-input"
+                                                                    type="radio"
+                                                                    name="flexRadioDefault"
+                                                                    id="flexRadioDefault1"
+                                                                    value="BERHASIL"
+                                                                    onClick={(e) => setStatus(e.target.value)} />
                                                                 <label className="form-check-label" htmlFor="flexRadioDefault1">
                                                                     Berhasil terjual
                                                                 </label>
@@ -252,7 +284,14 @@ export default function InfoPenawaran() {
                                                                 </p>
                                                             </div>
                                                             <div className="form-check">
-                                                                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
+                                                                <input
+                                                                    className="form-check-input"
+                                                                    type="radio"
+                                                                    name="flexRadioDefault"
+                                                                    id="flexRadioDefault2"
+                                                                    value="GAGAL"
+                                                                    onClick={(e) => setStatus(e.target.value)}
+                                                                />
                                                                 <label className="form-check-label" htmlFor="flexRadioDefault2">
                                                                     Batalkan transaksi
                                                                 </label>
@@ -261,7 +300,7 @@ export default function InfoPenawaran() {
                                                                 </p>
                                                             </div>
                                                         </Stack>
-                                                        <button type="button" className="btn btnPrimary mt-3 w-100" id="btnSubmit" onClick={() => setShow(true)} data-dismiss="modal">
+                                                        <button type="button" className="btn btnPrimary mt-3 w-100" id="btnSubmit" onClick={() => handleModalStatus(index)} data-dismiss="modal">
                                                             Kirim
                                                         </button>
                                                     </div>

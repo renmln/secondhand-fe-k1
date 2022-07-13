@@ -11,6 +11,7 @@ import DaftarJual from "./DaftarJual";
 import DaftarDiminati from "./DaftarDiminati";
 import EditProduct from "./EditProduct";
 import InfoPenawaran from "./InfoPenawaran"
+import DaftarTerjual from "./DaftarTerjual"
 
 export {
   Login,
@@ -25,5 +26,6 @@ export {
   DaftarJual,
   DaftarDiminati,
   EditProduct,
-  InfoPenawaran
+  InfoPenawaran,
+  DaftarTerjual
 };

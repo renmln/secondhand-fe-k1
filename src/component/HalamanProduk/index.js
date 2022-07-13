@@ -70,6 +70,7 @@ export default function HalamanProduk() {
   }
 
   function ModalTawar(props) {
+    
     return (
       <Modal
         {...props}

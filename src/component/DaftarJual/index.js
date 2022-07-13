@@ -28,7 +28,7 @@ export default function DaftarJual() {
     }
     dispatch(getAllProductByIdSeller());
   }, [dispatch, navigate, token]);
-console.log(user)
+  console.log(user)
   return (
     <div className="container">
       <div>
@@ -78,7 +78,11 @@ console.log(user)
                 <td>
                   <FiBox />
                 </td>
-                <td>Semua Produk</td>
+                <td>
+                  <a href={`/daftarjual`}>
+                    Semua Produk
+                  </a>
+                </td>
                 <td>
                   <FiChevronRight />
                 </td>
@@ -100,7 +104,11 @@ console.log(user)
                 <td>
                   <FiDollarSign />
                 </td>
-                <td>Terjual</td>
+                <td>
+                  <a href="daftarterjual">
+                    Terjual
+                  </a>
+                </td>
                 <td>
                   <FiChevronRight />
                 </td>

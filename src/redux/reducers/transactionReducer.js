@@ -1,4 +1,5 @@
-import { GET_ALL_TRANSACTION, CREATE_TRANSACTION, TRANSACTION_ERROR } from "../actions/types";
+import { GET_ALL_TRANSACTION, CREATE_TRANSACTION, TRANSACTION_ERROR,
+    UPDATE_TRANSACTION } from "../actions/types";
 
 const initialState = {
     transaction: [],
@@ -20,6 +21,11 @@ const transactionReducer = (state = initialState, action) => {
                 ...state,
                 status: action.status,
             };
+        case UPDATE_TRANSACTION:
+            return {
+                ...state,
+                status: action.payload,
+            };
 
         // case GET_PRODUCT:
         //     return {
@@ -31,11 +37,7 @@ const transactionReducer = (state = initialState, action) => {
         //         ...state,
         //         status: action.status,
         //     };
-        // case UPDATE_PRODUCT:
-        //     return {
-        //         ...state,
-        //         status: action.payload,
-        //     };
+
         // case DELETE_PRODUCT:
         //     return {
         //         ...state,
