@@ -18,7 +18,7 @@ import { Container, Row, Col, Button, Stack, Table, Card } from "react-bootstrap
 import CurrencyFormat from "react-currency-format";
 import AddProduct from "../../images/addProduct.png";
 import { getAllProductByIdSeller } from "../../redux/actions/productsActions";
-
+import NullOffer from '../../images/Group 33.svg'
 
 export default function DaftarTerjual() {
     const navigate = useNavigate();
@@ -30,24 +30,21 @@ export default function DaftarTerjual() {
     const { transaction } = useSelector((state) => state.transaction);
 
     useEffect(() => {
-        if (token === null) {
-            return navigate("/");
-        }
-        dispatch(getAllProductByIdSeller());
-    }, [dispatch, navigate, token]);
+        dispatch(getAllTransaction());
+    }, [dispatch]);
 
 
 
     const terjual = []
     if (product && user) {
-        for (let i = 0; i < product.length; i++) {
-            if (product[i].id_seller === user.id && product[i].status === "NOT AVAILABLE") {
-                terjual.push(product[i])
+        for (let i = 0; i < transaction.length; i++) {
+            if (transaction[i].id_seller === user.id && transaction[i].status === "BERHASIL") {
+                terjual.push(transaction[i])
             }
         }
     }
-    // console.log(product)
-    // console.log(terjual)
+    console.log(transaction)
+    console.log(terjual)
 
     const handleFilterDiminati = () => {
 
@@ -118,28 +115,44 @@ export default function DaftarTerjual() {
                         <Row className="mt-4">
                             {terjual.length === 0 || terjual.length === undefined ? (
                                 <>
-                                <p className="text-center">Belum Ada Produk Yang Terjual</p>
+                                    <Col lg={4} md={12} xs={12} className="m-auto">
+                                        <div className="">
+                                            <img src={NullOffer}></img>
+                                        </div>
+                                        <p className="text-center">Belum ada produkmu yang diminati nih, sabar ya rejeki nggak kemana kok</p>
+                                    </Col>
+
                                 </>
                             ) : (
                                 terjual.map((item) => (
-                                    <Col key={item.id} lg={4} md={4} xs={6} className="mb-4">
-                                        <Link to={`/halamanproduk/${item.id}`}>
-                                            <Card>
-                                                <Card.Img variant="top" src={item.image_1} className="imgProductLarge" />
-                                                <Card.Body>
-                                                    <Card.Title className="textInfo" style={{ fontSize: "14px", height: "10px" }}>
-                                                        {item.product_name}
-                                                    </Card.Title>
-                                                    <Card.Text className="textInfo" style={{ fontSize: "10px", height: "5px" }}>
-                                                        {item.category}
-                                                    </Card.Text>
-                                                    <Card.Text className="textInfo" style={{ fontSize: "14px", height: "12px" }}>
-                                                        <CurrencyFormat value={item.price} displayType={"text"} thousandSeparator={"."} decimalSeparator={","} prefix={"Rp. "} />
-                                                    </Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Link>
-                                    </Col>
+                                    <div className="card notifikasi">
+                                        <div className="row">
+                                            <div className="col-2 m-auto">
+                                                <img src={item.Product.image_1} className="w-100" alt="" />
+                                            </div>
+                                            <div className="col-10">
+                                                <div className="row mb-1" style={{ fontSize: "10px" }}>
+                                                    <div className="col-xl-6 mb-1">
+                                                        <p className="mb-1">Produk Terjual</p>
+                                                    </div>
+                                                    <div className="col-xl-6 mb-1" style={{ textAlign: "right" }}>
+                                                        <p className="mb-1">
+                                                            20 Apr, 14:04 &ensp;
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <p className="mb-1" style={{ fontSize: "14px", fontWeight: "bold" }}>
+                                                    {item.Product.product_name}
+                                                </p>
+                                                <p className="mb-1" style={{ fontSize: "14px", fontWeight: "bold" }}>
+                                                    {item.Product.price}
+                                                </p>
+                                                <p className="mb-1" style={{ fontSize: "14px", fontWeight: "bold" }}>
+                                                    Terjual dengan harga Rp {item.Offering.offering_price}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 ))
                             )}
                         </Row>

@@ -31,7 +31,7 @@ export default function NavBar() {
     useEffect(() => {
         dispatch(getAllOffering())
     }, [dispatch]);
-    // console.log(alloffer)
+    console.log(alloffer)
 
 
     const notif = []

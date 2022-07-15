@@ -98,6 +98,9 @@ const Regis = () => {
                 >
                   Masuk
                 </Button>
+                <div classname={{ marginTop: "20px" }}>
+                  <p> Lupa Password ? <Link to="/lupa-password">Klik disini</Link></p>
+                </div>
                 <div className="d-flex justify-content-center">
                   <Button
                     variant="success"

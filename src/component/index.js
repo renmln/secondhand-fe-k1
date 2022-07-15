@@ -12,6 +12,8 @@ import DaftarDiminati from "./DaftarDiminati";
 import EditProduct from "./EditProduct";
 import InfoPenawaran from "./InfoPenawaran"
 import DaftarTerjual from "./DaftarTerjual"
+import LupaPassword from "./LupaPassword"
+import ResetPassword from "./ResetPassword"
 
 export {
   Login,
@@ -27,5 +29,7 @@ export {
   DaftarDiminati,
   EditProduct,
   InfoPenawaran,
-  DaftarTerjual
+  DaftarTerjual,
+  LupaPassword,
+  ResetPassword,
 };

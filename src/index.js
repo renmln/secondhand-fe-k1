@@ -22,6 +22,9 @@ import {
   EditProduct,
   InfoPenawaran,
   DaftarTerjual,
+  LupaPassword,
+  ResetPassword
+
 } from "./component";
 import { InfoProfil } from "./component";
 
@@ -48,6 +51,8 @@ root.render(
         <Route path="/edit-product/:id" element={<EditProduct />} />
         <Route path="/info-penawaran/:id" element={<InfoPenawaran />} />
         <Route path="/daftarterjual" element={<DaftarTerjual />} />
+        <Route path="/lupa-password" element={<LupaPassword />} />
+        <Route path="/resetpassword/:token" element={<ResetPassword />} />
 
       </Routes>
     </BrowserRouter>

@@ -18,6 +18,8 @@ import CurrencyFormat from "react-currency-format";
 import AddProduct from "../../images/addProduct.png";
 import alertnotif from "../../images/Ellipse.png";
 import NullOffer from '../../images/Group 33.svg'
+
+
 export default function DaftarDiminati() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
