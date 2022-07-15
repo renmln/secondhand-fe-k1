@@ -19,14 +19,14 @@ export default function LandingPage() {
     dispatch(getAllProduct());
   }, [dispatch]);
 
-  const Produktersedia = []
+  const Produktersedia = [];
   if (product) {
     for (let i = 0; i < product.length; i++) {
-        if (product[i].status !== "NOT AVAILABLE") {
-          Produktersedia.push(product[i])
-        }
+      if (product[i].status !== "NOT AVAILABLE") {
+        Produktersedia.push(product[i]);
+      }
     }
-}
+  }
 
   return (
     <Container className="App">
@@ -78,19 +78,19 @@ export default function LandingPage() {
       </Container>
       <div id="card" className="container">
         <div className="row">
-          {Produktersedia.length === 0 ? (
+          {product.length === 0 ? (
             <>
               <h4 className="text-center py-4">Produk Tidak Tersedia</h4>
             </>
           ) : (
-            Produktersedia.map((item) => (
+            product.map((item) => (
               <div key={item.id} className="col-md-4 col-xl-2 col-sm-12">
                 <a
                   href={`/halamanproduk/${item.id}`}
                   className="text-decoration-none"
                   style={{ color: "black" }}
                 >
-                  <div className="card " style={{ border: "none" }}>
+                  <div className="card cardProduct " style={{}}>
                     <div className="d-flex justify-content-center ">
                       <img
                         className="card-img-top center-cropped m-1 img-fluid"
@@ -103,7 +103,7 @@ export default function LandingPage() {
                         alt="test"
                       />
                     </div>
-                    <div className="card-body mb-3">
+                    <div className="card-body">
                       <h6
                         className="card-title text-decoration-none"
                         style={{ fontsize: "14px" }}

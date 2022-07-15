@@ -9,7 +9,15 @@ import "../../App.css";
 import "../../css/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import AddProduct from "../../images/addProduct.png";
-import { Container, Row, Col, Button, Stack, Table, Card } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Stack,
+  Table,
+  Card,
+} from "react-bootstrap";
 import Swal from "sweetalert2";
 import CurrencyFormat from "react-currency-format";
 
@@ -52,14 +60,22 @@ export default function DaftarJual() {
                 <></>
               ) : (
                 <>
-                  <img src={user.photo_profile} alt="" className="image-profile" />
+                  <img
+                    src={user.photo_profile}
+                    alt=""
+                    className="image-profile"
+                  />
                   <div>
                     <h5 className="my-auto">{user.name}</h5>
                     <p className="my-auto">{user.city}</p>
                   </div>
                 </>
               )}
-              <Button type="button" className="btn-block btnOutlineSmall me-2 ms-auto" onClick={() => navigate("/infoprofil")}>
+              <Button
+                type="button"
+                className="btn-block btnOutlineSmall me-2 ms-auto"
+                onClick={() => navigate("/infoprofil")}
+              >
                 Edit
               </Button>
             </Stack>
@@ -71,19 +87,37 @@ export default function DaftarJual() {
               <h5>Kategori</h5>
               <Table style={{ color: "grey" }}>
                 <thead>
-                  <tr style={{ height: "50px" }} className="kategoriActive" id="filterAll" onClick={handleFilterSemua}>
+                  <tr
+                    style={{ height: "50px" }}
+                    className="kategoriActive"
+                    id="filterAll"
+                    onClick={handleFilterSemua}
+                  >
                     <td>
-                      <i className="bi bi-box me-2"></i>Semua Produk<i className="bi bi-chevron-right float-end"></i>
+                      <i className="bi bi-box me-2"></i>Semua Produk
+                      <i className="bi bi-chevron-right float-end"></i>
                     </td>
                   </tr>
-                  <tr style={{ height: "50px" }} className="kategoriInActive" id="filterDiminati" onClick={handleFilterDiminati}>
+                  <tr
+                    style={{ height: "50px" }}
+                    className="kategoriInActive"
+                    id="filterDiminati"
+                    onClick={handleFilterDiminati}
+                  >
                     <td>
-                      <i className="bi bi-heart me-2"></i>Diminati<i className="bi bi-chevron-right float-end"></i>
+                      <i className="bi bi-heart me-2"></i>Diminati
+                      <i className="bi bi-chevron-right float-end"></i>
                     </td>
                   </tr>
-                  <tr style={{ height: "50px" }} className="kategoriInActive" id="filterTerjual" onClick={handleFilterTerjual}>
+                  <tr
+                    style={{ height: "50px" }}
+                    className="kategoriInActive"
+                    id="filterTerjual"
+                    onClick={handleFilterTerjual}
+                  >
                     <td>
-                      <i className="bi bi-currency-dollar me-2"></i>Terjual<i className="bi bi-chevron-right float-end"></i>
+                      <i className="bi bi-currency-dollar me-2"></i>Terjual
+                      <i className="bi bi-chevron-right float-end"></i>
                     </td>
                   </tr>
                 </thead>
@@ -102,18 +136,40 @@ export default function DaftarJual() {
               ) : (
                 product.map((product) => (
                   <Col key={product.id} lg={4} md={4} xs={6} className="mb-4">
-                    <Link to={`/halamanproduk/${product.id}`}>
+                    <Link
+                      to={`/halamanproduk/${product.id}`}
+                      className="text-decoration-none"
+                    >
                       <Card>
-                        <Card.Img variant="top" src={product.image_1} className="imgProductLarge" />
+                        <Card.Img
+                          variant="top"
+                          src={product.image_1}
+                          className="imgProductLarge"
+                        />
                         <Card.Body>
-                          <Card.Title className="textInfo" style={{ fontSize: "14px", height: "10px" }}>
+                          <Card.Title
+                            className="textInfo"
+                            style={{ fontSize: "14px", height: "10px" }}
+                          >
                             {product.product_name}
                           </Card.Title>
-                          <Card.Text className="textInfo" style={{ fontSize: "10px", height: "5px" }}>
+                          <Card.Text
+                            className="textInfo"
+                            style={{ fontSize: "10px", height: "5px" }}
+                          >
                             {product.category}
                           </Card.Text>
-                          <Card.Text className="textInfo" style={{ fontSize: "14px", height: "12px" }}>
-                            <CurrencyFormat value={product.price} displayType={"text"} thousandSeparator={"."} decimalSeparator={","} prefix={"Rp. "} />
+                          <Card.Text
+                            className="textInfo"
+                            style={{ fontSize: "14px", height: "12px" }}
+                          >
+                            <CurrencyFormat
+                              value={product.price}
+                              displayType={"text"}
+                              thousandSeparator={"."}
+                              decimalSeparator={","}
+                              prefix={"Rp. "}
+                            />
                           </Card.Text>
                         </Card.Body>
                       </Card>
