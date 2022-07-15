@@ -13,6 +13,12 @@ import {
     FiPlus,
 } from "react-icons/fi";
 import { getAllOffering, getOfferingByIdBuyer } from "../../redux/actions/offeringActions";
+import { getAllTransaction } from "../../redux/actions/transactionAction";
+import { Container, Row, Col, Button, Stack, Table, Card } from "react-bootstrap";
+import CurrencyFormat from "react-currency-format";
+import AddProduct from "../../images/addProduct.png";
+import { getAllProductByIdSeller } from "../../redux/actions/productsActions";
+
 
 export default function DaftarTerjual() {
     const navigate = useNavigate();
@@ -21,184 +27,125 @@ export default function DaftarTerjual() {
     const { product } = useSelector((state) => state.product);
     const { user } = useSelector((state) => state.auth);
     const { alloffer } = useSelector((state) => state.offering);
-
+    const { transaction } = useSelector((state) => state.transaction);
 
     useEffect(() => {
-        dispatch(getAllOffering())
-    }, [dispatch]);
+        if (token === null) {
+            return navigate("/");
+        }
+        dispatch(getAllProductByIdSeller());
+    }, [dispatch, navigate, token]);
 
-    const diminati = []
-    if (alloffer && user) {
-        for (let i = 0; i < alloffer.length; i++) {
-            if (alloffer[i].Product.id_seller === user.id) {
-                diminati.push(alloffer[i])
+
+
+    const terjual = []
+    if (product && user) {
+        for (let i = 0; i < product.length; i++) {
+            if (product[i].id_seller === user.id && product[i].status === "NOT AVAILABLE") {
+                terjual.push(product[i])
             }
         }
     }
+    // console.log(product)
+    // console.log(terjual)
+
+    const handleFilterDiminati = () => {
+
+        return navigate("/daftarDiminati");
+    };
+    const handleFilterSemua = () => {
+        return navigate("/daftarjual");
+    };
+    const handleFilterTerjual = () => {
+        return navigate("/daftarterjual");
+    };
+
     return (
-        <div className="container">
-            <div>
-                <NavBar />
-            </div>
-            <div>
-                <p className="fw-bold my-3">Daftar Jual Saya</p>
-                <div className="row">
-                    {user === null ? (
-                        <></>
-                    ) : (
-                        <>
-                            <div
-                                className="col-xl-1 col-sm-1 col-1 d-flex"
-                                style={{ width: "70px" }}
-                            >
-                                <img
-                                    src={user.photo_profile}
-                                    alt=""
-                                    className="img-fluid align-items-center"
-                                    style={{ width: "70px", objectFit: "contain" }}
-                                />
-                            </div>
-                            <div className="col-xl-10  col-sm-6 col-9">
-                                <p className="fw-bold mb-1" style={{ fontSize: "16px" }}>
-                                    {user.name}
-                                </p>
-                                <p className="mb-1" style={{ fontSize: "14px" }}>
-                                    {user.city}
-                                </p>
-                            </div>
-                        </>
-                    )}
-                    <div className="col-xl-1  col-sm-3 col-1">
-                        <button className="btn btn-custom borderradius8">edit</button>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div className="row my-4 ">
-                    <div className="col-3 card p-3">
-                        <p className="fw-bold" style={{ fontSize: "16px" }}>
-                            Kategori
-                        </p>
-                        <table>
-                            <tr>
-                                <td>
-                                    <FiBox />
-                                </td>
-                                <td>
-                                    <a href={`/daftarjual`}>
-                                        Semua Produk
-                                    </a>
-                                </td>
-                                <td>
-                                    <FiChevronRight />
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <FiHeart />
-                                </td>
-                                <td>
-                                    <a href={`/daftarDiminati`}>Diminati</a>
-                                </td>
-                                <td>
-                                    <FiChevronRight />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <FiDollarSign />
-                                </td>
-                                <td>
-                                    <a href="daftarterjual">
-                                        Terjual
-                                    </a>
-                                </td>
-                                <td>
-                                    <FiChevronRight />
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div className="col-9 ">
-                        <div className="row justify-content-center">
-
-                            {diminati === null || diminati === undefined ? (
+        <>
+            <NavBar />
+            <Container>
+                <Row className="justify-content-md-center mt-5 mb-3">
+                    <Col>
+                        <h4 className="fw-bold">Daftar Jual Saya</h4>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Stack direction="horizontal" gap={3} className="infoPenjual">
+                            {user === null ? (
+                                <></>
+                            ) : (
                                 <>
-                                    <h4 className="text-center pt-5">Produk Tidak Tersedia</h4>
+                                    <img src={user.photo_profile} alt="" className="image-profile" />
+                                    <div>
+                                        <h5 className="my-auto">{user.name}</h5>
+                                        <p className="my-auto">{user.city}</p>
+                                    </div>
+                                </>
+                            )}
+                            <Button type="button" className="btn-block btnOutlineSmall me-2 ms-auto" onClick={() => navigate("/infoprofil")}>
+                                Edit
+                            </Button>
+                        </Stack>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col lg={3} md={12} xs={12}>
+                        <div className="boxShadow mt-4">
+                            <h5>Kategori</h5>
+                            <Table style={{ color: "grey" }}>
+                                <thead>
+                                    <tr style={{ height: "50px" }} className="kategoriInActive" id="filterAll" onClick={handleFilterSemua}>
+                                        <td>
+                                            <i className="bi bi-box me-2"></i>Semua Produk<i className="bi bi-chevron-right float-end"></i>
+                                        </td>
+                                    </tr>
+                                    <tr style={{ height: "50px" }} className="kategoriInActive" id="filterDiminati" onClick={handleFilterDiminati}>
+                                        <td>
+                                            <i className="bi bi-heart me-2"></i>Diminati<i className="bi bi-chevron-right float-end"></i>
+                                        </td>
+                                    </tr>
+                                    <tr style={{ height: "50px" }} className="kategoriActive" id="filterTerjual" onClick={handleFilterTerjual}>
+                                        <td>
+                                            <i className="bi bi-currency-dollar me-2"></i>Terjual<i className="bi bi-chevron-right float-end"></i>
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </Table>
+                        </div>
+                    </Col>
+                    <Col lg={9} md={12} xs={12}>
+                        <Row className="mt-4">
+                            {terjual.length === 0 || terjual.length === undefined ? (
+                                <>
+                                <p className="text-center">Belum Ada Produk Yang Terjual</p>
                                 </>
                             ) : (
-                                diminati.map((item) => (
-                                    <>
-                                        <div
-                                            // key={item.}
-                                            className="col-xl-3 col-md-5 col-sm-12 m-2"
-                                            style={{ border: "1px solid rgba(0,0,0,.125)" }}
-                                        >
-                                            <a
-                                                href={`/halamanproduk/${item.id_product}`}
-                                                className="text-decoration-none"
-                                                style={{ color: "black" }}
-                                            >
-                                                <div
-                                                    className="card "
-                                                    style={{
-                                                        border: "none",
-                                                        boxShadow: "0px 0px 4px rgba(0, 0, 0, 0.15)",
-                                                        padding: "8px, 8px, 16px, 8px",
-                                                        borderRadius: "4px",
-                                                    }}
-                                                >
-                                                    <div className="d-flex justify-content-center">
-                                                        <img
-                                                            className="card-img-top center-cropped m-1 img-fluid"
-                                                            style={{ height: "250px", objectFit: "cover" }}
-                                                            src={item.Product.image_1}
-                                                            alt="test"
-                                                        />
-                                                    </div>
-                                                    <div className="card-body">
-                                                        <h6
-                                                            className="card-title text-decoration-none"
-                                                            style={{ fontsize: "14px" }}
-                                                        >
-                                                            {item.Product.product_name}
-                                                        </h6>
-                                                        <p
-                                                            className="text-decoration-none"
-                                                            style={{ fontsize: "10px" }}
-                                                        >
-                                                            {item.Product.category}
-                                                        </p>
-                                                        <p
-                                                            className="text-decoration-none"
-                                                            style={{ fontsize: "14px" }}
-                                                        >
-                                                            Rp {item.Product.price}
-                                                        </p>
-                                                        <p
-                                                            className="text-decoration-none"
-                                                            style={{ fontsize: "14px" }}
-                                                        >
-                                                            Harga Tawar : Rp {item.offering_price}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </>
-
+                                terjual.map((item) => (
+                                    <Col key={item.id} lg={4} md={4} xs={6} className="mb-4">
+                                        <Link to={`/halamanproduk/${item.id}`}>
+                                            <Card>
+                                                <Card.Img variant="top" src={item.image_1} className="imgProductLarge" />
+                                                <Card.Body>
+                                                    <Card.Title className="textInfo" style={{ fontSize: "14px", height: "10px" }}>
+                                                        {item.product_name}
+                                                    </Card.Title>
+                                                    <Card.Text className="textInfo" style={{ fontSize: "10px", height: "5px" }}>
+                                                        {item.category}
+                                                    </Card.Text>
+                                                    <Card.Text className="textInfo" style={{ fontSize: "14px", height: "12px" }}>
+                                                        <CurrencyFormat value={item.price} displayType={"text"} thousandSeparator={"."} decimalSeparator={","} prefix={"Rp. "} />
+                                                    </Card.Text>
+                                                </Card.Body>
+                                            </Card>
+                                        </Link>
+                                    </Col>
                                 ))
-
                             )}
-
-
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div >
+                        </Row>
+                    </Col>
+                </Row>
+            </Container>
+        </>
     );
 }

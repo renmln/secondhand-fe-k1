@@ -42,7 +42,7 @@ export default function NavBar() {
             }
         }
     }
-    console.log(notif)
+    // console.log(notif)
 
 
     return (

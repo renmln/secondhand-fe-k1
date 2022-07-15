@@ -19,6 +19,15 @@ export default function LandingPage() {
     dispatch(getAllProduct());
   }, [dispatch]);
 
+  const Produktersedia = []
+  if (product) {
+    for (let i = 0; i < product.length; i++) {
+        if (product[i].status !== "NOT AVAILABLE") {
+          Produktersedia.push(product[i])
+        }
+    }
+}
+
   return (
     <Container className="App">
       <NavBar />
@@ -69,12 +78,12 @@ export default function LandingPage() {
       </Container>
       <div id="card" className="container">
         <div className="row">
-          {product.length === 0 ? (
+          {Produktersedia.length === 0 ? (
             <>
               <h4 className="text-center py-4">Produk Tidak Tersedia</h4>
             </>
           ) : (
-            product.map((item) => (
+            Produktersedia.map((item) => (
               <div key={item.id} className="col-md-4 col-xl-2 col-sm-12">
                 <a
                   href={`/halamanproduk/${item.id}`}
