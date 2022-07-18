@@ -49,7 +49,7 @@ export default function HalamanProduk() {
     const data = {
       id_product: detailProduct.id,
       offering_price: offering_price,
-      no_hp: user.no_hp,
+      no_hp: detailUser.no_hp,
     };
     console.log(data);
     console.log(user.no_hp);
@@ -68,12 +68,11 @@ export default function HalamanProduk() {
   }
 
   function handleChangePrice(event) {
-    console.log(event.target.value)
-    setOfferingPrice(event.target.value)
+    console.log(event.target.value);
+    setOfferingPrice(event.target.value);
   }
 
   function ModalTawar(props) {
-    
     return (
       <Modal
         {...props}
@@ -139,7 +138,7 @@ export default function HalamanProduk() {
                   style={{ borderRadius: "16px" }}
                   value={offering_price}
                   onChange={handleChangePrice}
-                // onChange={(e) => setOfferingPrice(e.target.value)}
+                  // onChange={(e) => setOfferingPrice(e.target.value)}
                 />
               </div>
               <button
