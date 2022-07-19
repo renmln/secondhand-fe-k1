@@ -18,7 +18,7 @@ import CurrencyFormat from "react-currency-format";
 import AddProduct from "../../images/addProduct.png";
 import alertnotif from "../../images/Ellipse.png";
 import NullOffer from '../../images/Group 33.svg'
-
+import { format, parseISO } from 'date-fns'
 
 export default function DaftarDiminati() {
   const navigate = useNavigate();
@@ -120,34 +120,37 @@ export default function DaftarDiminati() {
                 </>
               ) : (
                 diminati.map((item) => (
-                  <div className="card notifikasi">
-                    <div className="row">
-                      <div className="col-2 m-auto">
-                        <img src={item.Product.image_1} className="w-100" alt="" />
-                      </div>
-                      <div className="col-10">
-                        <div className="row mb-1" style={{ fontSize: "10px" }}>
-                          <div className="col-xl-6 mb-1">
-                            <p className="mb-1">Penawaran produk</p>
-                          </div>
-                          <div className="col-xl-6 mb-1" style={{ textAlign: "right" }}>
-                            <p className="mb-1">
-                              20 Apr, 14:04 &ensp; <img src={alertnotif} alt="" />
-                            </p>
-                          </div>
+                  <a href={`info-penawaran/${item.id_buyer}` } className="text-decoration-none" style={{color : "black"}}>
+                    <div className="card notifikasi">
+                      <div className="row">
+                        <div className="col-2 m-auto">
+                          <img src={item.Product.image_1} className="w-100" alt="" />
                         </div>
-                        <p className="mb-1" style={{ fontSize: "14px", fontWeight: "bold" }}>
-                          {item.Product.product_name}
-                        </p>
-                        <p className="mb-1" style={{ fontSize: "14px", fontWeight: "bold" }}>
-                          {item.Product.price}
-                        </p>
-                        <p className="mb-1" style={{ fontSize: "14px", fontWeight: "bold" }}>
-                          Ditawar Rp {item.offering_price}
-                        </p>
+                        <div className="col-10">
+                          <div className="row mb-1" style={{ fontSize: "10px" }}>
+                            <div className="col-xl-6 mb-1">
+                              <p className="mb-1">Penawaran produk</p>
+                            </div>
+                            <div className="col-xl-6 mb-1" style={{ textAlign: "right" }}>
+                              <p className="mb-1">
+                              {format(parseISO(item.createdAt), 'dd MMM, kk:mm')}
+                              </p>
+                            </div>
+                          </div>
+                          <p className="mb-1" style={{ fontSize: "14px", fontWeight: "bold" }}>
+                            {item.Product.product_name}
+                          </p>
+                          <p className="mb-1" style={{ fontSize: "14px", fontWeight: "bold" }}>
+                            {item.Product.price}
+                          </p>
+                          <p className="mb-1" style={{ fontSize: "14px", fontWeight: "bold" }}>
+                            Ditawar Rp {item.offering_price}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </a>
+
                 ))
               )}
             </Row>
