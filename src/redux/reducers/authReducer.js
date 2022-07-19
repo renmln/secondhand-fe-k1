@@ -121,7 +121,6 @@ const authReducer = (state = initialState, action) => {
         token: null,
         error: action.payload,
       };
-
     default:
       return state;
   }
