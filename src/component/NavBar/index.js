@@ -22,7 +22,8 @@ import alertnotif from "../../images/Ellipse.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getAllOffering } from "../../redux/actions/offeringActions";
 import { getAllNotificationByIdSeller } from "../../redux/actions/notificationAction";
-import { format, parseISO } from 'date-fns'
+import { format, parseISO } from 'date-fns';
+import Swal from "sweetalert2";
 
 export default function NavBar() {
     const dispatch = useDispatch();
@@ -55,7 +56,7 @@ export default function NavBar() {
     var notif = [];
     if (notification && user) {
         for (let i = 0; i < notification.length; i++) {
-            if (notification[i].Product.id_seller === user.id && notification[i].offeringId) {
+            if (notification[i].userId === user.id) {
                 notif.push(notification[i]);
             }
         }
@@ -69,6 +70,52 @@ export default function NavBar() {
 
 
     console.log(notif);
+
+    function handlenotif(index) {
+        if (notif[index].title === "Berhasil di ditambahkan") {
+            Swal.fire({
+                title: notif[index].Product.product_name,
+                text: 'Berhasil di ditambahkan',
+                imageUrl: notif[index].Product.image_1,
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+            })
+        }
+        if (notif[index].title === "Penawaran diterima") {
+            Swal.fire({
+                title: notif[index].Product.product_name,
+                text: `Penawaran Anda diterima dengan harga ${notif[index].Offering.offering_price}`,
+                imageUrl: notif[index].Product.image_1,
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+            })
+        }
+        if (notif[index].title === "Menerima penawaran") {
+            Swal.fire({
+                title: notif[index].Product.product_name,
+                text: `Anda menerima tawaran produk anda dengan harga ${notif[index].Offering.offering_price}`,
+                imageUrl: notif[index].Product.image_1,
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+            })
+        }
+        if (notif[index].title === "Penawaran produk" && notif[index].Product.id_seller !== user.id) {
+            Swal.fire({
+                title: notif[index].Product.product_name,
+                text: `Tawaran berhasil terkirim dengan harga ${notif[index].Offering.offering_price}. Silahkan menunggu konfirmasi penjual`,
+                imageUrl: notif[index].Product.image_1,
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+            })
+        }
+        if (notif[index].title === "Penawaran produk" && notif[index].Product.id_seller === user.id) {
+            navigate(`/info-penawaran/${notif[index].Offering.id_buyer}`)
+        }
+    }
 
     return (
         <Container>
@@ -137,10 +184,11 @@ export default function NavBar() {
                                 align="end"
                             >
                                 {notif.length > 0 ? (
-                                    notif.map((item) => {
+                                    notif.map((item, index) => {
                                         return (
                                             <NavDropdown.Item
-                                                href={`/info-penawaran/${item.Offering.id_buyer}`}
+                                                onClick={() => handlenotif(index)}
+                                            // href={`/info-penawaran/${item.Offering.id_buyer}`}
                                             >
                                                 <div className="card notifikasi">
                                                     <div className="row">

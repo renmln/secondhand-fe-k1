@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { getAllProduct } from "../../redux/actions/productsActions";
 import "../../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,10 +11,12 @@ import ButtonJual from "../ButtonJual";
 import Footer from "../Footer";
 import { Container } from "react-bootstrap";
 import { getOfferbyIDProduct } from "../../redux/actions/offeringActions";
+import Swal from "sweetalert2";
 
 export default function LandingPage() {
   const dispatch = useDispatch();
   const { product } = useSelector((state) => state.product);
+  const { user } = useSelector((state) => state.auth);
   const [category, setCategory] = useState("");
   const [isHobby, setIshobby] = useState(false);
   const [isVehicle, setIsvehicle] = useState(false);
@@ -21,6 +24,7 @@ export default function LandingPage() {
   const [isElectronic, setIselectronic] = useState(false);
   const [isHealth, setIshealt] = useState(false);
   const [isTrigger, setIsTrigger] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getAllProduct());
@@ -71,11 +75,35 @@ export default function LandingPage() {
     }
   }
 
+  const jumlahproduksaya = [];
+  if (product && user) {
+    for (let i = 0; i < product.length; i++) {
+      if (product[i].status !== "NOT AVAILABLE" && product[i].id_seller === user.id) {
+        jumlahproduksaya.push(product[i]);
+      }
+    }
+  }
+  console.log(jumlahproduksaya)
+
   function rupiah(number) {
     return new Intl.NumberFormat("id-ID", {
       style: "currency",
       currency: "IDR",
     }).format(number);
+
+  }
+
+  function handlebuttonjual() {
+    if (jumlahproduksaya.length >= 5) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Tidak bisa manambahkan produk',
+        text: 'mencapai batas maksimal jual',
+      })
+    }
+    else {
+      navigate('/infoproduk')
+    }
   }
 
   return (
@@ -268,7 +296,10 @@ export default function LandingPage() {
           )}
         </div>
       </div>
-      <ButtonJual />
+      <a onClick={handlebuttonjual}>
+        <ButtonJual />
+      </a>
+
       <div>
         <Footer />
       </div>

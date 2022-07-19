@@ -44,7 +44,30 @@ export default function DaftarJual() {
   const handleFilterTerjual = () => {
     return navigate("/daftarterjual");
   };
-  return { product } ? (
+
+  const barangTersedia = []
+  if (product) {
+    for (let i = 0; i < product.length; i++) {
+      if (product[i].status !== "NOT AVAILABLE") {
+        barangTersedia.push(product[i]);
+      }
+    }
+  }
+  // console.log(barangTersedia)
+  function handlebuttonjual() {
+    if (barangTersedia.length >= 4) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Tidak bisa manambahkan produk',
+        text: 'mencapai batas maksimal jual',
+      })
+    }
+    else {
+      navigate('/infoproduk')
+    }
+  }
+
+  return { barangTersedia } ? (
     <>
       <NavBar />
       <Container>
@@ -127,14 +150,16 @@ export default function DaftarJual() {
           <Col lg={9} md={12} xs={12}>
             <Row className="mt-4">
               <Col lg={4} md={4} xs={6} className="mb-4">
-                <Link to="/infoproduk">
+                <a onClick={handlebuttonjual}>
                   <img src={AddProduct} className="imgBtnAdd" alt="" />
-                </Link>
+                </a>
+
+
               </Col>
-              {product.length === 0 || product.length === undefined ? (
+              {barangTersedia.length === 0 || barangTersedia.length === undefined ? (
                 <></>
               ) : (
-                product.map((product) => (
+                barangTersedia.map((product) => (
                   <Col key={product.id} lg={4} md={4} xs={6} className="mb-4">
                     <Link
                       to={`/halamanproduk/${product.id}`}
