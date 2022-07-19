@@ -216,7 +216,7 @@ export default function LandingPage() {
                 </div>
               ))
           ) : (
-            product.map(
+            Produktersedia.map(
               (item) => (
                 console.log("ini landing page"),
                 (

@@ -5,6 +5,7 @@ import {
   GET_OFFER,
   OFFERING_ERROR,
   GET_ALL,
+  DELETE_OFFERING
 } from "./types";
 import axios from "axios";
 
@@ -167,5 +168,44 @@ export const getAllOffering = () => async (dispatch) => {
       type: OFFERING_ERROR,
       payload: err.response.data.msg,
     });
+  }
+};
+
+export const deleteOffering = (params) => async (dispatch) => {
+  
+  try {
+    const response = await fetch(
+      `http://localhost:8000/api/v1/product/offered/delete/${params.id}`,
+      {
+        method: "DELETE",
+      }
+    );
+      const data = await response.json();
+
+      dispatch({
+          type: DELETE_OFFERING,
+          payload: data.status,
+      });
+
+      Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Delete success",
+          showConfirmButton: false,
+          timer: 1500,
+      });
+  } catch (error) {
+      dispatch({
+          type: OFFERING_ERROR,
+          payload: error,
+      });
+
+      Swal.fire({
+          position: "center",
+          icon: "error",
+          title: error,
+          showConfirmButton: false,
+          timer: 1500,
+      });
   }
 };

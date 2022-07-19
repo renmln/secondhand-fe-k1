@@ -19,6 +19,7 @@ import CurrencyFormat from "react-currency-format";
 import AddProduct from "../../images/addProduct.png";
 import { getAllProductByIdSeller } from "../../redux/actions/productsActions";
 import NullOffer from '../../images/Group 33.svg'
+import { format, parseISO } from 'date-fns';
 
 export default function DaftarTerjual() {
     const navigate = useNavigate();
@@ -137,7 +138,7 @@ export default function DaftarTerjual() {
                                                     </div>
                                                     <div className="col-xl-6 mb-1" style={{ textAlign: "right" }}>
                                                         <p className="mb-1">
-                                                            20 Apr, 14:04 &ensp;
+                                                        {format(parseISO(item.createdAt), 'dd MMM, kk:mm')}
                                                         </p>
                                                     </div>
                                                 </div>

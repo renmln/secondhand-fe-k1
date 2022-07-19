@@ -11,6 +11,7 @@ import Jam from "../../images/Rectangle 23.png";
 import NavBar from "../NavBar";
 import { getUserbyID } from "../../redux/actions/authActions";
 import {
+  deleteOffering,
   getAllOffering,
   getOfferingByIdBuyer,
 } from "../../redux/actions/offeringActions";
@@ -45,6 +46,8 @@ export default function InfoPenawaran() {
     dispatch(getAllTransaction());
   }, [dispatch]);
 
+
+
   // Data Dummy
   const produkDitawar = [];
 
@@ -78,6 +81,13 @@ export default function InfoPenawaran() {
     dispatch(addTransaction(data));
   }
 
+  function handleTolak(index) {
+    const data = {
+      id: produkDitawar[index].id
+    };
+    console.log(data)
+    dispatch(deleteOffering(data));
+  }
   function handlerefresh() {
     window.location.reload();
   }
@@ -124,16 +134,9 @@ export default function InfoPenawaran() {
       >
         <div
           className="d-inline-flex"
-          style={{
-            padding: "10px",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          style={{ justifyContent: "center", alignItems: "center" }}
         >
-          <a className="navbar-brand" href="/">
-            {" "}
-            <img src={Rectangle127} alt="" />
-          </a>
+          <span className="navbar-brand mb-0 h1"></span>
         </div>
 
         <div
@@ -274,7 +277,8 @@ export default function InfoPenawaran() {
                     ) : (
                       <>
                         <div className="float-end mt-2">
-                          <Button className="btnOutline me-2 px-5">
+                          <Button className="btnOutline me-2 px-5"
+                          onClick={() => handleTolak(index)}>
                             Tolak
                           </Button>
                           <Button
