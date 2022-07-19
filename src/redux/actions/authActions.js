@@ -8,6 +8,8 @@ import {
   UPDATE_INFO_USERS,
   GET_USER,
   GET_USER_ERROR,
+  SEND_LINK_RESET,
+  SEND_LINK_ERROR,
 } from "./types";
 
 export const login = (data) => async (dispatch) => {
@@ -304,6 +306,55 @@ export const getUserbyID = (params) => async (dispatch) => {
       title: error.message,
       showConfirmButton: false,
       timer: 1500,
+    });
+  }
+};
+
+export const sendLinkResetPassword = (data) => async (dispatch) => {
+  try {
+    const response = await fetch(
+      "http://localhost:8000/api/v1/password-reset",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const result = await response.json();
+
+    if (result.token) {
+      dispatch({
+        type: SEND_LINK_RESET,
+        token: result.token,
+        user: result.user,
+      });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Login Successful",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+    } else {
+      authError(result.error);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Login Failed",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+    }
+  } catch (error) {
+    authError(error);
+    Swal.fire({
+      position: "center",
+      icon: "error",
+      title: "Email or Password is incorrect",
+      showConfirmButton: false,
+      timer: 1000,
     });
   }
 };
