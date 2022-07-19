@@ -55,7 +55,7 @@ export default function NavBar() {
     var notif = [];
     if (notification && user) {
         for (let i = 0; i < notification.length; i++) {
-            if (notification[i].Product.id_seller === user.id) {
+            if (notification[i].Product.id_seller === user.id && notification[i].offeringId) {
                 notif.push(notification[i]);
             }
         }
