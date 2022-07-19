@@ -1,7 +1,10 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { sendLinkResetPassword } from "../../redux/actions/authActions";
 
 const LupaPassword = () => {
+  const dispatch = useDispatch();
+  //   const { user, detailUser } = useSelector((state) => state.auth);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
@@ -9,10 +12,13 @@ const LupaPassword = () => {
     setEmail(e.target.value);
   };
 
-  const kirim = () => {
+  const handleSubmit = () => {
     if (!email) {
       setError("Email wajib diisi");
     } else {
+      const data = { email };
+      dispatch(sendLinkResetPassword(data));
+      setError("");
     }
   };
 
@@ -46,7 +52,7 @@ const LupaPassword = () => {
                   />
                 </div>
 
-                <button className="btn btn-primary" onClick={kirim}>
+                <button className="btn btn-primary" onClick={handleSubmit}>
                   Kirim
                 </button>
               </div>

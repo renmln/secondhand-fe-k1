@@ -10,6 +10,10 @@ import {
   GET_USER_ERROR,
   SEND_LINK_RESET,
   SEND_LINK_ERROR,
+  GET_LINK_RESET,
+  GET_LINK_ERROR,
+  RESET_PASSWORD,
+  RESET_PASSWORD_ERROR,
 } from "./types";
 
 export const login = (data) => async (dispatch) => {
@@ -329,11 +333,12 @@ export const sendLinkResetPassword = (data) => async (dispatch) => {
         type: SEND_LINK_RESET,
         token: result.token,
         user: result.user,
+        message: result.message,
       });
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Login Successful",
+        title: "Send Link Successful",
         showConfirmButton: false,
         timer: 1000,
       });
@@ -342,19 +347,101 @@ export const sendLinkResetPassword = (data) => async (dispatch) => {
       Swal.fire({
         position: "center",
         icon: "error",
-        title: "Login Failed",
+        title: "Send Link Failed",
         showConfirmButton: false,
         timer: 1000,
       });
     }
   } catch (error) {
-    authError(error);
+    dispatch({
+      type: SEND_LINK_ERROR,
+      payload: error.response,
+    });
     Swal.fire({
       position: "center",
       icon: "error",
       title: "Email or Password is incorrect",
       showConfirmButton: false,
       timer: 1000,
+    });
+  }
+};
+
+export const verifiedLink = (params) => async (dispatch) => {
+  try {
+    const id = params.id;
+    const token = params.token;
+    const response = await fetch(
+      `http://localhost:8000/api/v1/password-reset/${id}/${token}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+
+    dispatch({
+      type: GET_LINK_RESET,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_LINK_ERROR,
+      payload: error.response,
+    });
+    Swal.fire({
+      position: "center",
+      icon: "error",
+      title: error.message,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
+};
+
+export const resetPassword = (params, data) => async (dispatch) => {
+  try {
+    const id = params.id;
+    const token = params.token;
+    const response = await fetch(
+      `http://localhost:8000/api/v1/password-reset/${id}/${token}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const result = await response.json();
+
+    dispatch({
+      type: RESET_PASSWORD,
+      user: result.user,
+      message: result.message,
+    });
+
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Reset Password Successful",
+      showConfirmButton: false,
+      timer: 1000,
+    });
+  } catch (error) {
+    dispatch({
+      type: RESET_PASSWORD_ERROR,
+      payload: error.response,
+    });
+    Swal.fire({
+      position: "center",
+      icon: "error",
+      title: error.message,
+      showConfirmButton: false,
+      timer: 1500,
     });
   }
 };
