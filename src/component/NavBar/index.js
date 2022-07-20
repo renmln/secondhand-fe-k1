@@ -25,6 +25,7 @@ import { getAllNotificationByIdSeller, updateNotification } from "../../redux/ac
 import { format, parseISO } from 'date-fns';
 import Swal from "sweetalert2";
 import logo from "../../images/SecondHand1.png"
+import "../../App.css";
 
 export default function NavBar() {
     const dispatch = useDispatch();
@@ -69,7 +70,14 @@ export default function NavBar() {
         })
     }
 
-
+    let jumlahnotif = [];
+    if (notification && user) {
+        for (let i = 0; i < notification.length; i++) {
+            if (notification[i].userId === user.id && notification[i].status !== "read") {
+                jumlahnotif.push(notification[i]);
+            }
+        }
+    }
     console.log(notif);
 
     function handlenotif(index) {
@@ -209,6 +217,16 @@ export default function NavBar() {
                                         className="btn btn-sm nav-link text-dark rounded-12px active"
                                     >
                                         <FiBell />
+                                        {jumlahnotif.length > 0 ? (
+                                            <>
+                                                <span class="icon-button__badge">{jumlahnotif.length}</span>
+                                            </>
+                                        ) : (
+                                            <>
+
+                                            </>
+                                        )}
+
                                     </button>
                                 }
                                 id="collasible-nav-dropdown"
