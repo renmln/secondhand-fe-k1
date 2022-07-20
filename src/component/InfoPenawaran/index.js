@@ -87,7 +87,7 @@ export default function InfoPenawaran() {
       id: produkDitawar[index].id,
       status: "Ditolak"
     };
-    console.log(data)
+    // console.log(data)
     dispatch(updateOffering(data));
     window.location.reload()
   }
@@ -105,6 +105,11 @@ export default function InfoPenawaran() {
       };
       console.log(updatestatusproduct);
       dispatch(updateProduct(updatestatusproduct));
+      const data = {
+        id: listtransaksi[index].id_offering,
+        status: "BERHASIL"
+      };
+      dispatch(updateOffering(data))
     }
 
     if (status === "GAGAL") {
@@ -114,6 +119,12 @@ export default function InfoPenawaran() {
       };
       console.log(updatestatusproduct);
       dispatch(updateProduct(updatestatusproduct));
+
+      const data = {
+        id: listtransaksi[index].id_offering,
+        status: "Ditolak"
+      };
+      dispatch(updateOffering(data))
     }
 
     const data = {
@@ -281,7 +292,7 @@ export default function InfoPenawaran() {
                       <>
                         <div className="float-end mt-2">
                           <Button className="btnOutline me-2 px-5"
-                          onClick={() => handleTolak(index)}>
+                            onClick={() => handleTolak(index)}>
                             Tolak
                           </Button>
                           <Button

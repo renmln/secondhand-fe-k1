@@ -200,9 +200,9 @@ export default function HalamanProduk() {
   // }
   let cekoffer = [];
   if (offering && user) {
-    cekoffer = offering.find((x) => x.id_buyer === user.id);
+    cekoffer = offering.find((x) => x.id_buyer === user.id && x.status !== "Ditolak");
   }
-  // console.log(cekoffer);
+  console.log(cekoffer);
 
   return (
     <div className="container">
