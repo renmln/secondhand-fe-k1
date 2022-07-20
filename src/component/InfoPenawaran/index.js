@@ -14,6 +14,7 @@ import {
   deleteOffering,
   getAllOffering,
   getOfferingByIdBuyer,
+  updateOffering,
 } from "../../redux/actions/offeringActions";
 import {
   addTransaction,
@@ -83,10 +84,12 @@ export default function InfoPenawaran() {
 
   function handleTolak(index) {
     const data = {
-      id: produkDitawar[index].id
+      id: produkDitawar[index].id,
+      status: "Ditolak"
     };
     console.log(data)
-    dispatch(deleteOffering(data));
+    dispatch(updateOffering(data));
+    window.location.reload()
   }
   function handlerefresh() {
     window.location.reload();

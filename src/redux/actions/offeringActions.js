@@ -5,7 +5,8 @@ import {
   GET_OFFER,
   OFFERING_ERROR,
   GET_ALL,
-  DELETE_OFFERING
+  DELETE_OFFERING,
+  UPDATE_OFFERING
 } from "./types";
 import axios from "axios";
 
@@ -89,7 +90,6 @@ export const addOffering = (params) => async (dispatch) => {
 export const getOfferbyIDProduct = (params) => async (dispatch) => {
   try {
     const id = params.id;
-    console.log("iniii" + id);
     const response = await fetch(
       `http://localhost:8000/api/v1/products/offered/${id}`,
       {
@@ -198,6 +198,49 @@ export const deleteOffering = (params) => async (dispatch) => {
       dispatch({
           type: OFFERING_ERROR,
           payload: error,
+      });
+
+      Swal.fire({
+          position: "center",
+          icon: "error",
+          title: error,
+          showConfirmButton: false,
+          timer: 1500,
+      });
+  }
+};
+
+export const updateOffering = (params) => async (dispatch) => {
+  try {
+      const status = params.status;
+
+      console.log(params)
+
+      const config = {
+          headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-type": "application/json",
+          },
+      };
+      const response = await axios.put(
+          `http://localhost:8000/api/v1/product/offered/update/${params.id}`,
+          {
+              status
+          },
+          config
+      );
+      const data = await response.data;
+
+
+      dispatch({
+          type: UPDATE_OFFERING,
+          status: data.status,
+      });
+
+  } catch (error) {
+      dispatch({
+          type: OFFERING_ERROR,
+          payload: error.response,
       });
 
       Swal.fire({

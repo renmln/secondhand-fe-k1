@@ -1,4 +1,4 @@
-import { GET_ALL_NOTIFICATION, NOTIFICATION_ERROR, } from "../actions/types";
+import { GET_ALL_NOTIFICATION, NOTIFICATION_ERROR, UPDATE_NOTIFICATION, } from "../actions/types";
 
 const initialState = {
     notification: [],
@@ -20,7 +20,11 @@ const notificationReducer = (state = initialState, action) => {
                 error: action.payload,
                 status: "FAIL",
             };
-
+        case UPDATE_NOTIFICATION:
+            return {
+                ...state,
+                status: action.payload,
+            };
         // case GET_PRODUCT:
         //     return {
         //         ...state,

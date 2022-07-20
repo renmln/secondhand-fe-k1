@@ -1,4 +1,4 @@
-import { CREATE_OFFERING, GET_ALL_OFFERING, GET_OFFER, OFFERING_ERROR, GET_ALL, DELETE_OFFERING } from "../actions/types";
+import { CREATE_OFFERING, GET_ALL_OFFERING, GET_OFFER, OFFERING_ERROR, GET_ALL, DELETE_OFFERING, UPDATE_OFFERING } from "../actions/types";
 
 const initialState = {
   alloffer: [],
@@ -38,11 +38,16 @@ const offeringReducer = (state = initialState, action) => {
         error: action.payload,
         status: "FAIL",
       };
-      case DELETE_OFFERING:
-            return {
-                ...state,
-                status: action.payload,
-            };
+    case DELETE_OFFERING:
+      return {
+        ...state,
+        status: action.payload,
+      };
+    case UPDATE_OFFERING:
+      return {
+        ...state,
+        status: action.payload,
+      };
     default:
       return state;
   }

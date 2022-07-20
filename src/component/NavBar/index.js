@@ -21,9 +21,10 @@ import fotoproduk from "../../images/Rectangle 23.png";
 import alertnotif from "../../images/Ellipse.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getAllOffering } from "../../redux/actions/offeringActions";
-import { getAllNotificationByIdSeller } from "../../redux/actions/notificationAction";
+import { getAllNotificationByIdSeller, updateNotification } from "../../redux/actions/notificationAction";
 import { format, parseISO } from 'date-fns';
 import Swal from "sweetalert2";
+import logo from "../../images/SecondHand1.png"
 
 export default function NavBar() {
     const dispatch = useDispatch();
@@ -80,7 +81,13 @@ export default function NavBar() {
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'Custom image',
+                confirmButtonText: 'Ok'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
             })
+
         }
         if (notif[index].title === "Penawaran diterima") {
             Swal.fire({
@@ -90,7 +97,13 @@ export default function NavBar() {
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'Custom image',
+                confirmButtonText: 'Ok'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
             })
+
         }
         if (notif[index].title === "Menerima penawaran") {
             Swal.fire({
@@ -100,6 +113,11 @@ export default function NavBar() {
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'Custom image',
+                confirmButtonText: 'Ok'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
             })
         }
         if (notif[index].title === "Penawaran produk" && notif[index].Product.id_seller !== user.id) {
@@ -110,11 +128,24 @@ export default function NavBar() {
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'Custom image',
+                confirmButtonText: 'Ok'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
             })
         }
         if (notif[index].title === "Penawaran produk" && notif[index].Product.id_seller === user.id) {
             navigate(`/info-penawaran/${notif[index].Offering.id_buyer}`)
         }
+
+        const data = {
+            id: notif[index].id,
+            status: "read"
+        }
+        console.log(data)
+        dispatch(updateNotification(data))
+
     }
 
     return (
@@ -128,7 +159,7 @@ export default function NavBar() {
             >
                 <Navbar.Brand>
                     <a href="/">
-                        <img src={icon} alt="" />
+                        <img src={logo} alt="" style={{ width: "100px" }} />
                     </a>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -213,7 +244,15 @@ export default function NavBar() {
                                                                 >
                                                                     <p className="mb-1">
                                                                         {format(parseISO(item.createdAt), 'dd MMM, kk:mm')}
-                                                                        <img src={alertnotif} alt="" />
+                                                                        {item.status === "read" ? (
+                                                                            <></>
+                                                                        ) : (
+                                                                            <>
+                                                                                &nbsp; <img src={alertnotif} alt="" />
+                                                                            </>
+
+                                                                        )}
+
                                                                     </p>
                                                                 </div>
                                                             </div>
