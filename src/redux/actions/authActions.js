@@ -22,7 +22,7 @@ export const login = (data) => async (dispatch) => {
   // localStorage.setItem("userInfo", JSON.stringify(data));
   try {
     const response = await fetch(
-      "https://secondhand-backend-k1.herokuapp.com//api/v1/login",
+      "https://secondhand-backend-k1.herokuapp.com/api/v1/login",
       {
         method: "POST",
 

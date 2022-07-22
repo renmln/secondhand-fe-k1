@@ -57,7 +57,7 @@ const Regis = () => {
   });
 
   if (status === "LOGIN_SUCCESS") {
-    return <Navigate to={`https://secondhand-backend-k1.herokuapp.com/`} />;
+    return <Navigate to={`/`} />;
   }
 
   return (
