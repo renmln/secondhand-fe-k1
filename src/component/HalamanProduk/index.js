@@ -73,88 +73,6 @@ export default function HalamanProduk() {
     setOfferingPrice(event.target.value);
   }
 
-  function ModalTawar(props) {
-    return (
-      <Modal
-        {...props}
-        size="sm"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        preventDefault
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            <h6>Masukkan Harga Tawarmu</h6>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p style={{ fontSize: "14px" }}>
-            Harga tawaranmu akan diketahui penjual, jika penjual cocok kamu akan
-            segera dihubungi penjual.
-          </p>
-          <div className="row p-1">
-            <div className="col-3 m-auto ">
-              <img
-                src={profilpenjual}
-                alt="profilpenjual"
-                style={{ widht: "48" }}
-              />
-            </div>
-            <div
-              className="col-9 "
-              style={{
-                fontSize: "14px",
-                lineHeight: "20px",
-                paddingTop: "18px",
-                paddingLeft: "5px",
-              }}
-            >
-              <b>{detailProduct.product_name}</b>
-              <p>Rp {detailProduct.price}</p>
-            </div>
-          </div>
-          <div>
-            <form>
-              <div className="mb-3">
-                <input
-                  type="number"
-                  value={id_product}
-                  onChange={() => setIdProduct(detailProduct.id)}
-                  hidden
-                />
-                <input
-                  type="number"
-                  value={no_hp}
-                  onChange={() => setNoHp(user.no_hp)}
-                  hidden
-                />
-                <label htmlFor="harga_tawar" className="form-label">
-                  Harga Tawar
-                </label>
-                <input
-                  type="number"
-                  className="form-control rounded "
-                  id="harga_tawar"
-                  placeholder="Rp 0,00"
-                  style={{ borderRadius: "16px" }}
-                  value={offering_price}
-                  onChange={handleChangePrice}
-                // onChange={(e) => setOfferingPrice(e.target.value)}
-                />
-              </div>
-              <button
-                type="button"
-                className="btn btn-custom me-3 mb-2 "
-                onClick={handleSubmit}
-              >
-                Kirim
-              </button>
-            </form>
-          </div>
-        </Modal.Body>
-      </Modal>
-    );
-  }
 
   if (localStorage.getItem("token") === null) {
     Swal.fire({
@@ -184,7 +102,7 @@ export default function HalamanProduk() {
 
   let cekoffer = [];
   if (offering && user) {
-    cekoffer = offering.find((x) => x.id_buyer === user.id && x.status !== "Ditolak");
+    cekoffer = offering.find((x) => x.id_buyer === user.id && x.status !== "Ditolak" && x.status !== "GAGAL");
   }
   console.log(cekoffer);
 
@@ -314,12 +232,12 @@ export default function HalamanProduk() {
                       <div class="modal-header">
                         <h6 class="modal-title" id="exampleModalLongTitle">Masukkan Harga Tawarmu</h6>
                         <button
-                              type="button"
-                              className="btn-close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                              
-                            ></button>
+                          type="button"
+                          className="btn-close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+
+                        ></button>
                       </div>
                       <div class="modal-body">
                         <p style={{ fontSize: "14px" }}>
@@ -390,10 +308,7 @@ export default function HalamanProduk() {
                     </div>
                   </div>
                 </div>
-                <ModalTawar
-                  show={modalShow}
-                  onHide={() => setModalShow(false)}
-                />
+                
               </div>
             </>
           )}

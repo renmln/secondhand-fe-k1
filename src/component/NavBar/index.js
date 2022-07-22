@@ -26,6 +26,7 @@ import { format, parseISO } from 'date-fns';
 import Swal from "sweetalert2";
 import logo from "../../images/SecondHand1.png"
 import "../../App.css";
+import '../../css/style.css'
 
 export default function NavBar() {
     const dispatch = useDispatch();
@@ -78,7 +79,7 @@ export default function NavBar() {
             }
         }
     }
-    console.log(notif);
+    // console.log(notif);
 
     function handlenotif(index) {
         if (notif[index].title === "Berhasil di ditambahkan") {
@@ -132,6 +133,81 @@ export default function NavBar() {
             Swal.fire({
                 title: notif[index].Product.product_name,
                 text: `Tawaran berhasil terkirim dengan harga ${notif[index].Offering.offering_price}. Silahkan menunggu konfirmasi penjual`,
+                imageUrl: notif[index].Product.image_1,
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+                confirmButtonText: 'Ok'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            })
+        }
+        if (notif[index].title === "Penawaran ditolak") {
+            Swal.fire({
+                title: notif[index].Product.product_name,
+                text: `Tawaranmu dengan harga ${notif[index].Offering.offering_price}. Silahkan melakukan tawaran kembali jika ingin membeli`,
+                imageUrl: notif[index].Product.image_1,
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+                confirmButtonText: 'Ok'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            })
+        }
+        if (notif[index].title === "Menolak penawaran") {
+            Swal.fire({
+                title: notif[index].Product.product_name,
+                text: `Anda Menolak penawaran dengan harga ${notif[index].Offering.offering_price}.`,
+                imageUrl: notif[index].Product.image_1,
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+                confirmButtonText: 'Ok'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            })
+        }
+        if (notif[index].title === "Transaksi dibatalkan") {
+            Swal.fire({
+                title: notif[index].Product.product_name,
+                text: `Transaksi dibatalkan karena sesuatu hal. silahkan hubungi penjual`,
+                imageUrl: notif[index].Product.image_1,
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+                confirmButtonText: 'Ok'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            })
+        }
+        if (notif[index].title === "Membatalkan transaksi") {
+            Swal.fire({
+                title: notif[index].Product.product_name,
+                text: `Anda membatalkan transaksi`,
+                imageUrl: notif[index].Product.image_1,
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'Custom image',
+                confirmButtonText: 'Ok'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload();
+                }
+            })
+        }
+        if (notif[index].title === "Transaksi berhasil" && notif[index].Product.id_seller !== user.id) {
+            Swal.fire({
+                title: notif[index].Product.product_name,
+                text: `Transaksi berhasil dengan harga ${notif[index].Offering.offering_price}`,
                 imageUrl: notif[index].Product.image_1,
                 imageWidth: 400,
                 imageHeight: 200,
@@ -318,7 +394,7 @@ export default function NavBar() {
                             <Nav.Link href="/">
                                 <button
                                     type="button"
-                                    className="btn btn-sm btn-custom nav-link text-light rounded-12px active"
+                                    className="btn btn-sm btn-custom nav-link text-light rounded-12px active buttonlogout "
                                     onClick={handleLogout}
                                 >
                                     <FiLogOut /> Logout

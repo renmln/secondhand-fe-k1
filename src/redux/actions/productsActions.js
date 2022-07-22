@@ -127,6 +127,7 @@ export const addProduct = (params) => async (dispatch) => {
 
 export const updateProduct = (params) => async (dispatch) => {
     try {
+        console.log("updateproduk");
         console.log(params)
         var formdata = new FormData();
         // formdata.append("id_seller", params.idSeller);
@@ -138,7 +139,7 @@ export const updateProduct = (params) => async (dispatch) => {
         if (params.status) {
             formdata.append("status", params.status)
         }
-        console.log(formdata)
+        console.log("vek")
         // Upload new image
         if (params.file) {
             for (let i = 0; i < params.file.length; i++) {
