@@ -244,58 +244,43 @@ export default function LandingPage() {
                 </div>
               ))
           ) : (
-            Produktersedia.map(
-              (item) => (
-                console.log("ini landing page"),
-                (
-                  <div key={item.id} className="col-md-4 col-xl-2 col-sm-12">
-                    <a
-                      href={`/halamanproduk/${item.id}`}
-                      className="text-decoration-none"
-                      style={{ color: "black" }}
-                    >
-                      <div className="card " style={{ border: "none" }}>
-                        <div className="d-flex justify-content-center ">
-                          <img
-                            className="card-img-top center-cropped m-1 img-fluid"
-                            src={item.image_1}
-                            style={{
-                              width: "200px",
-                              height: "150px",
-                              objectFit: "cover",
-                            }}
-                            alt="test"
-                          />
-                        </div>
-                        <div className="card-body mb-3">
-                          <h6
-                            className="card-title text-decoration-none"
-                            style={{ fontsize: "14px" }}
-                          >
-                            {item.product_name}
-                          </h6>
-                          <p
-                            className="text-decoration-none"
-                            style={{ fontsize: "10px" }}
-                          >
-                            {item.category}
+            Produktersedia.map(((item) => (
+                            <div key={item.id} className="col-md-4 col-xl-2 col-sm-12">
+                                <a href={`/halamanproduk/${item.id}`} className="text-decoration-none" style={{color: "black"}}>
+                                    <div className="card cardProduct " style={{}}>
+                                        <div className="d-flex justify-content-center ">
+                                            <img
+                                                className="card-img-top center-cropped m-1 img-fluid"
+                                                src={item.image_1}
+                                                style={{
+                                                    width: "200px",
+                                                    height: "150px",
+                                                    objectFit: "cover",
+                                                }}
+                                                alt="test"
+                                            />
+                                        </div>
+                                        <div className="card-body">
+                                            <h6 className="card-title text-decoration-none" style={{fontsize: "14px"}}>
+                                                {item.product_name}
+                                            </h6>
+                                            <p className="text-decoration-none" style={{fontsize: "10px"}}>
+                                                {item.category}
+                                            </p>
+                                            <p className="text-decoration-none" style={{fontsize: "14px"}}>
+                                                Rp {item.price}
                           </p>
-                          <p
-                            className="text-decoration-none"
-                            style={{ fontsize: "14px" }}
-                          >
-                            {rupiah(item.price)}
-                          </p>
-                        </div>
-                      </div>
-                    </a>
-                  </div>
-                )
-              )
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        )
+                        )
             )
-          )}
-        </div>
-      </div>
+                    )}
+                </div>
+            </div>
+      
       <a onClick={handlebuttonjual}>
         <ButtonJual />
       </a>

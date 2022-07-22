@@ -57,7 +57,7 @@ const Regis = () => {
   });
 
   if (status === "LOGIN_SUCCESS") {
-    return <Navigate to={`/`} />;
+    return <Navigate to={`https://secondhand-backend-k1.herokuapp.com/`} />;
   }
 
   return (
@@ -99,7 +99,10 @@ const Regis = () => {
                   Masuk
                 </Button>
                 <div classname={{ marginTop: "20px" }}>
-                  <p> Lupa Password ? <Link to="/lupa-password">Klik disini</Link></p>
+                  <p>
+                    {" "}
+                    Lupa Password ? <Link to="/lupa-password">Klik disini</Link>
+                  </p>
                 </div>
                 <div className="d-flex justify-content-center">
                   <Button

@@ -21,14 +21,17 @@ export const login = (data) => async (dispatch) => {
   // localStorage.setItem("userEmail", user.data.email);
   // localStorage.setItem("userInfo", JSON.stringify(data));
   try {
-    const response = await fetch("http://localhost:8000/api/v1/login", {
-      method: "POST",
+    const response = await fetch(
+      "https://secondhand-backend-k1.herokuapp.com//api/v1/login",
+      {
+        method: "POST",
 
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
     const result = await response.json();
 
     if (result.token) {

@@ -23,6 +23,7 @@ import {
 } from "../../redux/actions/transactionAction";
 import { UPDATE_PRODUCT } from "../../redux/actions/types";
 import { updateProduct } from "../../redux/actions/productsActions";
+import { format, parseISO } from 'date-fns';
 
 export default function InfoPenawaran() {
   let [show, setShow] = useState(false);
@@ -59,6 +60,7 @@ export default function InfoPenawaran() {
       }
     }
   }
+  console.log(produkDitawar);
 
   const listtransaksi = [];
   if (transaction && user) {
@@ -66,7 +68,14 @@ export default function InfoPenawaran() {
       listtransaksi.push(transaction[i]);
     }
   }
+
   console.log(listtransaksi);
+
+  if (produkDitawar) {
+    produkDitawar.sort(function (a, b) {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    })
+  }
 
   function handleTerima(index) {
     // console.log(index)
@@ -105,6 +114,8 @@ export default function InfoPenawaran() {
       };
       console.log(updatestatusproduct);
       dispatch(updateProduct(updatestatusproduct));
+
+
       const data = {
         id: listtransaksi[index].id_offering,
         status: "BERHASIL"
@@ -122,7 +133,7 @@ export default function InfoPenawaran() {
 
       const data = {
         id: listtransaksi[index].id_offering,
-        status: "Ditolak"
+        status: "GAGAL"
       };
       dispatch(updateOffering(data))
     }
@@ -133,13 +144,14 @@ export default function InfoPenawaran() {
     };
     // console.log(data)
     dispatch(updateTransaction(data));
+    window.location.reload();
   }
 
   return (
     <div>
       <NavBar />
       <nav
-        className="navbar navbar-expand-lg bg-light d-inline-flex"
+        className="navbar navbar-expand-lg bg-light d-inline-flex infopenawar"
         style={{
           justifyContent: "space-between",
           alignItems: "center",
@@ -154,11 +166,11 @@ export default function InfoPenawaran() {
         </div>
 
         <div
-          className="d-inline-flex"
+          className="d-inline-flex "
           style={{ justifyContent: "center", alignItems: "center" }}
         >
           <span
-            className="navbar-brand mb-0 h1"
+            className="navbar-brand mb-0 h1" 
             style={{ fontWeight: "400px" }}
           >
             Info Penawar
@@ -257,52 +269,96 @@ export default function InfoPenawaran() {
                         className="align-self-start ms-auto"
                         style={{ fontSize: "12px", color: "#BABABA" }}
                       >
-                        Tanggal dan jam
+                        {format(parseISO(produk.createdAt), 'dd MMM, kk:mm')}
                       </p>
                     </Stack>
 
                     {listtransaksi.find(
-                      (x) => x.id_product === produk.id_product
+                      (x) => x.id_offering === produk.id
                     ) ? (
                       <>
                         <div className="float-end mt-2">
-                          <Button
-                            className="btnOutline me-2 px-5"
-                            data-toggle="modal"
-                            data-target={`#status${produk.id}`}
-                          >
-                            Status
-                          </Button>
-                          <a
-                            href={
-                              "https://api.whatsapp.com/send/?phone=" +
-                              user.no_hp +
-                              "&text&app_absent=0"
-                            }
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <Button className="btnPrimary px-3">
-                              Hubungi di <i className="bi bi-whatsapp ms-2"></i>
-                            </Button>
-                          </a>
+                          {produk.status === "BERHASIL" || produk.status === "GAGAL" ? (
+                            <>
+                              <Button
+                                className="btnOutline me-2 px-5"
+                                data-toggle="modal"
+                                data-target={`#status${produk.id}`}
+                                disabled
+                              >
+                                Transaksi {produk.status}
+                              </Button>
+                              <Button className="btnPrimary px-3" disabled>
+                                Hubungi di <i className="bi bi-whatsapp ms-2"></i>
+                              </Button>
+                            </>
+                          ) : (
+                            <>
+                              <Button
+                                className="btnOutline me-2 px-5"
+                                data-toggle="modal"
+                                data-target={`#status${produk.id}`}
+                              >
+                                Status
+                              </Button>
+                              <a
+                                href={
+                                  "https://api.whatsapp.com/send/?phone=" +
+                                  detailUser.no_hp +
+                                  "&text&app_absent=0"
+                                }
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Button className="btnPrimary px-3">
+                                  Hubungi di <i className="bi bi-whatsapp ms-2"></i>
+                                </Button>
+                              </a>
+                            </>
+                          )}
+
                         </div>
                       </>
                     ) : (
                       <>
                         <div className="float-end mt-2">
-                          <Button className="btnOutline me-2 px-5"
-                            onClick={() => handleTolak(index)}>
-                            Tolak
-                          </Button>
-                          <Button
-                            className="btnPrimary px-5"
-                            onClick={() => handleTerima(index)}
-                            data-toggle="modal"
-                            data-target={`#modal${produk.id}`}
-                          >
-                            Terima
-                          </Button>
+                          {produk.status === "Ditolak" ? (
+                            <>
+                              <Button className="btnOutline me-2 px-5"
+                                // onClick={() => handleTolak(index)}
+                                disabled
+                              >
+                                Tawaran ditolak
+                              </Button>
+                              <Button
+                                className="btnPrimary px-5"
+                                onClick={() => handleTerima(index)}
+                                data-toggle="modal"
+                                data-target={`#modal${produk.id}`}
+                                disabled
+                              >
+                                Terima
+                              </Button>
+                            </>
+                          ) : (
+                            <>
+                              <Button className="btnOutline me-2 px-5"
+                                onClick={() => handleTolak(index)}
+                              >
+                                Tolak
+                              </Button>
+                              <Button
+                                className="btnPrimary px-5"
+                                onClick={() => handleTerima(index)}
+                                data-toggle="modal"
+                                data-target={`#modal${produk.id}`}
+                              >
+                                Terima
+                              </Button>
+                            </>
+
+                          )}
+
                         </div>
                       </>
                     )}

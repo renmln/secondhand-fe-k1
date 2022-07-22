@@ -38,12 +38,7 @@ body {
   color: rgba(113, 38, 181, 1);
 }
 
-@media screen and (min-width: 768px) {
-  body {
-    margin: calc(var(--header-height) + 1rem) 0 0 0;
-    padding-left: calc(var(--nav-width));
-  }
-}
+
 
 /* Homepage */
 .btnOutline:after {
@@ -52,20 +47,13 @@ body {
 }
 
 .cardProduct {
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 0px 4px rgba(238, 197, 16, 0.274);
   border-radius: 4px;
   padding: 4px 4px 6px;
   width: 100%;
 }
 
-/* Halaman Product */
 
-@media screen and (max-width: 768px) {
-  body {
-    margin: calc(var(--header-height) + 1rem) 0 0 0;
-    padding-left: calc(var(--nav-width) - 250px);
-  }
-}
 
 /* Daftar Jual */
 .infoPenjual {
@@ -170,6 +158,8 @@ body {
   border-bottom: 0.25px solid;
   border-bottom-color: lightgray !important;
 }
+
+
 
 @media screen and (min-width: 768px) {
   body {
