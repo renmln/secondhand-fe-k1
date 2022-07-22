@@ -1,10 +1,12 @@
 import './App.css';
 import { Login } from './component';
+import { LandingPage } from './component';
 
 function App() {
   return (
-    <Login/>
-  );
+    <Login />
+    // <LandingPage/>
+  )
 }
 
 export default App;
