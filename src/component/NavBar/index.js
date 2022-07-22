@@ -243,7 +243,7 @@ export default function NavBar() {
             >
                 <Navbar.Brand>
                     <a href="/">
-                        <img src={logo} alt="" style={{ width: "100px" }} />
+                        <img src={logo} alt="" style={{ width: "130px" }} />
                     </a>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -268,11 +268,10 @@ export default function NavBar() {
                     {!isAuthenticated ? (
                         <Nav>
                             <Nav.Link href="/login">
-                                <button
-                                    type="button"
-                                    className="btn btn-sm btn-custom nav-link text-light buttonradius12 active "
+                                 <button
+                                    className="btnPrimary border-0"
                                 >
-                                    <FiLogIn /> Masuk
+                                    <FiLogOut /> Masuk
                                 </button>
                             </Nav.Link>
                         </Nav>
@@ -393,8 +392,8 @@ export default function NavBar() {
 
                             <Nav.Link href="/">
                                 <button
-                                    type="button"
-                                    className="btn btn-sm btn-custom nav-link text-light rounded-12px active buttonlogout "
+                                    className="btnPrimary border-0"
+                                
                                     onClick={handleLogout}
                                 >
                                     <FiLogOut /> Logout
