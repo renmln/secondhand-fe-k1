@@ -367,22 +367,20 @@ export const sendLinkResetPassword = (data) => async (dispatch) => {
   }
 };
 
-export const verifiedLink = (params) => async (dispatch) => {
+export const verifiedLink = (id, token) => async (dispatch) => {
   try {
-    const id = params.id;
-    const token = params.token;
     const response = await fetch(
-      `http://localhost:8000/api/v1/password-reset/${id}/${token}`,
+      `http://localhost:8000/api/v1/verify-token/${id}/${token}`,
       {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
           "Content-type": "application/json",
         },
       }
     );
     const data = await response.json();
-
+    console.log("ini actions");
+    console.log(data);
     dispatch({
       type: GET_LINK_RESET,
       payload: data,
@@ -402,14 +400,12 @@ export const verifiedLink = (params) => async (dispatch) => {
   }
 };
 
-export const resetPassword = (params, data) => async (dispatch) => {
+export const resetPassword = (id, data) => async (dispatch) => {
   try {
-    const id = params.id;
-    const token = params.token;
     const response = await fetch(
-      `http://localhost:8000/api/v1/password-reset/${id}/${token}`,
+      `http://localhost:8000/api/v1/password-reset/${id}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
@@ -417,13 +413,12 @@ export const resetPassword = (params, data) => async (dispatch) => {
       }
     );
     const result = await response.json();
-
     dispatch({
       type: RESET_PASSWORD,
-      user: result.user,
+      user: result,
+      token: result.token,
       message: result.message,
     });
-
     Swal.fire({
       position: "center",
       icon: "success",

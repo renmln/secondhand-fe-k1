@@ -44,7 +44,7 @@ export default function HalamanProduk() {
     dispatch(getOfferbyIDProduct({ id }));
   }, [dispatch, id]);
   console.log(id);
-  console.log(offering)
+  console.log(offering);
 
   const handleSubmit = async () => {
     const data = {
@@ -125,7 +125,7 @@ export default function HalamanProduk() {
                 <input
                   type="number"
                   value={no_hp}
-                  onChange={() => setNoHp(user.no_hp)}
+                  onChange={() => setNoHp(detailUser.no_hp)}
                   hidden
                 />
                 <label htmlFor="harga_tawar" className="form-label">
@@ -139,7 +139,7 @@ export default function HalamanProduk() {
                   style={{ borderRadius: "16px" }}
                   value={offering_price}
                   onChange={handleChangePrice}
-                // onChange={(e) => setOfferingPrice(e.target.value)}
+                  // onChange={(e) => setOfferingPrice(e.target.value)}
                 />
               </div>
               <button
@@ -184,7 +184,9 @@ export default function HalamanProduk() {
 
   let cekoffer = [];
   if (offering && user) {
-    cekoffer = offering.find((x) => x.id_buyer === user.id && x.status !== "Ditolak");
+    cekoffer = offering.find(
+      (x) => x.id_buyer === user.id && x.status !== "Ditolak"
+    );
   }
   console.log(cekoffer);
 
@@ -306,25 +308,35 @@ export default function HalamanProduk() {
                 </div>
               </div>
               <div>
-
                 {/* Modal */}
-                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div
+                  class="modal fade"
+                  id="exampleModalCenter"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="exampleModalCenterTitle"
+                  aria-hidden="true"
+                >
+                  <div
+                    class="modal-dialog modal-dialog-centered modal-sm"
+                    role="document"
+                  >
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h6 class="modal-title" id="exampleModalLongTitle">Masukkan Harga Tawarmu</h6>
+                        <h6 class="modal-title" id="exampleModalLongTitle">
+                          Masukkan Harga Tawarmu
+                        </h6>
                         <button
-                              type="button"
-                              className="btn-close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                              
-                            ></button>
+                          type="button"
+                          className="btn-close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
                       </div>
                       <div class="modal-body">
                         <p style={{ fontSize: "14px" }}>
-                          Harga tawaranmu akan diketahui penjual, jika penjual cocok kamu akan
-                          segera dihubungi penjual.
+                          Harga tawaranmu akan diketahui penjual, jika penjual
+                          cocok kamu akan segera dihubungi penjual.
                         </p>
                         <div className="row p-1">
                           <div className="col-3 m-auto ">
@@ -362,7 +374,10 @@ export default function HalamanProduk() {
                                 onChange={() => setNoHp(user.no_hp)}
                                 hidden
                               />
-                              <label htmlFor="harga_tawar" className="form-label">
+                              <label
+                                htmlFor="harga_tawar"
+                                className="form-label"
+                              >
                                 Harga Tawar
                               </label>
                               <input
@@ -373,7 +388,7 @@ export default function HalamanProduk() {
                                 style={{ borderRadius: "16px" }}
                                 value={offering_price}
                                 onChange={handleChangePrice}
-                              // onChange={(e) => setOfferingPrice(e.target.value)}
+                                // onChange={(e) => setOfferingPrice(e.target.value)}
                               />
                             </div>
                             <button
@@ -386,7 +401,6 @@ export default function HalamanProduk() {
                           </form>
                         </div>
                       </div>
-
                     </div>
                   </div>
                 </div>

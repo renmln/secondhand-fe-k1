@@ -1,37 +1,34 @@
 import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Navigate, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { verifiedLink, resetPassword } from "../../redux/actions/authActions";
 
-const ResetPassword = () => {
-  const dispatch = useDispatch();
+export default function ResetPassword() {
   const { id, token } = useParams();
-  const [validUrl, setValidUrl] = useState(false);
+  const dispatch = useDispatch();
+  const { detailUser } = useSelector((state) => state.auth);
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [validpassword, setValidPassword] = useState("");
+  const validUrl = detailUser !== null ? true : false;
 
-  React.useEffect(() => {
-    try {
-      dispatch(verifiedLink(id, token));
-      setValidUrl(true);
-    } catch (error) {
-      setValidUrl(false);
-    }
+  useEffect(() => {
+    dispatch(verifiedLink(id, token));
   }, [dispatch, id, token]);
 
   const handleSubmit = () => {
-    try {
-      dispatch(resetPassword(password));
-      setError("");
+    const data = { password };
+    if (password !== validpassword) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Password is not match",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+    } else {
+      dispatch(resetPassword(detailUser.id_user, data));
       window.location = "/login";
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setError(error.response.data.message);
-      }
     }
   };
 
@@ -60,8 +57,8 @@ const ResetPassword = () => {
                       type="password"
                       placeholder="ulangi password"
                       className="form-control"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      value={validpassword}
+                      onChange={(e) => setValidPassword(e.target.value)}
                     />
                   </div>
                   <button className="btn btn-primary" onClick={handleSubmit}>
@@ -72,11 +69,9 @@ const ResetPassword = () => {
             </div>
           </div>
         ) : (
-          <h1>404 Not Found</h1>
+          <h1 style={{ textAlign: "center" }}>404 Not Found</h1>
         )}
       </div>
     </div>
   );
-};
-
-export default ResetPassword;
+}

@@ -98,9 +98,7 @@ const authReducer = (state = initialState, action) => {
     case GET_LINK_RESET:
       return {
         ...state,
-        token: action.token,
-        user: action.user,
-        message: action.message,
+        detailUser: action.payload,
       };
     case GET_LINK_ERROR:
       return {
